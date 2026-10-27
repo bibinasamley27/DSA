@@ -265,6 +265,38 @@ def test_slow_client_cannot_block_owner():
     assert outbox not in simulation.clients
 
 
+def test_socket_cancellation_cleans_up_client_and_tasks():
+    from types import SimpleNamespace
+    from app.api import socket
+
+    async def check():
+        simulation = Simulation()
+
+        class Socket:
+            headers = {}
+            app = SimpleNamespace(state=SimpleNamespace(simulation=simulation))
+
+            async def accept(self):
+                pass
+
+            async def send_json(self, message):
+                pass
+
+            async def receive_text(self):
+                await asyncio.Event().wait()
+
+        before = set(asyncio.all_tasks())
+        handler = asyncio.create_task(socket(Socket()))
+        while not simulation.clients:
+            await asyncio.sleep(0)
+        handler.cancel()
+        await handler
+        assert not simulation.clients
+        assert set(asyncio.all_tasks()) == before
+
+    asyncio.run(check())
+
+
 def test_published_contract_and_traces():
     import json
     from pathlib import Path

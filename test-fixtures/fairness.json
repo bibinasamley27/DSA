@@ -1,0 +1,299 @@
+{
+  "protocol_version": "1.0",
+  "kind": "state",
+  "run_id": "fixture-fairness-rescue",
+  "sequence_number": 77,
+  "tick": 38,
+  "sim_status": "paused",
+  "scenario": "fairness_trap",
+  "seed": 42,
+  "controller_mode": "adaptive",
+  "speed": 1,
+  "phase": "GREEN",
+  "phase_remaining": 5,
+  "active_direction": "S",
+  "queue_order": [
+    "S",
+    "E",
+    "W",
+    "N"
+  ],
+  "direction_states": [
+    {
+      "direction": "N",
+      "queue_count": 4,
+      "max_wait_ticks": 9,
+      "priority_score": 12.5,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "E",
+      "queue_count": 12,
+      "max_wait_ticks": 18,
+      "priority_score": 33.0,
+      "congestion_flag": true,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "S",
+      "queue_count": 3,
+      "max_wait_ticks": 32,
+      "priority_score": 22,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "W",
+      "queue_count": 5,
+      "max_wait_ticks": 12,
+      "priority_score": 16.0,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 1,
+      "direction": "N",
+      "status": "QUEUED",
+      "arrival_tick": 15,
+      "path_progress": 0,
+      "queue_position": 0
+    },
+    {
+      "id": 2,
+      "direction": "N",
+      "status": "QUEUED",
+      "arrival_tick": 16,
+      "path_progress": 0,
+      "queue_position": 1
+    },
+    {
+      "id": 3,
+      "direction": "N",
+      "status": "QUEUED",
+      "arrival_tick": 17,
+      "path_progress": 0,
+      "queue_position": 2
+    },
+    {
+      "id": 4,
+      "direction": "N",
+      "status": "QUEUED",
+      "arrival_tick": 18,
+      "path_progress": 0,
+      "queue_position": 3
+    },
+    {
+      "id": 5,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 6,
+      "path_progress": 0,
+      "queue_position": 0
+    },
+    {
+      "id": 6,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 7,
+      "path_progress": 0,
+      "queue_position": 1
+    },
+    {
+      "id": 7,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 8,
+      "path_progress": 0,
+      "queue_position": 2
+    },
+    {
+      "id": 8,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 9,
+      "path_progress": 0,
+      "queue_position": 3
+    },
+    {
+      "id": 9,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 10,
+      "path_progress": 0,
+      "queue_position": 4
+    },
+    {
+      "id": 10,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 11,
+      "path_progress": 0,
+      "queue_position": 5
+    },
+    {
+      "id": 11,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 12,
+      "path_progress": 0,
+      "queue_position": 6
+    },
+    {
+      "id": 12,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 13,
+      "path_progress": 0,
+      "queue_position": 7
+    },
+    {
+      "id": 13,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 14,
+      "path_progress": 0,
+      "queue_position": 8
+    },
+    {
+      "id": 14,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 15,
+      "path_progress": 0,
+      "queue_position": 9
+    },
+    {
+      "id": 15,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 16,
+      "path_progress": 0,
+      "queue_position": 10
+    },
+    {
+      "id": 16,
+      "direction": "E",
+      "status": "QUEUED",
+      "arrival_tick": 17,
+      "path_progress": 0,
+      "queue_position": 11
+    },
+    {
+      "id": 17,
+      "direction": "S",
+      "status": "QUEUED",
+      "arrival_tick": 6,
+      "path_progress": 0,
+      "queue_position": 0
+    },
+    {
+      "id": 18,
+      "direction": "S",
+      "status": "QUEUED",
+      "arrival_tick": 7,
+      "path_progress": 0,
+      "queue_position": 1
+    },
+    {
+      "id": 19,
+      "direction": "S",
+      "status": "QUEUED",
+      "arrival_tick": 8,
+      "path_progress": 0,
+      "queue_position": 2
+    },
+    {
+      "id": 20,
+      "direction": "W",
+      "status": "QUEUED",
+      "arrival_tick": 12,
+      "path_progress": 0,
+      "queue_position": 0
+    },
+    {
+      "id": 21,
+      "direction": "W",
+      "status": "QUEUED",
+      "arrival_tick": 13,
+      "path_progress": 0,
+      "queue_position": 1
+    },
+    {
+      "id": 22,
+      "direction": "W",
+      "status": "QUEUED",
+      "arrival_tick": 14,
+      "path_progress": 0,
+      "queue_position": 2
+    },
+    {
+      "id": 23,
+      "direction": "W",
+      "status": "QUEUED",
+      "arrival_tick": 15,
+      "path_progress": 0,
+      "queue_position": 3
+    },
+    {
+      "id": 24,
+      "direction": "W",
+      "status": "QUEUED",
+      "arrival_tick": 16,
+      "path_progress": 0,
+      "queue_position": 4
+    }
+  ],
+  "metrics": {
+    "arrived": 42,
+    "departed": 18,
+    "mean_wait_ticks": 8.4,
+    "max_wait_ticks": 32,
+    "switches": 3,
+    "fairness_overrides": 1
+  },
+  "decisions": [
+    {
+      "event_id": 31,
+      "tick": 35,
+      "type": "FAIRNESS_OVERRIDE",
+      "direction": "S",
+      "description": "South is nonempty and has waited 32 ticks. Fairness puts it at the head of the next plan.",
+      "data": {
+        "max_wait_ticks": 32,
+        "candidate_order": [
+          "S",
+          "E",
+          "W",
+          "N"
+        ]
+      }
+    },
+    {
+      "event_id": 32,
+      "tick": 37,
+      "type": "ORDER_COMMITTED",
+      "description": "Clearance completed; the fairness-protected plan is now active.",
+      "data": {
+        "order": [
+          "S",
+          "E",
+          "W",
+          "N"
+        ]
+      }
+    },
+    {
+      "event_id": 33,
+      "tick": 38,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "South begins GREEN after yellow and all-red clearance.",
+      "data": {
+        "phase": "GREEN"
+      }
+    }
+  ]
+}

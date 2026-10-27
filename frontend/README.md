@@ -1,5 +1,11 @@
 # Frontend — 3D simulation page and shared client (Person B)
 
+For measured comparisons in the controller's Benchmarks tab, run
+`python -m scripts.benchmark --verify-repeat` from the repository root with the
+backend virtual environment active, then load `reports/benchmark.json`. Export
+preserves recorded schedules for replay. See `docs/INTEGRATION.md` for the full
+workflow and timing configuration.
+
 React 19 + TypeScript + Vite + `@react-three/fiber` v9, CSS Modules. Protocol: WebSocket JSON v1.0
 (`../backend/README.md`, `src/types/simulation.ts` is the frozen type file copied unchanged from `backend/fixtures/simulation.ts`).
 
@@ -34,7 +40,7 @@ run (`runEpoch` increments, old run id retired, later messages of it dropped); s
 decisions are de-duplicated by `run_id/event_id` (last 200 kept); acks/errors are matched by `request_id`
 (`sent → accepted → applied`, or `rejected` / `timeout` / `not_sent`). On disconnect the last snapshot is kept but `stale` is true and nothing keeps moving.
 
-`src/pages/ControllerPage.tsx` is a placeholder for Person C.
+`src/pages/ControllerPage.tsx` renders Person C’s controller dashboard at `/controller`: linked list, circular queue, priority scores, sort playback, decision timeline, metrics, benchmarks and demo guide. It subscribes to the same `useSimState()` singleton and sends commands through `store.sendCommand()`; switching pages does not open another socket. The shared header chooses live or recorded mock data for both pages. Controller commands are disabled for mock, stale or disconnected data. Its styles are scoped to the controller root.
 
 ## Rendering
 `src/scene/*` (Road, Junction, Lane, Signal, Vehicle, CameraRig, HUD, Scene). Signals read `phase` + `active_direction` directly

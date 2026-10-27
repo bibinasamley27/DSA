@@ -2,6 +2,7 @@ import asyncio
 import json
 from contextlib import asynccontextmanager, suppress
 from time import monotonic
+from anyio import CancelScope
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from .engine import Engine
@@ -120,8 +121,11 @@ async def socket(ws: WebSocket):
         for task in done:
             with suppress(WebSocketDisconnect, RuntimeError):
                 task.result()
+    except asyncio.CancelledError:
+        pass  # Socket teardown can cancel the handler before receive observes the disconnect.
     finally:
         simulation.clients.discard(outbox)
         for task in tasks:
             task.cancel()
-        await asyncio.gather(*tasks, return_exceptions=True)
+        with CancelScope(shield=True):
+            await asyncio.gather(*tasks, return_exceptions=True)

@@ -30,17 +30,25 @@ npm run build
 ## Shared store (for Person C)
 ```ts
 import { store, useSimState, startConnection } from './net/connection';
-const { snapshot, connection, stale, decisions, commands, runEpoch, mode } = useSimState(); // useSyncExternalStore
+const { snapshot, connection, stale, decisions, plan, commands, runEpoch, mode } = useSimState(); // useSyncExternalStore
 store.sendCommand({ command: 'step' });   // validated, then sent; result appears in `commands`
 ```
 One `SimStore` + one transport exist for the whole app (`src/net/connection.ts`), independent of which page is mounted, so
 navigation never restarts anything. `App` calls `startConnection()` once. Rules enforced in `store.ts`:
 state/trace messages with a sequence ≤ the last accepted are dropped; a state with a new `run_id` and a higher sequence starts a new
 run (`runEpoch` increments, old run id retired, later messages of it dropped); sequence tracking resets on each new socket;
-decisions are de-duplicated by `run_id/event_id` (last 200 kept); acks/errors are matched by `request_id`
+decision traces pass the same sequence guard as states and advance it; decisions are de-duplicated by `run_id/event_id`
+(`decisions`: last 200 of all events; `plan`: last 300 non-ARRIVAL events, so planning traces survive heavy arrival traffic);
+snapshots must satisfy the SRS invariants (4 unique directions, `queue_count` = QUEUED vehicles, `arrival_tick <= tick`, no EXITED); acks/errors are matched by `request_id`
 (`sent → accepted → applied`, or `rejected` / `timeout` / `not_sent`). On disconnect the last snapshot is kept but `stale` is true and nothing keeps moving.
 
-`src/pages/ControllerPage.tsx` renders Person C’s controller dashboard at `/controller`: linked list, circular queue, priority scores, sort playback, decision timeline, metrics, benchmarks and demo guide. It subscribes to the same `useSimState()` singleton and sends commands through `store.sendCommand()`; switching pages does not open another socket. The shared header chooses live or recorded mock data for both pages. Controller commands are disabled for mock, stale or disconnected data. Its styles are scoped to the controller root.
+`src/pages/ControllerPage.tsx` (Person C's page, redesigned in PR #6) renders the DSA controller visualizer at `/controller`:
+step-engine rail (commands, lamps, setup, export, metrics) and six sections: traffic linked list, circular signal queue,
+Bubble Sort playback, priority breakdown, fairness/stability/spillback, and a decision log; plus Benchmarks and Demo guide tabs.
+It uses the same `useSimState()` singleton and `store.sendCommand()`; commands are disabled for mock, stale or pending state.
+`lib/sortTrace.ts` rebuilds every Bubble Sort array exactly from `SORT_COMPARE`/`SORT_SWAP` events and `lib/decisionLog.ts`
+explains committed orders and greens from emitted events only; both are tested against `backend/fixtures/*.trace.json`,
+so regenerating those fixtures after an engine change must keep the tests green.
 
 ## Rendering
 `src/scene/*` (Road, Junction, Lane, Signal, Vehicle, CameraRig, HUD, Scene). Signals read `phase` + `active_direction` directly

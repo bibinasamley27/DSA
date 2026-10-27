@@ -69,6 +69,15 @@ describe('SimStore ordering', () => {
     expect(store.getState().snapshot?.sequence_number).toBe(10);
     expect(store.getState().rejected.staleSequence).toBe(2);
   });
+  it('keeps planning events in a separate buffer that arrivals cannot evict', () => {
+    const { store } = setup();
+    const ev = (id: number, type: string) => ({ event_id: id, tick: 1, type, direction: 'N', description: 'x', data: {} });
+    const trace = (s: number, evs: object[]) => raw({ protocol_version: '1.0', kind: 'decision_trace', run_id: RUN, sequence_number: s, tick: 1, payload: { decisions: evs } });
+    store.ingest(trace(11, [ev(1, 'THRESHOLD')]));
+    store.ingest(trace(12, Array.from({ length: 250 }, (_, i) => ev(100 + i, 'ARRIVAL'))));
+    expect(store.getState().decisions.some((d) => d.event_id === 1)).toBe(false); // evicted from the 200-event log
+    expect(store.getState().plan.map((d) => d.event_id)).toEqual([1]);              // still available for the controller
+  });
   it('ignores traces for other runs', () => {
     const { store } = setup();
     store.ingest(raw({ protocol_version: '1.0', kind: 'decision_trace', run_id: 'other', sequence_number: 99, tick: 1, payload: { decisions: [] } }));

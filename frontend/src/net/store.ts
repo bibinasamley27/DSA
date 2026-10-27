@@ -28,6 +28,8 @@ export interface SimState {
   /** True when `snapshot` predates a disconnect and no newer state has arrived. */
   stale: boolean;
   decisions: DecisionEvent[];
+  /** Same events minus ARRIVAL, kept longer: planning traces survive heavy arrival traffic (up to ~140 arrivals per round). */
+  plan: DecisionEvent[];
   commands: CommandRecord[];
   /** Latest protocol/server problem for the UI; cleared when a valid state arrives. */
   error: string | null;
@@ -41,12 +43,13 @@ export interface Transport {
 }
 
 const MAX_DECISIONS = 200;
+const MAX_PLAN = 300;
 const MAX_COMMANDS = 8;
 const ACK_TIMEOUT_MS = 5000;
 
 export const initialState = (mode: SimState['mode'] = 'live', mockId: string | null = null): SimState => ({
   mode, mockId, connection: 'idle', snapshot: null, runEpoch: 0, receivedAt: 0, stale: false,
-  decisions: [], commands: [], error: null, rejected: { malformed: 0, staleSequence: 0, staleRun: 0 },
+  decisions: [], plan: [], commands: [], error: null, rejected: { malformed: 0, staleSequence: 0, staleRun: 0 },
 });
 
 export class SimStore {
@@ -151,11 +154,11 @@ export class SimStore {
       this.retiredRuns.add(cur.run_id);
       this.seenEvents.clear();
     }
-    const decisions = this.mergeDecisions(newRun ? [] : this.state.decisions, s.run_id, s.decisions);
+    const logs = this.mergeDecisions(newRun ? { decisions: [], plan: [] } : this.state, s.run_id, s.decisions);
     const commands = this.state.commands.map((c) =>
       c.status === 'accepted' && (c.ackSequence ?? 0) < s.sequence_number ? { ...c, status: 'applied' as const } : c);
     this.set({
-      snapshot: s, receivedAt: this.now(), stale: false, error: null, decisions, commands,
+      snapshot: s, receivedAt: this.now(), stale: false, error: null, ...logs, commands,
       runEpoch: this.state.runEpoch + (cur === null || newRun ? 1 : 0),
     });
   }
@@ -164,17 +167,22 @@ export class SimStore {
     if (runId !== this.state.snapshot?.run_id) return this.reject('staleRun');
     if (sequence <= this.lastSequence) return this.reject('staleSequence');
     this.lastSequence = sequence; // traces share the server's sequence with states
-    this.set({ decisions: this.mergeDecisions(this.state.decisions, runId, events) });
+    this.set(this.mergeDecisions(this.state, runId, events));
   }
 
-  private mergeDecisions(existing: DecisionEvent[], runId: string, incoming: DecisionEvent[]): DecisionEvent[] {
+  private mergeDecisions(base: Pick<SimState, 'decisions' | 'plan'>, runId: string, incoming: DecisionEvent[]): Pick<SimState, 'decisions' | 'plan'> {
     const fresh = incoming.filter((e) => {
       const key = `${runId}/${e.event_id}`;
       if (this.seenEvents.has(key)) return false;
       this.seenEvents.add(key);
       return true;
     });
-    return fresh.length === 0 ? existing : [...existing, ...fresh].slice(-MAX_DECISIONS);
+    if (fresh.length === 0) return { decisions: base.decisions, plan: base.plan };
+    const planning = fresh.filter((e) => e.type !== 'ARRIVAL');
+    return {
+      decisions: [...base.decisions, ...fresh].slice(-MAX_DECISIONS),
+      plan: planning.length ? [...base.plan, ...planning].slice(-MAX_PLAN) : base.plan,
+    };
   }
 
   // --- outbound ---

@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { Component, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { PoseTracker } from '../lib/interp';
 import { SimClock } from '../lib/simClock';
+import { crosswalkBusy, makeCrossers } from '../lib/pedestrians';
 import { Pedestrians } from './Pedestrians';
 import { lampFor } from '../lib/signal';
 import type { SimState } from '../net/store';
@@ -50,13 +51,17 @@ export function Scene({ sim, quality = 'high', viewKey = 0 }: { sim: SimState; q
   const clock = useMemo(() => new SimClock(), []);
   const { snapshot, runEpoch, receivedAt, stale } = sim;
   // Both updates are idempotent per snapshot, so running them during render is safe (also under StrictMode).
+  const crossers = useMemo(() => (runEpoch >= 0 ? makeCrossers() : []), [runEpoch]); // fresh positions for every run
   const ids = useMemo(() => {
+    const now = performance.now();
+    tracker.setCrosswalkBusy((arm) => crosswalkBusy(crossers, arm));
     clock.update(snapshot, runEpoch, receivedAt, stale);
+    if (!stale) tracker.resume(now);
     if (snapshot) tracker.update(snapshot, runEpoch, receivedAt, clock.value(receivedAt));
     else tracker.clear();
-    tracker.hold(stale ? performance.now() : null); // stop moving the moment the connection is lost
+    if (stale) tracker.hold(now); // stop moving the moment the connection is lost
     return tracker.ids();
-  }, [tracker, clock, snapshot, runEpoch, receivedAt, stale]);
+  }, [tracker, clock, crossers, snapshot, runEpoch, receivedAt, stale]);
   const shadows = quality === 'high';
 
   const gl = useMemo(webglAvailable, []);
@@ -91,7 +96,7 @@ export function Scene({ sim, quality = 'high', viewKey = 0 }: { sim: SimState; q
           </group>
         ))}
         {ids.map((id) => <Vehicle key={id} id={id} tracker={tracker} clock={clock} shadows={shadows} />)}
-        <Pedestrians snapshot={stale ? null : snapshot} clock={clock} runEpoch={runEpoch} shadows={shadows} />
+        <Pedestrians snapshot={stale ? null : snapshot} clock={clock} crossers={crossers} tracker={tracker} shadows={shadows} />
       </Canvas>
     </Boundary>
   );

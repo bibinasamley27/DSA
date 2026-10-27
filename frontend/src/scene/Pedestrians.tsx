@@ -2,7 +2,8 @@ import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import { BoxGeometry, type Group } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { crosserPose, makeCrossers, makeWalkers, stepCrossers, walkerPose, type PedPose } from '../lib/pedestrians';
+import { crosserPose, makeWalkers, stepCrossers, walkerPose, type Crosser, type PedPose } from '../lib/pedestrians';
+import type { PoseTracker } from '../lib/interp';
 import type { SimClock } from '../lib/simClock';
 import type { StateSnapshot } from '../types/simulation';
 import { mat, tinted } from './materials';
@@ -23,16 +24,16 @@ const KERB_Y = 0.225; // sidewalk top
 const ROAD_Y = 0.02;
 
 /** Decorative people: walkers on the sidewalks and crossers that use the crosswalks only when the server's state makes it safe. */
-export function Pedestrians({ snapshot, clock, runEpoch, shadows }: { snapshot: StateSnapshot | null; clock: SimClock; runEpoch: number; shadows: boolean }) {
+export function Pedestrians({ snapshot, clock, crossers, tracker, shadows }: { snapshot: StateSnapshot | null; clock: SimClock; crossers: Crosser[]; tracker: PoseTracker; shadows: boolean }) {
   const walkers = useMemo(makeWalkers, []);
-  const crossers = useMemo(() => (runEpoch >= 0 ? makeCrossers() : []), [runEpoch]); // fresh positions for every run
   const snap = useRef(snapshot);
   useEffect(() => { snap.current = snapshot; }, [snapshot]);
   const refs = useRef<(Group | null)[]>([]);
 
   useFrame(() => {
-    const t = clock.value(performance.now());
-    stepCrossers(crossers, snap.current, t);
+    const now = performance.now();
+    const t = clock.value(now);
+    stepCrossers(crossers, snap.current, t, (arm) => tracker.turningInto(arm, now, t));
     const place = (g: Group | null | undefined, p: PedPose, onRoad: boolean, seed: number) => {
       if (!g) return;
       const bob = p.walking ? Math.abs(Math.sin((t * 3 + seed) * Math.PI)) * 0.06 : 0;

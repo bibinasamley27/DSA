@@ -1,0 +1,245 @@
+{
+  "$defs": {
+    "ControllerCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "const": "set_controller",
+          "title": "Command",
+          "type": "string"
+        },
+        "controller_mode": {
+          "enum": [
+            "fixed",
+            "adaptive"
+          ],
+          "title": "Controller Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command",
+        "controller_mode"
+      ],
+      "title": "ControllerCommand",
+      "type": "object"
+    },
+    "ScenarioCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "const": "set_scenario",
+          "title": "Command",
+          "type": "string"
+        },
+        "scenario": {
+          "enum": [
+            "zero_demand",
+            "balanced",
+            "east_surge",
+            "fairness_trap",
+            "oscillation"
+          ],
+          "title": "Scenario",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command",
+        "scenario"
+      ],
+      "title": "ScenarioCommand",
+      "type": "object"
+    },
+    "SeedCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "const": "set_seed",
+          "title": "Command",
+          "type": "string"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command",
+        "seed"
+      ],
+      "title": "SeedCommand",
+      "type": "object"
+    },
+    "SimpleCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "enum": [
+            "start",
+            "pause",
+            "step",
+            "reset"
+          ],
+          "title": "Command",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command"
+      ],
+      "title": "SimpleCommand",
+      "type": "object"
+    },
+    "SpeedCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "const": "set_speed",
+          "title": "Command",
+          "type": "string"
+        },
+        "speed": {
+          "enum": [
+            0.5,
+            1,
+            2,
+            4
+          ],
+          "title": "Speed"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command",
+        "speed"
+      ],
+      "title": "SpeedCommand",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "pause": "#/$defs/SimpleCommand",
+      "reset": "#/$defs/SimpleCommand",
+      "set_controller": "#/$defs/ControllerCommand",
+      "set_scenario": "#/$defs/ScenarioCommand",
+      "set_seed": "#/$defs/SeedCommand",
+      "set_speed": "#/$defs/SpeedCommand",
+      "start": "#/$defs/SimpleCommand",
+      "step": "#/$defs/SimpleCommand"
+    },
+    "propertyName": "command"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/SimpleCommand"
+    },
+    {
+      "$ref": "#/$defs/ScenarioCommand"
+    },
+    {
+      "$ref": "#/$defs/SeedCommand"
+    },
+    {
+      "$ref": "#/$defs/SpeedCommand"
+    },
+    {
+      "$ref": "#/$defs/ControllerCommand"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "protocol_version": "1.0",
+  "kind": "state",
+  "run_id": "b932c721-0835-4c49-a75d-cecf52721548",
+  "sequence_number": 1,
+  "tick": 0,
+  "sim_status": "paused",
+  "scenario": "balanced",
+  "seed": 42,
+  "controller_mode": "adaptive",
+  "speed": 1,
+  "phase": "GREEN",
+  "phase_remaining": 8,
+  "active_direction": "N",
+  "direction_states": [
+    {
+      "direction": "N",
+      "queue_count": 0,
+      "max_wait_ticks": 0,
+      "priority_score": 0.0,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "E",
+      "queue_count": 0,
+      "max_wait_ticks": 0,
+      "priority_score": 0.0,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "S",
+      "queue_count": 0,
+      "max_wait_ticks": 0,
+      "priority_score": 0.0,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    },
+    {
+      "direction": "W",
+      "queue_count": 0,
+      "max_wait_ticks": 0,
+      "priority_score": 0.0,
+      "congestion_flag": false,
+      "downstream_free_slots": null
+    }
+  ],
+  "queue_order": [
+    "N",
+    "E",
+    "S",
+    "W"
+  ],
+  "vehicles": [],
+  "metrics": {
+    "arrived": 0,
+    "departed": 0,
+    "mean_wait_ticks": 0.0,
+    "max_wait_ticks": 0,
+    "switches": 0,
+    "fairness_overrides": 0
+  },
+  "decisions": []
+}

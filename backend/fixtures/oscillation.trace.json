@@ -1,0 +1,5055 @@
+{
+  "seed": 42,
+  "scenario": "oscillation",
+  "ticks": 200,
+  "config": {
+    "green": 8,
+    "yellow": 2,
+    "all_red": 1,
+    "capacity": 15,
+    "congestion_threshold": 5
+  },
+  "snapshots": [
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 1,
+      "tick": 0,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "GREEN",
+      "phase_remaining": 8,
+      "active_direction": "N",
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 0,
+          "max_wait_ticks": 0,
+          "priority_score": 0.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 0,
+          "max_wait_ticks": 0,
+          "priority_score": 0.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 0,
+          "max_wait_ticks": 0,
+          "priority_score": 0.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 0,
+          "max_wait_ticks": 0,
+          "priority_score": 0.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "vehicles": [],
+      "metrics": {
+        "arrived": 0,
+        "departed": 0,
+        "mean_wait_ticks": 0.0,
+        "max_wait_ticks": 0,
+        "switches": 0,
+        "fairness_overrides": 0
+      },
+      "decisions": []
+    },
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 2,
+      "tick": 40,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "GREEN",
+      "phase_remaining": 1,
+      "active_direction": "W",
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 4,
+          "max_wait_ticks": 17,
+          "priority_score": 16.5,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 15,
+          "max_wait_ticks": 20,
+          "priority_score": 40.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 2,
+          "max_wait_ticks": 8,
+          "priority_score": 8.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 9,
+          "max_wait_ticks": 10,
+          "priority_score": 23.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "vehicles": [
+        {
+          "id": 6,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 23,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 13,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 26,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 24,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 32,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 30,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 35,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 1,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 20,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 3,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 21,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 4,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 22,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 7,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 23,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 9,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 24,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 12,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 25,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 14,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 26,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 16,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 27,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 19,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 29,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 20,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 30,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 22,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 31,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 25,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 32,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 31,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 35,
+          "path_progress": 0.0,
+          "queue_position": 12
+        },
+        {
+          "id": 33,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 36,
+          "path_progress": 0.0,
+          "queue_position": 13
+        },
+        {
+          "id": 34,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 37,
+          "path_progress": 0.0,
+          "queue_position": 14
+        },
+        {
+          "id": 26,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 32,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 28,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 34,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 21,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 30,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 23,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 31,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 27,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 33,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 29,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 34,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 32,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 35,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 35,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 37,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 37,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 38,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 39,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 39,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 41,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 40,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 18,
+          "direction": "W",
+          "status": "CROSSING",
+          "arrival_tick": 28,
+          "path_progress": 0.5,
+          "queue_position": 0
+        }
+      ],
+      "metrics": {
+        "arrived": 38,
+        "departed": 7,
+        "mean_wait_ticks": 11.125,
+        "max_wait_ticks": 14,
+        "switches": 3,
+        "fairness_overrides": 0
+      },
+      "decisions": [
+        {
+          "event_id": 49,
+          "tick": 40,
+          "type": "ARRIVAL",
+          "direction": "E",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 40,
+            "accepted": false
+          }
+        },
+        {
+          "event_id": 50,
+          "tick": 40,
+          "type": "ARRIVAL",
+          "direction": "W",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 41,
+            "accepted": true
+          }
+        }
+      ]
+    },
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 3,
+      "tick": 80,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "GREEN",
+      "phase_remaining": 5,
+      "active_direction": "W",
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 14,
+          "max_wait_ticks": 16,
+          "priority_score": 36.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 9,
+          "max_wait_ticks": 51,
+          "priority_score": 43.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 6,
+          "max_wait_ticks": 7,
+          "priority_score": 15.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 8,
+          "max_wait_ticks": 45,
+          "priority_score": 38.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "vehicles": [
+        {
+          "id": 48,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 64,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 49,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 65,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 53,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 68,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 55,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 69,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 57,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 70,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 59,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 71,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 61,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 72,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 63,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 73,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 65,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 74,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 67,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 75,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 70,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 77,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 72,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 78,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 73,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 79,
+          "path_progress": 0.0,
+          "queue_position": 12
+        },
+        {
+          "id": 75,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 80,
+          "path_progress": 0.0,
+          "queue_position": 13
+        },
+        {
+          "id": 19,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 29,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 20,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 30,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 22,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 31,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 25,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 32,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 31,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 35,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 33,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 36,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 34,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 37,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 54,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 68,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 68,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 75,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 64,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 73,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 66,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 74,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 69,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 75,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 71,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 77,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 74,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 79,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 76,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 80,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 32,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 35,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 35,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 37,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 37,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 38,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 39,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 39,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 41,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 40,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 45,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 42,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 47,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 43,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 62,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 72,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 29,
+          "direction": "W",
+          "status": "CROSSING",
+          "arrival_tick": 34,
+          "path_progress": 0.5,
+          "queue_position": 0
+        }
+      ],
+      "metrics": {
+        "arrived": 70,
+        "departed": 32,
+        "mean_wait_ticks": 21.060606060606062,
+        "max_wait_ticks": 47,
+        "switches": 7,
+        "fairness_overrides": 0
+      },
+      "decisions": [
+        {
+          "event_id": 108,
+          "tick": 80,
+          "type": "ARRIVAL",
+          "direction": "N",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 75,
+            "accepted": true
+          }
+        },
+        {
+          "event_id": 109,
+          "tick": 80,
+          "type": "ARRIVAL",
+          "direction": "S",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 76,
+            "accepted": true
+          }
+        }
+      ]
+    },
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 4,
+      "tick": 120,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "ALL_RED",
+      "phase_remaining": 1,
+      "active_direction": null,
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 8,
+          "max_wait_ticks": 46,
+          "priority_score": 39.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 11,
+          "max_wait_ticks": 45,
+          "priority_score": 44.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 1,
+          "max_wait_ticks": 34,
+          "priority_score": 19.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 13,
+          "max_wait_ticks": 78,
+          "priority_score": 65.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "E",
+        "N",
+        "S",
+        "W"
+      ],
+      "vehicles": [
+        {
+          "id": 65,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 74,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 67,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 75,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 70,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 77,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 72,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 78,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 73,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 79,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 75,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 80,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 77,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 82,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 96,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 116,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 68,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 75,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 85,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 108,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 88,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 112,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 90,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 113,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 92,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 114,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 94,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 115,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 97,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 116,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 99,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 117,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 101,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 118,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 103,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 119,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 104,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 120,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 83,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 86,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 45,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 42,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 47,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 43,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 62,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 72,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 86,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 108,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 87,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 109,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 89,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 112,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 91,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 113,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 93,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 114,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 95,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 115,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 98,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 116,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 100,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 117,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 102,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 118,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 105,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 120,
+          "path_progress": 0.0,
+          "queue_position": 12
+        }
+      ],
+      "metrics": {
+        "arrived": 95,
+        "departed": 62,
+        "mean_wait_ticks": 31.129032258064516,
+        "max_wait_ticks": 60,
+        "switches": 10,
+        "fairness_overrides": 1
+      },
+      "decisions": [
+        {
+          "event_id": 158,
+          "tick": 120,
+          "type": "ARRIVAL",
+          "direction": "E",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 104,
+            "accepted": true
+          }
+        },
+        {
+          "event_id": 159,
+          "tick": 120,
+          "type": "ARRIVAL",
+          "direction": "W",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 105,
+            "accepted": true
+          }
+        },
+        {
+          "event_id": 160,
+          "tick": 120,
+          "type": "PHASE_CHANGE",
+          "direction": null,
+          "description": "phase change",
+          "data": {
+            "phase": "ALL_RED",
+            "remaining": 1
+          }
+        }
+      ]
+    },
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 5,
+      "tick": 160,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "GREEN",
+      "phase_remaining": 2,
+      "active_direction": "S",
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 11,
+          "max_wait_ticks": 33,
+          "priority_score": 38.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 8,
+          "max_wait_ticks": 42,
+          "priority_score": 37.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 4,
+          "max_wait_ticks": 4,
+          "priority_score": 10.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 15,
+          "max_wait_ticks": 45,
+          "priority_score": 52.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "vehicles": [
+        {
+          "id": 117,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 127,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 120,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 128,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 129,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 152,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 131,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 153,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 133,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 154,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 135,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 155,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 137,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 156,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 139,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 157,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 141,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 158,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 142,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 159,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 144,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 160,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 101,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 118,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 103,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 119,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 104,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 120,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 106,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 121,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 109,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 123,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 111,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 124,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 113,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 125,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 145,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 160,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 138,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 156,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 140,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 157,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 143,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 159,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 146,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 160,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 95,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 115,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 98,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 116,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 100,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 117,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 102,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 118,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 105,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 120,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 107,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 121,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 108,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 122,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 110,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 123,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 112,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 124,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 114,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 125,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 116,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 126,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 119,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 127,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 122,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 128,
+          "path_progress": 0.0,
+          "queue_position": 12
+        },
+        {
+          "id": 126,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 130,
+          "path_progress": 0.0,
+          "queue_position": 13
+        },
+        {
+          "id": 128,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 131,
+          "path_progress": 0.0,
+          "queue_position": 14
+        },
+        {
+          "id": 136,
+          "direction": "S",
+          "status": "CROSSING",
+          "arrival_tick": 155,
+          "path_progress": 0.5,
+          "queue_position": 0
+        }
+      ],
+      "metrics": {
+        "arrived": 130,
+        "departed": 91,
+        "mean_wait_ticks": 33.44565217391305,
+        "max_wait_ticks": 80,
+        "switches": 14,
+        "fairness_overrides": 2
+      },
+      "decisions": [
+        {
+          "event_id": 219,
+          "tick": 160,
+          "type": "ARRIVAL",
+          "direction": "N",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 144,
+            "accepted": true
+          }
+        },
+        {
+          "event_id": 220,
+          "tick": 160,
+          "type": "ARRIVAL",
+          "direction": "E",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 145,
+            "accepted": true
+          }
+        },
+        {
+          "event_id": 221,
+          "tick": 160,
+          "type": "ARRIVAL",
+          "direction": "S",
+          "description": "arrival",
+          "data": {
+            "vehicle_id": 146,
+            "accepted": true
+          }
+        }
+      ]
+    },
+    {
+      "protocol_version": "1.0",
+      "kind": "state",
+      "run_id": "2d853182-9b25-451c-bc5b-f0b05acb6c9c",
+      "sequence_number": 6,
+      "tick": 200,
+      "sim_status": "paused",
+      "scenario": "oscillation",
+      "seed": 42,
+      "controller_mode": "adaptive",
+      "speed": 1,
+      "phase": "GREEN",
+      "phase_remaining": 6,
+      "active_direction": "S",
+      "direction_states": [
+        {
+          "direction": "N",
+          "queue_count": 7,
+          "max_wait_ticks": 42,
+          "priority_score": 35.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "E",
+          "queue_count": 2,
+          "max_wait_ticks": 4,
+          "priority_score": 6.0,
+          "congestion_flag": false,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "S",
+          "queue_count": 12,
+          "max_wait_ticks": 39,
+          "priority_score": 43.5,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        },
+        {
+          "direction": "W",
+          "queue_count": 12,
+          "max_wait_ticks": 76,
+          "priority_score": 62.0,
+          "congestion_flag": true,
+          "downstream_free_slots": null
+        }
+      ],
+      "queue_order": [
+        "E",
+        "N",
+        "S",
+        "W"
+      ],
+      "vehicles": [
+        {
+          "id": 141,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 158,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 142,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 159,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 144,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 160,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 148,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 163,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 151,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 165,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 153,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 166,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 154,
+          "direction": "N",
+          "status": "QUEUED",
+          "arrival_tick": 167,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 172,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 196,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 175,
+          "direction": "E",
+          "status": "QUEUED",
+          "arrival_tick": 198,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 147,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 161,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 149,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 163,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 152,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 165,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 155,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 167,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 157,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 168,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 158,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 169,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 160,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 170,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 162,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 171,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 165,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 172,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 167,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 173,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 169,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 174,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 171,
+          "direction": "S",
+          "status": "QUEUED",
+          "arrival_tick": 175,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 112,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 124,
+          "path_progress": 0.0,
+          "queue_position": 0
+        },
+        {
+          "id": 114,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 125,
+          "path_progress": 0.0,
+          "queue_position": 1
+        },
+        {
+          "id": 116,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 126,
+          "path_progress": 0.0,
+          "queue_position": 2
+        },
+        {
+          "id": 119,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 127,
+          "path_progress": 0.0,
+          "queue_position": 3
+        },
+        {
+          "id": 122,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 128,
+          "path_progress": 0.0,
+          "queue_position": 4
+        },
+        {
+          "id": 126,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 130,
+          "path_progress": 0.0,
+          "queue_position": 5
+        },
+        {
+          "id": 128,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 131,
+          "path_progress": 0.0,
+          "queue_position": 6
+        },
+        {
+          "id": 163,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 171,
+          "path_progress": 0.0,
+          "queue_position": 7
+        },
+        {
+          "id": 173,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 196,
+          "path_progress": 0.0,
+          "queue_position": 8
+        },
+        {
+          "id": 174,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 197,
+          "path_progress": 0.0,
+          "queue_position": 9
+        },
+        {
+          "id": 176,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 198,
+          "path_progress": 0.0,
+          "queue_position": 10
+        },
+        {
+          "id": 177,
+          "direction": "W",
+          "status": "QUEUED",
+          "arrival_tick": 199,
+          "path_progress": 0.0,
+          "queue_position": 11
+        },
+        {
+          "id": 146,
+          "direction": "S",
+          "status": "CROSSING",
+          "arrival_tick": 160,
+          "path_progress": 0.5,
+          "queue_position": 0
+        }
+      ],
+      "metrics": {
+        "arrived": 153,
+        "departed": 119,
+        "mean_wait_ticks": 36.291666666666664,
+        "max_wait_ticks": 80,
+        "switches": 18,
+        "fairness_overrides": 3
+      },
+      "decisions": []
+    }
+  ],
+  "decisions": [
+    {
+      "event_id": 1,
+      "tick": 8,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 2,
+      "tick": 10,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 3,
+      "tick": 11,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 4,
+      "tick": 19,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 5,
+      "tick": 20,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 1,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 6,
+      "tick": 20,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 2,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 7,
+      "tick": 21,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 3,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 8,
+      "tick": 21,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 9,
+      "tick": 22,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 4,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 10,
+      "tick": 22,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 5,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 11,
+      "tick": 22,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 12,
+      "tick": 23,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 6,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 13,
+      "tick": 23,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 7,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 14,
+      "tick": 23,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 8,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 15,
+      "tick": 24,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 9,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 16,
+      "tick": 24,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 10,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 17,
+      "tick": 24,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 11,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 18,
+      "tick": 25,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 12,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 19,
+      "tick": 26,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 13,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 20,
+      "tick": 26,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 14,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 21,
+      "tick": 26,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 15,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 22,
+      "tick": 27,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 16,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 23,
+      "tick": 27,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 17,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 24,
+      "tick": 28,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 18,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 25,
+      "tick": 29,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 19,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 26,
+      "tick": 30,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 20,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 27,
+      "tick": 30,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 21,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 28,
+      "tick": 30,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 29,
+      "tick": 31,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 22,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 30,
+      "tick": 31,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 23,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 31,
+      "tick": 32,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 24,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 32,
+      "tick": 32,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 25,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 33,
+      "tick": 32,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 26,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 34,
+      "tick": 32,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 35,
+      "tick": 33,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 27,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 36,
+      "tick": 33,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 37,
+      "tick": 34,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 28,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 38,
+      "tick": 34,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 29,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 39,
+      "tick": 35,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 30,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 40,
+      "tick": 35,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 31,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 41,
+      "tick": 35,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 32,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 42,
+      "tick": 36,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 33,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 43,
+      "tick": 37,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 34,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 44,
+      "tick": 37,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 35,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 45,
+      "tick": 38,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 36,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 46,
+      "tick": 38,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 37,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 47,
+      "tick": 39,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 38,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 48,
+      "tick": 39,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 39,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 49,
+      "tick": 40,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 40,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 50,
+      "tick": 40,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 41,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 51,
+      "tick": 41,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 42,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 52,
+      "tick": 41,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 43,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 53,
+      "tick": 41,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 54,
+      "tick": 42,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 44,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 55,
+      "tick": 42,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 45,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 56,
+      "tick": 43,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 46,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 57,
+      "tick": 43,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 47,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 58,
+      "tick": 43,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 59,
+      "tick": 44,
+      "type": "THRESHOLD",
+      "direction": null,
+      "description": "threshold",
+      "data": {
+        "triggered": true
+      }
+    },
+    {
+      "event_id": 60,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "left_score": 20.5,
+        "right_score": 42.0
+      }
+    },
+    {
+      "event_id": 61,
+      "tick": 44,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "order": [
+          "E",
+          "N",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 62,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "S",
+        "left_score": 20.5,
+        "right_score": 10.0
+      }
+    },
+    {
+      "event_id": 63,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "left_score": 10.0,
+        "right_score": 26.5
+      }
+    },
+    {
+      "event_id": 64,
+      "tick": 44,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "order": [
+          "E",
+          "N",
+          "W",
+          "S"
+        ]
+      }
+    },
+    {
+      "event_id": 65,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 42.0,
+        "right_score": 20.5
+      }
+    },
+    {
+      "event_id": 66,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "W",
+        "left_score": 20.5,
+        "right_score": 26.5
+      }
+    },
+    {
+      "event_id": 67,
+      "tick": 44,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "N",
+        "right": "W",
+        "order": [
+          "E",
+          "W",
+          "N",
+          "S"
+        ]
+      }
+    },
+    {
+      "event_id": 68,
+      "tick": 44,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "W",
+        "left_score": 42.0,
+        "right_score": 26.5
+      }
+    },
+    {
+      "event_id": 69,
+      "tick": 44,
+      "type": "HYSTERESIS_REJECT",
+      "direction": null,
+      "description": "hysteresis reject",
+      "data": {
+        "candidate": [
+          "E",
+          "W",
+          "N",
+          "S"
+        ],
+        "improvement": 21.5,
+        "streak": 1
+      }
+    },
+    {
+      "event_id": 70,
+      "tick": 44,
+      "type": "ORDER_COMMITTED",
+      "direction": null,
+      "description": "order committed",
+      "data": {
+        "order": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 71,
+      "tick": 44,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 72,
+      "tick": 52,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 73,
+      "tick": 54,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 74,
+      "tick": 55,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 75,
+      "tick": 63,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 76,
+      "tick": 64,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 48,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 77,
+      "tick": 65,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 49,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 78,
+      "tick": 65,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 50,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 79,
+      "tick": 65,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 80,
+      "tick": 66,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 51,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 81,
+      "tick": 66,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 82,
+      "tick": 67,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 52,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 83,
+      "tick": 68,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 53,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 84,
+      "tick": 68,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 54,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 85,
+      "tick": 69,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 55,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 86,
+      "tick": 69,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 56,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 87,
+      "tick": 70,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 57,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 88,
+      "tick": 70,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 58,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 89,
+      "tick": 71,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 59,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 90,
+      "tick": 71,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 60,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 91,
+      "tick": 72,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 61,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 92,
+      "tick": 72,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 62,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 93,
+      "tick": 73,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 63,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 94,
+      "tick": 73,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 64,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 95,
+      "tick": 74,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 65,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 96,
+      "tick": 74,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 66,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 97,
+      "tick": 74,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 98,
+      "tick": 75,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 67,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 99,
+      "tick": 75,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 68,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 100,
+      "tick": 75,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 69,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 101,
+      "tick": 76,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 102,
+      "tick": 77,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 70,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 103,
+      "tick": 77,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 71,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 104,
+      "tick": 77,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 105,
+      "tick": 78,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 72,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 106,
+      "tick": 79,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 73,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 107,
+      "tick": 79,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 74,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 108,
+      "tick": 80,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 75,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 109,
+      "tick": 80,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 76,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 110,
+      "tick": 82,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 77,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 111,
+      "tick": 82,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 78,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 112,
+      "tick": 84,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 79,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 113,
+      "tick": 85,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 80,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 114,
+      "tick": 85,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 81,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 115,
+      "tick": 85,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 116,
+      "tick": 86,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 82,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 117,
+      "tick": 86,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 83,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 118,
+      "tick": 87,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 84,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 119,
+      "tick": 87,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 120,
+      "tick": 88,
+      "type": "THRESHOLD",
+      "direction": null,
+      "description": "threshold",
+      "data": {
+        "triggered": true
+      }
+    },
+    {
+      "event_id": 121,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "left_score": 42.0,
+        "right_score": 47.5
+      }
+    },
+    {
+      "event_id": 122,
+      "tick": 88,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "order": [
+          "E",
+          "N",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 123,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "S",
+        "left_score": 42.0,
+        "right_score": 25.5
+      }
+    },
+    {
+      "event_id": 124,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "left_score": 25.5,
+        "right_score": 29.0
+      }
+    },
+    {
+      "event_id": 125,
+      "tick": 88,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "order": [
+          "E",
+          "N",
+          "W",
+          "S"
+        ]
+      }
+    },
+    {
+      "event_id": 126,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 47.5,
+        "right_score": 42.0
+      }
+    },
+    {
+      "event_id": 127,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "W",
+        "left_score": 42.0,
+        "right_score": 29.0
+      }
+    },
+    {
+      "event_id": 128,
+      "tick": 88,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 47.5,
+        "right_score": 42.0
+      }
+    },
+    {
+      "event_id": 129,
+      "tick": 88,
+      "type": "FAIRNESS_OVERRIDE",
+      "direction": "E",
+      "description": "fairness override",
+      "data": {
+        "wait": 59
+      }
+    },
+    {
+      "event_id": 130,
+      "tick": 88,
+      "type": "ORDER_COMMITTED",
+      "direction": null,
+      "description": "order committed",
+      "data": {
+        "order": [
+          "E",
+          "N",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 131,
+      "tick": 88,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 132,
+      "tick": 96,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 133,
+      "tick": 98,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 134,
+      "tick": 99,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 135,
+      "tick": 107,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 136,
+      "tick": 108,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 85,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 137,
+      "tick": 108,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 86,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 138,
+      "tick": 109,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 87,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 139,
+      "tick": 109,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 140,
+      "tick": 110,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 141,
+      "tick": 112,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 88,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 142,
+      "tick": 112,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 89,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 143,
+      "tick": 113,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 90,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 144,
+      "tick": 113,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 91,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 145,
+      "tick": 114,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 92,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 146,
+      "tick": 114,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 93,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 147,
+      "tick": 115,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 94,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 148,
+      "tick": 115,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 95,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 149,
+      "tick": 116,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 96,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 150,
+      "tick": 116,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 97,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 151,
+      "tick": 116,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 98,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 152,
+      "tick": 117,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 99,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 153,
+      "tick": 117,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 100,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 154,
+      "tick": 118,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 101,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 155,
+      "tick": 118,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 102,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 156,
+      "tick": 118,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 157,
+      "tick": 119,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 103,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 158,
+      "tick": 120,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 104,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 159,
+      "tick": 120,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 105,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 160,
+      "tick": 120,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 161,
+      "tick": 121,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 106,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 162,
+      "tick": 121,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 107,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 163,
+      "tick": 121,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 164,
+      "tick": 122,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 108,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 165,
+      "tick": 123,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 109,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 166,
+      "tick": 123,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 110,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 167,
+      "tick": 124,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 111,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 168,
+      "tick": 124,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 112,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 169,
+      "tick": 125,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 113,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 170,
+      "tick": 125,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 114,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 171,
+      "tick": 126,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 115,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 172,
+      "tick": 126,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 116,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 173,
+      "tick": 127,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 117,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 174,
+      "tick": 127,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 118,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 175,
+      "tick": 127,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 119,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 176,
+      "tick": 128,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 120,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 177,
+      "tick": 128,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 121,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 178,
+      "tick": 128,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 122,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 179,
+      "tick": 129,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 123,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 180,
+      "tick": 129,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 181,
+      "tick": 130,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 124,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 182,
+      "tick": 130,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 125,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 183,
+      "tick": 130,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 126,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 184,
+      "tick": 131,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 127,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 185,
+      "tick": 131,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 128,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 186,
+      "tick": 131,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 187,
+      "tick": 132,
+      "type": "THRESHOLD",
+      "direction": null,
+      "description": "threshold",
+      "data": {
+        "triggered": true
+      }
+    },
+    {
+      "event_id": 188,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 58.5,
+        "right_score": 49.0
+      }
+    },
+    {
+      "event_id": 189,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "S",
+        "left_score": 49.0,
+        "right_score": 27.0
+      }
+    },
+    {
+      "event_id": 190,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "left_score": 27.0,
+        "right_score": 38.5
+      }
+    },
+    {
+      "event_id": 191,
+      "tick": 132,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "order": [
+          "E",
+          "N",
+          "W",
+          "S"
+        ]
+      }
+    },
+    {
+      "event_id": 192,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 58.5,
+        "right_score": 49.0
+      }
+    },
+    {
+      "event_id": 193,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "W",
+        "left_score": 49.0,
+        "right_score": 38.5
+      }
+    },
+    {
+      "event_id": 194,
+      "tick": 132,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "N",
+        "left_score": 58.5,
+        "right_score": 49.0
+      }
+    },
+    {
+      "event_id": 195,
+      "tick": 132,
+      "type": "FAIRNESS_OVERRIDE",
+      "direction": "N",
+      "description": "fairness override",
+      "data": {
+        "wait": 58
+      }
+    },
+    {
+      "event_id": 196,
+      "tick": 132,
+      "type": "ORDER_COMMITTED",
+      "direction": null,
+      "description": "order committed",
+      "data": {
+        "order": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 197,
+      "tick": 132,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 198,
+      "tick": 140,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 199,
+      "tick": 142,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 200,
+      "tick": 143,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 201,
+      "tick": 151,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 202,
+      "tick": 152,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 129,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 203,
+      "tick": 152,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 130,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 204,
+      "tick": 153,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 131,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 205,
+      "tick": 153,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 132,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 206,
+      "tick": 153,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 207,
+      "tick": 154,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 133,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 208,
+      "tick": 154,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 134,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 209,
+      "tick": 154,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 210,
+      "tick": 155,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 135,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 211,
+      "tick": 155,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 136,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 212,
+      "tick": 156,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 137,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 213,
+      "tick": 156,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 138,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 214,
+      "tick": 157,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 139,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 215,
+      "tick": 157,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 140,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 216,
+      "tick": 158,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 141,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 217,
+      "tick": 159,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 142,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 218,
+      "tick": 159,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 143,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 219,
+      "tick": 160,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 144,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 220,
+      "tick": 160,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 145,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 221,
+      "tick": 160,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 146,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 222,
+      "tick": 161,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 147,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 223,
+      "tick": 162,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 224,
+      "tick": 163,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 148,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 225,
+      "tick": 163,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 149,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 226,
+      "tick": 163,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 150,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 227,
+      "tick": 164,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 228,
+      "tick": 165,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 151,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 229,
+      "tick": 165,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 152,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 230,
+      "tick": 165,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 231,
+      "tick": 166,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 153,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 232,
+      "tick": 167,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 154,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 233,
+      "tick": 167,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 155,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 234,
+      "tick": 168,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 156,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 235,
+      "tick": 168,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 157,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 236,
+      "tick": 169,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 158,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 237,
+      "tick": 170,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 159,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 238,
+      "tick": 170,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 160,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 239,
+      "tick": 171,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 161,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 240,
+      "tick": 171,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 162,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 241,
+      "tick": 171,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 163,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 242,
+      "tick": 172,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 164,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 243,
+      "tick": 172,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 165,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 244,
+      "tick": 173,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 166,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 245,
+      "tick": 173,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 167,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 246,
+      "tick": 173,
+      "type": "PHASE_CHANGE",
+      "direction": "W",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 247,
+      "tick": 174,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 168,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 248,
+      "tick": 174,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 169,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 249,
+      "tick": 175,
+      "type": "ARRIVAL",
+      "direction": "N",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 170,
+        "accepted": false
+      }
+    },
+    {
+      "event_id": 250,
+      "tick": 175,
+      "type": "ARRIVAL",
+      "direction": "S",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 171,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 251,
+      "tick": 175,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 252,
+      "tick": 176,
+      "type": "THRESHOLD",
+      "direction": null,
+      "description": "threshold",
+      "data": {
+        "triggered": true
+      }
+    },
+    {
+      "event_id": 253,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "left_score": 54.5,
+        "right_score": 45.0
+      }
+    },
+    {
+      "event_id": 254,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "S",
+        "left_score": 45.0,
+        "right_score": 36.5
+      }
+    },
+    {
+      "event_id": 255,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "left_score": 36.5,
+        "right_score": 42.0
+      }
+    },
+    {
+      "event_id": 256,
+      "tick": 176,
+      "type": "SORT_SWAP",
+      "direction": null,
+      "description": "sort swap",
+      "data": {
+        "left": "S",
+        "right": "W",
+        "order": [
+          "N",
+          "E",
+          "W",
+          "S"
+        ]
+      }
+    },
+    {
+      "event_id": 257,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "left_score": 54.5,
+        "right_score": 45.0
+      }
+    },
+    {
+      "event_id": 258,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "E",
+        "right": "W",
+        "left_score": 45.0,
+        "right_score": 42.0
+      }
+    },
+    {
+      "event_id": 259,
+      "tick": 176,
+      "type": "SORT_COMPARE",
+      "direction": null,
+      "description": "sort compare",
+      "data": {
+        "left": "N",
+        "right": "E",
+        "left_score": 54.5,
+        "right_score": 45.0
+      }
+    },
+    {
+      "event_id": 260,
+      "tick": 176,
+      "type": "FAIRNESS_OVERRIDE",
+      "direction": "E",
+      "description": "fairness override",
+      "data": {
+        "wait": 58
+      }
+    },
+    {
+      "event_id": 261,
+      "tick": 176,
+      "type": "ORDER_COMMITTED",
+      "direction": null,
+      "description": "order committed",
+      "data": {
+        "order": [
+          "E",
+          "N",
+          "S",
+          "W"
+        ]
+      }
+    },
+    {
+      "event_id": 262,
+      "tick": 176,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 263,
+      "tick": 184,
+      "type": "PHASE_CHANGE",
+      "direction": "E",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 264,
+      "tick": 186,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 265,
+      "tick": 187,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 266,
+      "tick": 195,
+      "type": "PHASE_CHANGE",
+      "direction": "N",
+      "description": "phase change",
+      "data": {
+        "phase": "YELLOW",
+        "remaining": 2
+      }
+    },
+    {
+      "event_id": 267,
+      "tick": 196,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 172,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 268,
+      "tick": 196,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 173,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 269,
+      "tick": 197,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 174,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 270,
+      "tick": 197,
+      "type": "PHASE_CHANGE",
+      "direction": null,
+      "description": "phase change",
+      "data": {
+        "phase": "ALL_RED",
+        "remaining": 1
+      }
+    },
+    {
+      "event_id": 271,
+      "tick": 198,
+      "type": "ARRIVAL",
+      "direction": "E",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 175,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 272,
+      "tick": 198,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 176,
+        "accepted": true
+      }
+    },
+    {
+      "event_id": 273,
+      "tick": 198,
+      "type": "PHASE_CHANGE",
+      "direction": "S",
+      "description": "phase change",
+      "data": {
+        "phase": "GREEN",
+        "remaining": 8
+      }
+    },
+    {
+      "event_id": 274,
+      "tick": 199,
+      "type": "ARRIVAL",
+      "direction": "W",
+      "description": "arrival",
+      "data": {
+        "vehicle_id": 177,
+        "accepted": true
+      }
+    }
+  ],
+  "report": {
+    "arrived": 153,
+    "departed": 119,
+    "mean_wait_ticks": 36.291666666666664,
+    "max_wait_ticks": 80,
+    "switches": 18,
+    "fairness_overrides": 3,
+    "generated": 177,
+    "rejected": 24,
+    "p95_wait_ticks": 60
+  }
+}

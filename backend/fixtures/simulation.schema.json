@@ -1,0 +1,428 @@
+{
+  "$defs": {
+    "DecisionEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "integer"
+        },
+        "tick": {
+          "title": "Tick",
+          "type": "integer"
+        },
+        "type": {
+          "enum": [
+            "ARRIVAL",
+            "PHASE_CHANGE",
+            "THRESHOLD",
+            "SORT_COMPARE",
+            "SORT_SWAP",
+            "HYSTERESIS_REJECT",
+            "FAIRNESS_OVERRIDE",
+            "ORDER_COMMITTED",
+            "SPILLBACK_BLOCK"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "N",
+                "E",
+                "S",
+                "W"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Direction"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "data": {
+          "additionalProperties": true,
+          "title": "Data",
+          "type": "object"
+        }
+      },
+      "required": [
+        "event_id",
+        "tick",
+        "type",
+        "description"
+      ],
+      "title": "DecisionEvent",
+      "type": "object"
+    },
+    "DirectionState": {
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "queue_count": {
+          "minimum": 0,
+          "title": "Queue Count",
+          "type": "integer"
+        },
+        "max_wait_ticks": {
+          "minimum": 0,
+          "title": "Max Wait Ticks",
+          "type": "integer"
+        },
+        "priority_score": {
+          "title": "Priority Score",
+          "type": "number"
+        },
+        "congestion_flag": {
+          "title": "Congestion Flag",
+          "type": "boolean"
+        },
+        "downstream_free_slots": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Downstream Free Slots"
+        }
+      },
+      "required": [
+        "direction",
+        "queue_count",
+        "max_wait_ticks",
+        "priority_score",
+        "congestion_flag"
+      ],
+      "title": "DirectionState",
+      "type": "object"
+    },
+    "MetricsState": {
+      "additionalProperties": false,
+      "properties": {
+        "arrived": {
+          "title": "Arrived",
+          "type": "integer"
+        },
+        "departed": {
+          "title": "Departed",
+          "type": "integer"
+        },
+        "mean_wait_ticks": {
+          "title": "Mean Wait Ticks",
+          "type": "number"
+        },
+        "max_wait_ticks": {
+          "title": "Max Wait Ticks",
+          "type": "integer"
+        },
+        "switches": {
+          "title": "Switches",
+          "type": "integer"
+        },
+        "fairness_overrides": {
+          "title": "Fairness Overrides",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "arrived",
+        "departed",
+        "mean_wait_ticks",
+        "max_wait_ticks",
+        "switches",
+        "fairness_overrides"
+      ],
+      "title": "MetricsState",
+      "type": "object"
+    },
+    "Reply": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "welcome",
+            "ack",
+            "error",
+            "decision_trace"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "sequence_number": {
+          "minimum": 1,
+          "title": "Sequence Number",
+          "type": "integer"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "run_id",
+        "sequence_number",
+        "tick",
+        "payload"
+      ],
+      "title": "Reply",
+      "type": "object"
+    },
+    "StateSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "state",
+          "default": "state",
+          "title": "Kind",
+          "type": "string"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "sequence_number": {
+          "minimum": 1,
+          "title": "Sequence Number",
+          "type": "integer"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "sim_status": {
+          "enum": [
+            "paused",
+            "running",
+            "stopped"
+          ],
+          "title": "Sim Status",
+          "type": "string"
+        },
+        "scenario": {
+          "title": "Scenario",
+          "type": "string"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "controller_mode": {
+          "enum": [
+            "fixed",
+            "adaptive"
+          ],
+          "title": "Controller Mode",
+          "type": "string"
+        },
+        "speed": {
+          "enum": [
+            0.5,
+            1,
+            2,
+            4
+          ],
+          "title": "Speed"
+        },
+        "phase": {
+          "enum": [
+            "GREEN",
+            "YELLOW",
+            "ALL_RED"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "phase_remaining": {
+          "minimum": 1,
+          "title": "Phase Remaining",
+          "type": "integer"
+        },
+        "active_direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "N",
+                "E",
+                "S",
+                "W"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Active Direction"
+        },
+        "direction_states": {
+          "items": {
+            "$ref": "#/$defs/DirectionState"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "title": "Direction States",
+          "type": "array"
+        },
+        "queue_order": {
+          "items": {
+            "enum": [
+              "N",
+              "E",
+              "S",
+              "W"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "title": "Queue Order",
+          "type": "array"
+        },
+        "vehicles": {
+          "items": {
+            "$ref": "#/$defs/VehicleState"
+          },
+          "title": "Vehicles",
+          "type": "array"
+        },
+        "metrics": {
+          "$ref": "#/$defs/MetricsState"
+        },
+        "decisions": {
+          "items": {
+            "$ref": "#/$defs/DecisionEvent"
+          },
+          "title": "Decisions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "run_id",
+        "sequence_number",
+        "tick",
+        "sim_status",
+        "scenario",
+        "seed",
+        "controller_mode",
+        "speed",
+        "phase",
+        "phase_remaining",
+        "active_direction",
+        "direction_states",
+        "queue_order",
+        "vehicles",
+        "metrics",
+        "decisions"
+      ],
+      "title": "StateSnapshot",
+      "type": "object"
+    },
+    "VehicleState": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "direction": {
+          "enum": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "status": {
+          "default": "QUEUED",
+          "enum": [
+            "QUEUED",
+            "CROSSING",
+            "EXITED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "arrival_tick": {
+          "minimum": 0,
+          "title": "Arrival Tick",
+          "type": "integer"
+        },
+        "path_progress": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Path Progress",
+          "type": "number"
+        },
+        "queue_position": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Queue Position",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "direction",
+        "arrival_tick"
+      ],
+      "title": "VehicleState",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/StateSnapshot"
+    },
+    {
+      "$ref": "#/$defs/Reply"
+    }
+  ]
+}

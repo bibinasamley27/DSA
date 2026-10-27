@@ -31,10 +31,12 @@ export function validateReport(v: unknown): v is Report {
     r.rows.length > 0 &&
     r.rows.every(
       (x) =>
+        !!x && typeof x === "object" &&
         typeof x.scenario === "string" &&
-        Number.isInteger(x.seed) &&
+        Number.isSafeInteger(x.seed) &&
         ["fixed", "adaptive"].includes(x.controller) &&
         typeof x.arrival_schedule_sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(x.arrival_schedule_sha256) &&
         [
           "arrived",
           "departed",
@@ -47,18 +49,20 @@ export function validateReport(v: unknown): v is Report {
         ].every(
           (k) =>
             typeof x[k as keyof Row] === "number" &&
+            Number.isFinite(x[k as keyof Row]) &&
             Number(x[k as keyof Row]) >= 0,
         ),
     ) &&
     r.rows.every((x) =>
-      r.rows.some(
+      r.rows.filter(
         (y) =>
           y.scenario === x.scenario &&
           y.seed === x.seed &&
           y.controller !== x.controller &&
           y.arrival_schedule_sha256 === x.arrival_schedule_sha256,
-      ),
-    )
+      ).length === 1,
+    ) &&
+    new Set(r.rows.map((x) => `${x.scenario}:${x.seed}:${x.controller}`)).size === r.rows.length
   );
 }
 export function downloadJson(value: unknown, name: string) {
@@ -95,13 +99,15 @@ export function BenchmarkPanel() {
           <Download size={15} /> Export JSON
         </button>
         <input
+          aria-label="Benchmark report file"
           hidden
           ref={file}
           type="file"
           accept=".json,application/json"
           onChange={async (e) => {
+            const input = e.currentTarget;
             try {
-              const f = e.target.files?.[0];
+              const f = input.files?.[0];
               if (!f) return;
               const v = JSON.parse(await f.text());
               if (!validateReport(v))
@@ -113,7 +119,7 @@ export function BenchmarkPanel() {
             } catch (err) {
               setError(String(err));
             }
-            e.target.value = "";
+            input.value = "";
           }}
         />
       </div>
@@ -128,6 +134,7 @@ export function BenchmarkPanel() {
             {report.rows.length} measured runs · {report.duration_ticks} ticks
             per run
           </p>
+          <p>Waits cover vehicles that started crossing; unfinished queues are not included. Compare departures and rejected arrivals too.</p>
           <table>
             <thead>
               <tr>
@@ -173,7 +180,8 @@ export function BenchmarkPanel() {
             Import a report from the Python benchmark runner to compare both
             controllers on identical arrival schedules.
           </p>
-          <code>python3 scripts/benchmark.py --adapter your_adapter</code>
+          <code>python -m scripts.benchmark --verify-repeat</code>
+          <p>Load reports/benchmark.json generated from the repository root.</p>
           <p>Test matrix: 4 scenarios × 5 seeds × 2 controllers</p>
         </div>
       )}

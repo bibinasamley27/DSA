@@ -1,5 +1,11 @@
 # Frontend — 3D simulation page and shared client (Person B)
 
+For measured comparisons in the controller's Benchmarks tab, run
+`python -m scripts.benchmark --verify-repeat` from the repository root with the
+backend virtual environment active, then load `reports/benchmark.json`. Export
+preserves recorded schedules for replay. See `docs/INTEGRATION.md` for the full
+workflow and timing configuration.
+
 React 19 + TypeScript + Vite + `@react-three/fiber` v9, CSS Modules. Protocol: WebSocket JSON v1.0
 (`../backend/README.md`, `src/types/simulation.ts` is the frozen type file copied unchanged from `backend/fixtures/simulation.ts`).
 

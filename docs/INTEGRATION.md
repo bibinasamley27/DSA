@@ -14,42 +14,61 @@ Run `cd frontend && npm ci && npm run dev`, then open `http://localhost:5173/con
 
 Joint browser and live-backend acceptance remains required before merge. Automated route tests mock the WebGL canvas, not the snapshot store, page controls or navigation.
 
-## Benchmark adapter supplied by Person A
+## Real benchmark integration
 
-No engine API or scenario rates were provided. Create an importable module (for example `team_benchmark_adapter.py`) at the repository root exposing these two synchronous functions:
-
-```python
-def generate_schedule(*, scenario: str, seed: int, duration_ticks: int) -> list[dict[str, int]]:
-    # Call the backend's seeded arrivals generator once.
-    # Return exactly duration_ticks records, each {'N': count, 'E': count, 'S': count, 'W': count}.
-    ...
-
-def run(*, controller: str, scenario: str, seed: int, duration_ticks: int,
-        arrivals: list[dict[str, int]], config: dict) -> dict:
-    # Construct a fresh backend engine with the supplied exact arrival schedule.
-    # Honor all timing/capacity config values identically for both controllers.
-    # Advance exactly duration_ticks. Do not mutate arrivals or config.
-    # Compute actual crossing-start waits; p95 uses nearest-rank percentile.
-    return {
-        'arrived': ..., 'departed': ..., 'mean_wait_ticks': ...,
-        'p95_wait_ticks': ..., 'max_wait_ticks': ..., 'switches': ...,
-        'rejected_arrivals': ..., 'fairness_overrides': ...,
-    }
-```
-
-Default demo configuration: green 8 ticks, yellow 2, all-red 1, service capacity 1 per tick, queue capacity 60. These are harness inputs pending agreement with Person A, not frozen backend defaults. Pass `--config path.json` for the backend's actual exposed configuration; unsupported keys should raise an error.
-
-From the repository root:
+From the repository root, activate the Python 3.12 environment installed using
+`backend/requirements.txt`, then run:
 
 ```sh
-python3 -m scripts.benchmark --adapter team_benchmark_adapter --verify-repeat
-python3 -m scripts.benchmark --adapter team_benchmark_adapter --replay reports/benchmark.json --verify-repeat
+python -m scripts.benchmark --verify-repeat
+python -m scripts.benchmark --replay reports/benchmark.json --verify-repeat --output reports/benchmark-replay.json
 ```
 
-The runner makes 40 measured runs (4 scenarios × 5 seeds × 2 controllers), records every arrival schedule with a SHA-256 digest, prevents mutation, checks required finite metrics, and writes JSON plus a Markdown table. Repeat verification doubles engine invocations. Import the JSON into the GUI's Benchmarks tab. Nothing is measured until the real adapter exists. `tests/test_benchmark.py` uses deliberately fake metrics strictly for harness unit testing, never as a project report.
+The supplied `team_benchmark_adapter.py` calls the existing backend arrivals,
+Engine, Config and Metrics. It converts the generator's per-tick direction tuples
+to recorded N/E/S/W counts and converts those exact counts back for replay.
+It contains no controller or scoring implementation. Both controllers use the
+same arrivals, timing and capacity; repeat verification reruns every measured row.
 
-Report limitations: finite horizons censor unfinished waiting vehicles; compare queued backlog and departed count alongside mean/p95. Fairness may trade throughput or average wait for lower worst waits. Arrival and rejected-arrival counting conventions must match the engine.
+Defaults come directly from backend Config: green=8, yellow=2, all_red=1,
+capacity=15 and congestion_threshold=5. Service is the engine's existing one
+vehicle per green tick. Optional `--config config.json` accepts these exact keys
+and merges missing values with Config defaults; unknown keys and invalid types
+are rejected. Non-default replay runs must use the original `--ticks`, `--seeds`
+and `--config` values. Recorded schedule hashes are checked before replay.
+
+The runner writes `reports/benchmark.json` and a concise Markdown results table.
+It measures 40 runs (four scenarios, five seeds, two controllers); `--verify-repeat`
+doubles engine invocations. These generated reports are ignored by Git. The
+measured, small `test-fixtures/benchmark.json` is the committed integration fixture.
+
+Open the controller's Benchmarks tab and load `reports/benchmark.json`. Export
+JSON preserves the complete loaded object, including configuration and recorded
+schedules. The importer rejects malformed metrics, duplicate controller rows,
+unpaired runs and inconsistent schedule hashes. The JSON array in the earlier
+`backend/fixtures/benchmark.json` is the original backend runner's format; generate
+an integrated report using the command above for this dashboard. No WebSocket
+fields or frozen DTOs are changed by the report format.
+
+Waits cover accepted vehicles that have started crossing, including the vehicle
+still crossing at the horizon. Departed counts completed crossings. Arrived is
+accepted demand; generated equals arrived plus rejected. Unserved waits are
+censored, so compare departures, rejections and remaining backlog alongside mean,
+p95 and worst served wait. No improvement is guaranteed. A 30-tick fairness
+trigger is not a maximum-wait guarantee. The harness unit tests use fake adapters
+only to test pairing/tampering; the adapter tests and import fixture use the real
+engine.
+
+Run the integration checks from the repository root:
+
+```sh
+python -m pytest -c backend/pytest.ini backend/tests tests -q
+cd frontend
+npm ci
+npm test
+npm run build
+```
 
 ## Fixture cases
 
-The preview-case selector loads authored static JSON for East Surge, Fairness Rescue and Stability Rejection. It changes neither Python state nor any live control. Use these to develop the visualization independently. Only live events can serve as evidence of actual algorithm execution; fixture decisions and metric values must never be presented as measured outcomes.
+The shared header selects recorded scene mock streams for offline visualization. The older authored examples in `test-fixtures/state.json`, `fairness.json` and `oscillation.json` are explanatory examples, not evidence that the engine ran. The separate `benchmark.json` fixture is measured and reproducible. Live control always uses the single shared store.

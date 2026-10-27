@@ -34,6 +34,7 @@ class BenchmarkTests(unittest.TestCase):
         with self.assertRaises(ValueError): validate_metrics({'departed': 0})
         with self.assertRaises(ValueError): validate_schedule([{'N': -1}], 1)
         with self.assertRaises(ValueError): run_matrix(FakeAdapter, 3, [1], DEFAULT_CONFIG)
+        with self.assertRaises(ValueError): run_matrix(FakeAdapter, 3, [1, 2, 3, 4, 5, 5], DEFAULT_CONFIG)
     def test_hash_is_order_independent(self):
         self.assertEqual(digest({'N': 1, 'E': 0}), digest({'E': 0, 'N': 1}))
 

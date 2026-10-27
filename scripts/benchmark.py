@@ -9,10 +9,11 @@ import json
 import math
 from pathlib import Path
 from typing import Any
+from backend.app.models import Config
 
 SCENARIOS = ('balanced', 'east_surge', 'fairness_trap', 'oscillation')
 METRICS = ('arrived', 'departed', 'mean_wait_ticks', 'p95_wait_ticks', 'max_wait_ticks', 'switches', 'rejected_arrivals', 'fairness_overrides')
-DEFAULT_CONFIG = {'green_ticks': 8, 'yellow_ticks': 2, 'all_red_ticks': 1, 'service_capacity_per_tick': 1, 'queue_capacity': 60}
+DEFAULT_CONFIG = Config().model_dump()
 
 def canonical(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
@@ -39,7 +40,7 @@ def validate_metrics(metrics: Any) -> dict:
     return {name: metrics[name] for name in METRICS}
 
 def run_matrix(adapter: Any, duration: int, seeds: list[int], config: dict, replay: dict | None = None, verify_repeat: bool = False) -> dict:
-    if duration < 1 or len(set(seeds)) < 5:
+    if type(duration) is not int or duration < 1 or len(seeds) < 5 or len(set(seeds)) != len(seeds):
         raise ValueError('Use a positive duration and at least five unique seeds.')
     report = {'report_version': '1.0', 'duration_ticks': duration, 'config': copy.deepcopy(config), 'adapter': adapter.__name__, 'schedules': {}, 'rows': []}
     for scenario in SCENARIOS:
@@ -67,12 +68,12 @@ def results_table(report: dict) -> str:
     lines = ['| Scenario | Seed | Mode | Arrived | Departed | Mean wait | p95 | Max | Switches | Rejected | Rescues |', '|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|']
     for r in report['rows']:
         lines.append(f"| {r['scenario']} | {r['seed']} | {r['controller']} | {r['arrived']} | {r['departed']} | {r['mean_wait_ticks']:.2f} | {r['p95_wait_ticks']} | {r['max_wait_ticks']} | {r['switches']} | {r['rejected_arrivals']} | {r['fairness_overrides']} |")
-    lines.append('\nWaits are simulation ticks. Results reflect completed crossing-start waits; include unfinished queues when discussing end-of-run censoring. No performance improvement is assumed.')
+    lines.append('\nWaits are simulation ticks from arrival to crossing start, including vehicles still crossing at the horizon. Departed counts completed crossings. Arrived counts accepted arrivals; generated = arrived + rejected. Queued backlog = arrived - departed - crossing (crossing is at most one vehicle). Unserved waits are censored; no performance improvement is assumed.')
     return '\n'.join(lines) + '\n'
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--adapter', required=True, help='Importable module exposing generate_schedule() and run(); see docs/INTEGRATION.md')
+    parser.add_argument('--adapter', default='team_benchmark_adapter', help='Engine adapter module (default: team_benchmark_adapter)')
     parser.add_argument('--ticks', type=int, default=1000)
     parser.add_argument('--seeds', type=int, nargs='+', default=[11, 23, 42, 67, 101])
     parser.add_argument('--output', type=Path, default=Path('reports/benchmark.json'))
@@ -83,7 +84,7 @@ def main() -> None:
     try:
         adapter = importlib.import_module(args.adapter)
         prior = json.loads(args.replay.read_text()) if args.replay else None
-        config = json.loads(args.config.read_text()) if args.config else DEFAULT_CONFIG
+        config = Config.model_validate(json.loads(args.config.read_text()) if args.config else DEFAULT_CONFIG, strict=True).model_dump()
         if prior and (prior['duration_ticks'] != args.ticks or prior['config'] != config):
             raise ValueError('Replay must use the recorded duration and configuration.')
         report = run_matrix(adapter, args.ticks, args.seeds, config, prior['schedules'] if prior else None, args.verify_repeat)
@@ -91,7 +92,7 @@ def main() -> None:
         args.output.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
         args.output.with_suffix('.md').write_text(results_table(report))
         print(f"Saved {len(report['rows'])} measured runs to {args.output} and {args.output.with_suffix('.md')}")
-    except (ImportError, AttributeError, ValueError, KeyError) as exc:
+    except (ImportError, AttributeError, ValueError, KeyError, TypeError, OSError) as exc:
         parser.exit(2, f'Benchmark not run: {exc}\nSee docs/INTEGRATION.md for the Person A adapter contract.\n')
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ it("rejects unpaired or unmeasured reports and accepts matching schedules", () =
     switches: 1,
     rejected_arrivals: 0,
     fairness_overrides: 0,
-    arrival_schedule_sha256: "abc",
+    arrival_schedule_sha256: "a".repeat(64),
   };
   const r = { report_version: "1.0", duration_ticks: 1000, rows: [row] };
   expect(validateReport(r)).toBe(false);

@@ -125,6 +125,17 @@ describe('PoseTracker', () => {
     expect(t.sample(1, 0, 1)!.scale).toBe(0);
     expect(t.sample(1, 1000, 1)!.scale).toBe(1);
   });
+  it('freezes live vehicles while held (stale) and resumes from the frozen pose', () => {
+    const t = new PoseTracker();
+    t.update(withVehicles(1, 1, 0), 1, 0, 1);
+    t.update(crossingN(2), 1, 1000, 2);
+    t.hold(1250);
+    const frozen = t.sample(1, 1250, 2)!;
+    expect(t.sample(1, 9000, 2)).toEqual(frozen);                // no motion after the disconnect
+    t.update(crossingN(3), 1, 9000, 3);                           // reconnect: next snapshot starts from the frozen pose
+    t.hold(null);
+    expect(t.sample(1, 9000, 3)!.z).toBeCloseTo(frozen.z);
+  });
   it('copes with 60 vehicles', () => {
     const t = new PoseTracker();
     t.update(withVehicles(60, 1), 1, 0, 1);

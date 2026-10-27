@@ -54,6 +54,7 @@ export function Scene({ sim, quality = 'high', viewKey = 0 }: { sim: SimState; q
     clock.update(snapshot, runEpoch, receivedAt, stale);
     if (snapshot) tracker.update(snapshot, runEpoch, receivedAt, clock.value(receivedAt));
     else tracker.clear();
+    tracker.hold(stale ? performance.now() : null); // stop moving the moment the connection is lost
     return tracker.ids();
   }, [tracker, clock, snapshot, runEpoch, receivedAt, stale]);
   const shadows = quality === 'high';

@@ -78,3 +78,15 @@ worst cases (all left, all right onto a side street, all straight): zero car ove
 pedestrian contacts or conflicting-phase crossings, and every car at its slot when the engine reports it crossing.
 Live backend smoke (headless Chromium, software rendering): arrivals drive in, turns and supercars render, no page errors.
 Not verified: GPU frame rate on the demo laptop.
+
+---
+
+# Emergency pre-emption — 28 October 2026
+
+Branch `feat/emergency-preemption` (ADR 0003). Python 3.12.15: `pytest backend/tests tests` **68 passed**
+(15 emergency tests). Frontend: **134 passed**, typecheck and build passed. Without ambulances the recorded traces'
+decisions are identical to before. Live WebSocket check against the new backend at 4x: ambulance detected on a red
+approach during the other approach's yellow, green after clearance, crossed with a 5 s wait; a second ambulance on the
+same lane rejected; pre-emption cleared. Browser check in mock mode (recorded engine run with five ambulances): banner,
+ambulance model, controller log. Not verified in a browser against the live backend (the running dev backend had not
+been restarted) and not on the demo laptop's GPU.

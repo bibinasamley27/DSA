@@ -121,8 +121,25 @@ const superDetails = mergeGeometries([
   tinted(placed(new BoxGeometry(0.9, 0.06, 0.05), 0, 0.42, half + 0.01), '#ff2533'),
 ])!;
 
+// Ambulance: taller box body (white) with red stripe, cab, and a roof light bar animated in Vehicle.tsx.
+const ambBody = mergeGeometries([
+  placed(new BoxGeometry(1.14, 0.95, CAR_LEN * 0.62), 0, 0.68, half * 0.35).toNonIndexed(),     // rear box
+  placed(new BoxGeometry(1.1, 0.6, CAR_LEN * 0.4), 0, 0.5, -half * 0.58).toNonIndexed(),        // cab
+])!;
+const ambDetails = mergeGeometries([
+  tinted(placed(new BoxGeometry(1.16, 0.14, CAR_LEN * 0.63), 0, 0.62, half * 0.35), '#d61f2c'), // red band
+  tinted(placed(new BoxGeometry(0.2, 0.2, 0.02), 0, 0.92, half + 0.01), '#d61f2c'),              // rear cross (v)
+  tinted(placed(new BoxGeometry(0.06, 0.2, 0.02), 0, 0.92, half + 0.015), '#ffffff'),
+  tinted(placed(new BoxGeometry(1.02, 0.24, 0.06), 0, 0.64, -half - 0.005), '#1f3446'),         // windscreen
+  ...[[-0.52, -half * 0.6], [0.52, -half * 0.6], [-0.52, half * 0.6], [0.52, half * 0.6]].map(([x, z]) =>
+    tinted(placed(new CylinderGeometry(0.22, 0.22, 0.2, 10).rotateZ(Math.PI / 2), x!, 0.22, z!), '#16181c')),
+  ...[-0.36, 0.36].map((x) => tinted(placed(new BoxGeometry(0.26, 0.12, 0.06), x, 0.42, -half - 0.01), '#fff4c2')),
+])!;
+
 export const geo = {
-  carBody, carDetails, superBody, superDetails,
+  carBody, carDetails, superBody, superDetails, ambBody, ambDetails,
+  sirenLeft: new BoxGeometry(0.42, 0.14, 0.26).translate(-0.24, 0, 0),
+  sirenRight: new BoxGeometry(0.42, 0.14, 0.26).translate(0.24, 0, 0),
   lamp: new SphereGeometry(0.14, 12, 8),
   unit: new BoxGeometry(1, 1, 1),
   trunk: new CylinderGeometry(0.16, 0.22, 1.4, 6),
@@ -137,6 +154,11 @@ export const carMaterial = (id: number) => carMats[Math.abs(id) % carMats.length
 const SUPER = ['#e10600', '#ffcc00', '#76ff03', '#ff6d00', '#00e5ff', '#d500f9'];
 const superMats = SUPER.map((color) => new MeshStandardMaterial({ color, roughness: 0.22, metalness: 0.55 }));
 export const superMaterial = (id: number) => superMats[Math.abs(id) % superMats.length]!;
+export const ambulanceMat = new MeshStandardMaterial({ color: '#f4f6f8', roughness: 0.4, metalness: 0.1 });
+export const siren = {
+  red: { on: new MeshBasicMaterial({ color: '#ff2a2a' }), off: new MeshStandardMaterial({ color: '#5a1515' }) },
+  blue: { on: new MeshBasicMaterial({ color: '#2a7bff' }), off: new MeshStandardMaterial({ color: '#15265a' }) },
+};
 
 const BUILDING = ['#e8e3d8', '#d9a99c', '#9fc0d6', '#ebd29a', '#b5c4a8', '#c4b3d6', '#d6d9de'];
 export const buildingMats = BUILDING.map((color) => new MeshStandardMaterial({ color, map: windows, roughness: 0.85 }));

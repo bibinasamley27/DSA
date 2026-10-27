@@ -106,6 +106,14 @@ release; UUID run identity and transport sequence are deliberately excluded from
 repeatability comparisons. Presets: zero_demand, balanced, east_surge,
 fairness_trap, oscillation.
 
+## Emergency pre-emption (ADR 0003)
+
+`spawn_emergency` with `direction` adds an ambulance (`kind: "ambulance"`) to the back of that approach; allowed
+while running, one waiting ambulance per approach. Its approach is held green until the ambulance crosses; any other
+green is ended and followed by full yellow and all-red first. The cut-short approach then gets its green back.
+Waiting ambulances are ordered by a hand-written min-heap (`structures.EmergencyHeap`). Snapshots carry
+`preemption` and the metrics `emergencies` / `mean_emergency_wait_ticks`.
+
 Spillback and downstream capacity are optional Phase 2 and are omitted; the
 frozen downstream_free_slots field is null. Frontend rendering and browser
 integration belong to Persons B/C and cannot be tested before their code exists.

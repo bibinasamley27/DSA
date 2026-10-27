@@ -11,6 +11,7 @@ import type { StateSnapshot, VehicleState } from '../types/simulation';
 import balanced from '../fixtures/balanced.json';
 import eastSurge from '../fixtures/east_surge.json';
 import fairnessTrap from '../fixtures/fairness_trap.json';
+import emergency from '../fixtures/emergency.json';
 
 const CAR_W = 1.15;
 const PED_R = 0.2;
@@ -78,7 +79,9 @@ function replay(frames: StateSnapshot[], interval: number, opts?: TrackerOptions
         const p = crosserPose(c, t);
         if (!p.onRoad) continue;
         const vertical = c.arm === 'N' || c.arm === 'S';
-        if (s.phase !== 'GREEN' || s.active_direction === null || vertical === (s.active_direction === 'N' || s.active_direction === 'S'))
+        // Never on the road while the road it crosses has GREEN or YELLOW. (A pre-emption may cut the perpendicular
+        // green short; a pedestrian then finishes during its yellow/all-red, when no conflicting traffic moves.)
+        if (s.active_direction !== null && vertical === (s.active_direction === 'N' || s.active_direction === 'S'))
           problems.push(`tick ${s.tick}: pedestrian on the ${c.arm} crosswalk during ${s.phase} ${s.active_direction}`);
         for (const car of cars) if (pedTouches(p.x, p.z, car.p)) problems.push(`tick ${s.tick}: pedestrian on ${c.arm} crosswalk touches car ${car.id}`);
       }
@@ -91,7 +94,7 @@ function replay(frames: StateSnapshot[], interval: number, opts?: TrackerOptions
   return problems;
 }
 
-const FIXTURES = [['east_surge', eastSurge], ['fairness_trap', fairnessTrap], ['balanced', balanced]] as const;
+const FIXTURES = [['east_surge', eastSurge], ['fairness_trap', fairnessTrap], ['balanced', balanced], ['emergency', emergency]] as const;
 
 describe.each(FIXTURES)('%s fixture (decorative turns and side-street exits)', (_name, data) => {
   it.each(deliveries(data as unknown as StateSnapshot[]))('%s: no overlaps, safe crossings, arrivals in time', (_label, frames, interval) => {

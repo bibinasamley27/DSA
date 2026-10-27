@@ -1,7 +1,7 @@
 // The six controller visualizations. Every value comes from the authoritative snapshot or from events the Python
 // engine emitted; nothing here schedules, sorts for real, or predicts the next phase.
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Anchor, ChevronLeft, ChevronRight, Pause, Play, RotateCcw, ShieldCheck, Timer, Gauge, Waypoints } from "lucide-react";
+import { Anchor, ChevronLeft, ChevronRight, Pause, Play, RotateCcw, ShieldCheck, Siren, Timer, Gauge, Waypoints } from "lucide-react";
 import type { DecisionEvent, Direction, StateSnapshot } from "../types/simulation";
 import { buildLog, type LogItem, type Reason } from "../lib/decisionLog";
 import { sortRuns } from "../lib/sortTrace";
@@ -58,6 +58,7 @@ export function LinkedListView({ state }: { state: StateSnapshot }) {
               <div className={css.nodeBig}>{d.queue_count}</div>
               <div className={css.nodeSub}>
                 wait {d.max_wait_ticks}s {d.congestion_flag && <b className={css.congested}>· CONGESTED</b>}
+                {state.vehicles.some((v) => v.kind === "ambulance" && v.status === "QUEUED" && v.direction === d.direction) && <b className={css.bad}> · AMBULANCE</b>}
               </div>
               <div className={css.nodeNext}>next → {state.direction_states[i + 1]?.direction ?? "null"}</div>
             </div>
@@ -265,6 +266,13 @@ export function PolicyView({ state, plan }: { state: StateSnapshot; plan: Decisi
         <p>congested now: {state.direction_states.filter((d) => d.congestion_flag).map((d) => d.direction).join(", ") || "none"}</p>
       </div>
       <div className={css.policyBlock}>
+        <h3><Siren size={14} /> Emergency pre-emption</h3>
+        <p>{state.preemption
+          ? <b className={css.bad}>clearing {names[state.preemption.direction]} for ambulance #{state.preemption.vehicle_id} (waiting since t={state.preemption.since_tick})</b>
+          : "idle: no ambulance waiting"}</p>
+        <p>an ambulance gets the next safe green (yellow and all-red are never skipped); its whole lane flushes ahead of it · called {state.metrics.emergencies} · mean wait to cross {state.metrics.emergencies ? `${state.metrics.mean_emergency_wait_ticks.toFixed(1)}s` : "—"}</p>
+      </div>
+      <div className={css.policyBlock}>
         <h3><Waypoints size={14} /> Spillback</h3>
         <p>{spillback
           ? <>downstream free slots: {state.direction_states.map((d) => `${d.direction}=${d.downstream_free_slots ?? "—"}`).join(" ")}</>
@@ -286,11 +294,11 @@ function reasonText(r: Reason): string {
     case "kept": return "order unchanged";
   }
 }
-type Filter = "all" | "plan" | "phase";
+type Filter = "all" | "plan" | "phase" | "emergency";
 export function DecisionLogView({ plan }: { plan: DecisionEvent[] }) {
   const [filter, setFilter] = useState<Filter>("all");
   const items = useMemo(() => buildLog(plan), [plan]);
-  const shown = items.filter((x) => filter === "all" || (filter === "plan" ? x.type === "boundary" : x.type !== "boundary")).slice(-60).reverse();
+  const shown = items.filter((x) => filter === "all" || (filter === "plan" ? x.type === "boundary" : filter === "emergency" ? x.type === "emergency" || (x.type === "green" && x.cause !== "plan") : x.type === "green" || x.type === "clearance")).slice(-60).reverse();
   const row = (x: LogItem) => {
     const t = <span className={css.logTick}>t={String(x.tick).padStart(3, "0")}</span>;
     if (x.type === "boundary") {
@@ -310,8 +318,21 @@ export function DecisionLogView({ plan }: { plan: DecisionEvent[] }) {
           {t}<b className={`${css.logKind} ${css.ok}`}>GREEN {x.direction}</b>
           <div className={css.logBody}>
             <b>{names[x.direction]} gets the green</b>
-            <span>{x.slot !== null && x.order ? `slot ${x.slot} of 4 in the order committed at t=${x.committedAt} (${arrow(x.order)})` : "initial round (before the first buffered commit)"}</span>
+            <span>{x.cause === "preempt" ? "emergency pre-emption: green for the ambulance's lane (outside the planned order)"
+              : x.cause === "resume" ? "resumes the green that was cut short for an ambulance"
+              : x.slot !== null && x.order ? `slot ${x.slot} of 4 in the order committed at t=${x.committedAt} (${arrow(x.order)})` : "initial round (before the first buffered commit)"}</span>
           </div>
+        </div>
+      );
+    }
+    if (x.type === "emergency") {
+      const text = x.stage === "detected" ? `ambulance #${x.vehicleId} detected on ${names[x.direction]}`
+        : x.stage === "start" ? `${names[x.direction]} lane held green until ambulance #${x.vehicleId} crosses${x.interrupted ? ` (${names[x.interrupted]}'s green was cut short and will resume)` : ""}`
+        : `ambulance #${x.vehicleId} crossed after ${x.wait ?? "?"}s; normal schedule continues`;
+      return (
+        <div key={x.eventId} className={`${css.logItem} ${css.logPlan}`}>
+          {t}<b className={`${css.logKind} ${css.bad}`}>{x.stage === "end" ? "CLEARED" : "EMERGENCY"}</b>
+          <div className={css.logBody}><span>{text}</span></div>
         </div>
       );
     }
@@ -325,8 +346,8 @@ export function DecisionLogView({ plan }: { plan: DecisionEvent[] }) {
   return (
     <>
       <div className={css.filters} role="group" aria-label="Decision log filter">
-        {(["all", "plan", "phase"] as const).map((f) => (
-          <button key={f} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === "all" ? "All" : f === "plan" ? "Planning" : "Phases"}</button>
+        {(["all", "plan", "phase", "emergency"] as const).map((f) => (
+          <button key={f} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === "all" ? "All" : f === "plan" ? "Planning" : f === "phase" ? "Phases" : "Emergency"}</button>
         ))}
       </div>
       <div className={css.console}>

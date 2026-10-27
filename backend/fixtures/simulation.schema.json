@@ -21,7 +21,10 @@
             "HYSTERESIS_REJECT",
             "FAIRNESS_OVERRIDE",
             "ORDER_COMMITTED",
-            "SPILLBACK_BLOCK"
+            "SPILLBACK_BLOCK",
+            "EMERGENCY_DETECTED",
+            "PREEMPT_START",
+            "PREEMPT_END"
           ],
           "title": "Type",
           "type": "string"
@@ -143,6 +146,16 @@
         "fairness_overrides": {
           "title": "Fairness Overrides",
           "type": "integer"
+        },
+        "emergencies": {
+          "default": 0,
+          "title": "Emergencies",
+          "type": "integer"
+        },
+        "mean_emergency_wait_ticks": {
+          "default": 0,
+          "title": "Mean Emergency Wait Ticks",
+          "type": "number"
         }
       },
       "required": [
@@ -154,6 +167,37 @@
         "fairness_overrides"
       ],
       "title": "MetricsState",
+      "type": "object"
+    },
+    "Preemption": {
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "integer"
+        },
+        "since_tick": {
+          "minimum": 0,
+          "title": "Since Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "direction",
+        "vehicle_id",
+        "since_tick"
+      ],
+      "title": "Preemption",
       "type": "object"
     },
     "Reply": {
@@ -339,6 +383,17 @@
           },
           "title": "Decisions",
           "type": "array"
+        },
+        "preemption": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Preemption"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -406,6 +461,15 @@
           "minimum": 0,
           "title": "Queue Position",
           "type": "integer"
+        },
+        "kind": {
+          "default": "car",
+          "enum": [
+            "car",
+            "ambulance"
+          ],
+          "title": "Kind",
+          "type": "string"
         }
       },
       "required": [

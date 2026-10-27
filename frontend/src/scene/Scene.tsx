@@ -95,7 +95,7 @@ export function Scene({ sim, quality = 'high', viewKey = 0 }: { sim: SimState; q
             <Signal direction={d} lamp={lampFor(d, snapshot)} shadows={shadows} />
           </group>
         ))}
-        {ids.map((id) => <Vehicle key={id} id={id} tracker={tracker} clock={clock} shadows={shadows} />)}
+        {ids.map((id) => <Vehicle key={id} id={id} kind={tracker.kindOf(id)} tracker={tracker} clock={clock} shadows={shadows} />)}
         <Pedestrians snapshot={stale ? null : snapshot} clock={clock} crossers={crossers} tracker={tracker} shadows={shadows} />
       </Canvas>
     </Boundary>

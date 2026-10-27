@@ -80,6 +80,9 @@ intersect at any sampled instant, no crossing pedestrian touches a car or walks 
   can serve them; crossing cars go left, right or straight (decorative, by vehicle id; straight if a crosswalk they would
   cut through is occupied); departed cars drive off to the world edge or onto a side street. Queued cars keep one slot of
   distance in the engine's FIFO order. About 1 in 9 cars uses a supercar skin. Nothing changes counts or metrics.
+- **Ambulances** (ADR 0003) are real engine vehicles: "Send ambulance" sends `spawn_emergency`; the scene draws a
+  white ambulance with a flashing light bar and an EMERGENCY banner while `preemption` is set; the controller page
+  shows pre-emption status and explains pre-emption/resume greens in the decision log. Mock fixture `emergency`.
 - **Pedestrians are decorative** (see `docs/adr/0001-decorative-pedestrians.md`). The backend has no pedestrian model (PRD non-goal). Walkers each own a
   sidewalk strip; crossers use a crosswalk only while the perpendicular road is GREEN with `phase_remaining` covering the whole crossing.
   They read signal state and never influence the simulation.

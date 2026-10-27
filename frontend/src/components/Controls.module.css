@@ -12,3 +12,9 @@
 .playback button { display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border-radius: 10px; border: 2px solid #8a6d12; background: #ffd84d; color: #3a2d00; cursor: pointer; }
 .playback button:hover:not(:disabled) { background: #ffe680; }
 .playback button:disabled { opacity: 0.4; cursor: not-allowed; }
+.emergency { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: end; padding-top: 10px; border-top: 1px dashed var(--border); }
+.panel .ambulance, .ambulance { display: inline-flex; align-items: center; gap: 6px; background: #d61f2c; border-color: #8f0f18; color: #fff; }
+.emergency label { display: grid; gap: 3px; font-size: 0.75rem; color: var(--muted); }
+.emergency select { font: inherit; font-size: 0.9rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; min-height: 36px; min-width: 0; width: 100%; }
+.emergency button { font: inherit; min-height: 36px; border-radius: 6px; border: 1px solid; font-weight: 700; padding: 0 12px; cursor: pointer; }
+.emergency button:disabled { opacity: 0.45; cursor: not-allowed; }

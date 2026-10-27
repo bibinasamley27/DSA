@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Controls, Playback } from '../components/Controls';
+import { Controls, EmergencyControl, Playback } from '../components/Controls';
 import { store, useSimState } from '../net/connection';
 import { Charts } from '../scene/Charts';
 import { HUD } from '../scene/HUD';
@@ -24,11 +24,17 @@ export default function SimulationPage() {
         </div>
         <div className={styles.playback}><Playback sim={sim} onCommand={send} /></div>
         <div className={styles.timer}><Timer tick={sim.snapshot?.tick ?? null} /></div>
+        {sim.snapshot?.preemption && (
+          <p className={styles.emergencyBanner} role="status">
+            EMERGENCY · clearing the {({ N: 'North', E: 'East', S: 'South', W: 'West' } as const)[sim.snapshot.preemption.direction]} lane for ambulance #{sim.snapshot.preemption.vehicle_id}
+          </p>
+        )}
         {!sim.snapshot && <p className={styles.empty} role="status">Waiting for the first server snapshot…</p>}
         {sim.snapshot && sim.snapshot.vehicles.length === 0 && <p className={styles.badge}>No vehicles in the junction</p>}
       </div>
       <div className={styles.left}>
         <Controls sim={sim} onCommand={send} />
+        <EmergencyControl sim={sim} onCommand={send} />
         <details className={styles.details}>
           <summary>Status &amp; metrics</summary>
           <HUD sim={sim} />

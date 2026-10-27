@@ -100,3 +100,26 @@ export function Playback({ sim, onCommand }: { sim: SimState; onCommand: (c: Com
     </div>
   );
 }
+
+const DIR_NAME = { N: 'North', E: 'East', S: 'South', W: 'West' } as const;
+
+/** Calls an ambulance on one approach. The engine pre-empts the signals; this only sends the command. */
+export function EmergencyControl({ sim, onCommand }: { sim: SimState; onCommand: (c: CommandInput) => void }) {
+  const [direction, setDirection] = useState<keyof typeof DIR_NAME>('E');
+  const open = sim.connection === 'open' && !sim.stale;
+  const cmd: CommandInput = { command: 'spawn_emergency', direction };
+  const why = sim.mode === 'mock' ? 'Mock data: commands do not reach an engine' : open ? validateCommand(cmd, sim.snapshot) : 'Not connected';
+  return (
+    <section className={styles.emergency} aria-label="Emergency vehicle">
+      <label>Ambulance approach
+        <select value={direction} onChange={(e) => setDirection(e.target.value as keyof typeof DIR_NAME)}>
+          {(Object.keys(DIR_NAME) as (keyof typeof DIR_NAME)[]).map((d) => <option key={d} value={d}>{DIR_NAME[d]}</option>)}
+        </select>
+      </label>
+      <button type="button" className={styles.ambulance} disabled={why !== null} title={why ?? 'Clear this lane for an ambulance'} onClick={() => onCommand(cmd)}>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M10 3h4v4h4v4h-4v4h-4v-4H6V7h4z" /></svg>
+        Send ambulance
+      </button>
+    </section>
+  );
+}

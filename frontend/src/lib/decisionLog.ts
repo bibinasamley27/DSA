@@ -15,7 +15,8 @@ export type Reason =
 
 export type LogItem =
   | { type: 'boundary'; tick: number; eventId: number; order: Direction[]; previous: Direction[] | null; reasons: Reason[] }
-  | { type: 'green'; tick: number; eventId: number; direction: Direction; slot: number | null; order: Direction[] | null; committedAt: number | null }
+  | { type: 'green'; tick: number; eventId: number; direction: Direction; slot: number | null; order: Direction[] | null; committedAt: number | null; cause: 'plan' | 'preempt' | 'resume' }
+  | { type: 'emergency'; tick: number; eventId: number; stage: 'detected' | 'start' | 'end'; direction: Direction; vehicleId: number; wait: number | null; interrupted: Direction | null }
   | { type: 'clearance'; tick: number; eventId: number; phase: 'YELLOW' | 'ALL_RED'; direction: Direction | null };
 
 const DIRS = new Set<string>(['N', 'E', 'S', 'W']);
@@ -53,10 +54,19 @@ export function buildLog(events: DecisionEvent[]): LogItem[] {
       committed = { order, tick: e.tick, greens: 0 };
       previous = order;
     } else if (e.type === 'PHASE_CHANGE' && e.data.phase === 'GREEN' && e.direction) {
-      if (committed) committed.greens += 1;
+      // Pre-emption and resumed greens are outside the committed order's four slots (engine does not advance the queue).
+      const cause = e.data.reason === 'preempt' ? 'preempt' : e.data.reason === 'resume' ? 'resume' : 'plan';
+      if (committed && cause === 'plan') committed.greens += 1;
       out.push({
-        type: 'green', tick: e.tick, eventId: e.event_id, direction: e.direction,
-        slot: committed ? committed.greens : null, order: committed?.order ?? null, committedAt: committed?.tick ?? null,
+        type: 'green', tick: e.tick, eventId: e.event_id, direction: e.direction, cause,
+        slot: committed && cause === 'plan' ? committed.greens : null, order: committed?.order ?? null, committedAt: committed?.tick ?? null,
+      });
+    } else if ((e.type === 'EMERGENCY_DETECTED' || e.type === 'PREEMPT_START' || e.type === 'PREEMPT_END') && e.direction) {
+      out.push({
+        type: 'emergency', tick: e.tick, eventId: e.event_id, direction: e.direction,
+        stage: e.type === 'EMERGENCY_DETECTED' ? 'detected' : e.type === 'PREEMPT_START' ? 'start' : 'end',
+        vehicleId: num(e.data.vehicle_id), wait: typeof e.data.wait === 'number' ? e.data.wait : null,
+        interrupted: typeof e.data.interrupted === 'string' && DIRS.has(e.data.interrupted) ? (e.data.interrupted as Direction) : null,
       });
     } else if (e.type === 'PHASE_CHANGE' && (e.data.phase === 'YELLOW' || e.data.phase === 'ALL_RED')) {
       out.push({ type: 'clearance', tick: e.tick, eventId: e.event_id, phase: e.data.phase, direction: e.direction });

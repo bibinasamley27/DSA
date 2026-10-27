@@ -43,6 +43,51 @@
       "title": "ControllerCommand",
       "type": "object"
     },
+    "EmergencyCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "const": "1.0",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "kind": {
+          "const": "command",
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Request Id",
+          "type": "string"
+        },
+        "command": {
+          "const": "spawn_emergency",
+          "title": "Command",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "title": "Direction",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "kind",
+        "request_id",
+        "command",
+        "direction"
+      ],
+      "title": "EmergencyCommand",
+      "type": "object"
+    },
     "ScenarioCommand": {
       "additionalProperties": false,
       "properties": {
@@ -220,6 +265,7 @@
       "set_scenario": "#/$defs/ScenarioCommand",
       "set_seed": "#/$defs/SeedCommand",
       "set_speed": "#/$defs/SpeedCommand",
+      "spawn_emergency": "#/$defs/EmergencyCommand",
       "start": "#/$defs/SimpleCommand",
       "step": "#/$defs/SimpleCommand"
     },
@@ -240,6 +286,9 @@
     },
     {
       "$ref": "#/$defs/ControllerCommand"
+    },
+    {
+      "$ref": "#/$defs/EmergencyCommand"
     }
   ]
 }

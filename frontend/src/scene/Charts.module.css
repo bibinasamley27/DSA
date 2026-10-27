@@ -1,0 +1,9 @@
+.charts { display: grid; gap: 8px; width: 100%; }
+.chart { margin: 0; padding: 8px 10px; background: rgba(255, 255, 255, 0.92); border: 2px solid #c9d1db; border-radius: 10px; color: #14181f; }
+.chart figcaption { text-align: center; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.chart small { display: block; text-align: center; color: #4f5b6b; font-size: 0.7rem; }
+.bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; height: 96px; align-items: end; padding: 4px 0; }
+.col { display: grid; grid-template-rows: auto 1fr auto; height: 100%; align-items: end; justify-items: center; }
+.val { font-size: 0.7rem; font-variant-numeric: tabular-nums; }
+.bar { width: 70%; background: #ffc928; border: 1px solid #8a6d12; border-radius: 3px 3px 0 0; min-height: 2px; align-self: end; transition: height 0.4s; }
+.lab { font-size: 0.72rem; font-weight: 700; }

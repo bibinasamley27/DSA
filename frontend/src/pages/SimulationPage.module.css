@@ -1,0 +1,24 @@
+/* Overlay panels use a fixed light palette because they sit on top of the 3D view. */
+.page { --text: #14181f; --muted: #4f5b6b; --surface: transparent; --surface-2: #fffdf3; --border: #d9c36a; --accent: #1d4ed8; --accent-text: #fff;
+  position: relative; height: calc(100vh - 64px); min-height: 520px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+.view { position: absolute; inset: 0; background: #bcd9ea; }
+.playback { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); }
+.viewTools { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; }
+.viewTools button { font: 600 0.8rem system-ui; padding: 6px 10px; border-radius: 8px; border: 2px solid #8a6d12; background: rgba(255, 248, 225, 0.92); color: #3a2d00; cursor: pointer; }
+.timer { position: absolute; left: 16px; bottom: 12px; }
+.left { position: absolute; top: 12px; left: 12px; max-height: calc(100% - 70px); width: 290px; overflow-y: auto; display: grid; gap: 8px; align-content: start; padding: 8px;
+  background: rgba(255, 248, 225, 0.9); border: 4px solid #f2cf5b; border-radius: 14px; }
+.left > section { border: 0; padding: 0; background: transparent; }
+.details summary { cursor: pointer; font-weight: 700; padding: 6px 0; color: var(--text); }
+.details > aside { background: rgba(255, 255, 255, 0.7); }
+.right { position: absolute; right: 12px; bottom: 12px; width: 300px; }
+.empty, .badge { position: absolute; left: 50%; top: 70px; transform: translateX(-50%); margin: 0; padding: 6px 12px; border-radius: 6px; background: rgba(15, 18, 24, 0.8); color: #fff; font-size: 0.85rem; }
+@media (max-width: 900px) { .left { width: 240px; } .right { width: 240px; } }
+@media (max-width: 700px) {
+  .playback { left: 12px; transform: none; }
+  .viewTools { top: auto; bottom: 12px; }
+  .page { height: auto; display: flex; flex-direction: column; overflow: visible; border: 0; gap: 8px; }
+  .view { position: relative; height: 58vh; min-height: 340px; border-radius: 10px; overflow: hidden; }
+  .left, .right { position: static; width: auto; }
+  .left { overflow: visible; }
+}

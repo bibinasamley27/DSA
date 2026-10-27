@@ -19,6 +19,6 @@ it("rejects unpaired or unmeasured reports and accepts matching schedules", () =
   expect(validateReport(r)).toBe(false);
   r.rows.push({ ...row, controller: "adaptive" });
   expect(validateReport(r)).toBe(true);
-  r.rows[1].arrival_schedule_sha256 = "different";
+  r.rows[1]!.arrival_schedule_sha256 = "different";
   expect(validateReport(r)).toBe(false);
 });

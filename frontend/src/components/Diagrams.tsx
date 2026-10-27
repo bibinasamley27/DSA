@@ -50,7 +50,7 @@ export function LinkedListDiagram({ state }: { state: StateSnapshot }) {
               <div className={css.nodeFooter}>
                 next{" "}
                 <code>
-                  {i === 3 ? "null" : state.direction_states[i + 1].direction}
+                  {state.direction_states[i + 1]?.direction ?? "null"}
                 </code>
               </div>
             </div>
@@ -105,7 +105,7 @@ export function CircularQueueDiagram({ state }: { state: StateSnapshot }) {
         {state.queue_order.map((d, i) => (
           <g
             key={d}
-            transform={`translate(${positions[i][0]},${positions[i][1]})`}
+            transform={`translate(${positions[i % positions.length]![0]},${positions[i % positions.length]![1]})`}
           >
             <circle
               r="27"

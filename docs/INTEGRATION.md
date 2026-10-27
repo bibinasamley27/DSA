@@ -1,28 +1,18 @@
 # Person C integration boundary
 
-This checkout implements the controller UI and QA tools. The source pack's Person A engine and Person B 3D scene were not supplied. No production scheduling engine has been invented here. The standalone app uses labelled, authored fixture data; its trace is illustrative, not proof that an engine ran.
+This checkout implements the controller UI and QA tools. The team repository includes Person A’s engine and Person B’s scene; this change integrates the controller with their existing shared frontend client. The standalone app uses labelled, authored fixture data; its trace is illustrative, not proof that an engine ran.
 
-## Frontend handoff to Person B
+## Frontend integration with Person B and Person A
 
-Mount `ControllerPage` inside the same `SimulationProvider` that wraps `SimulationPage`. Use `useSimulation()` in either page. Keep one provider above navigation so switching pages does not reconnect or reset. The included shell only contains Person C tabs; no fake 3D page.
+The team app routes `/` to `SimulationPage` and `/controller` to `ControllerPage` under the existing shared `Shell`. Both subscribe to `useSimState()` from `frontend/src/net/connection.ts`. One process-wide `SimStore` and transport own snapshots, events, ordering, reconnects and command replies. Do not wrap either page in a separate provider or create a second socket.
 
-`frontend/src/types/simulation.ts` mirrors the supplied v1.0 field names. It is a consumer contract, not a replacement for Person A's authoritative JSON Schema. The original documents include a top-level full snapshot even though one paragraph describes a generic payload envelope; this client follows the full snapshot example.
+The controller dashboard sends typed commands through `store.sendCommand()` using the existing `net/commands.ts`. This preserves Person A’s published flat command fields (no `args` wrapper), `payload.request_id` acknowledgement/error matching, and `payload.decisions` trace parsing. Backend schemas and shared DTOs are unchanged. The obsolete Person C prototype socket and protocol copy have been removed; shared transport/protocol tests and controller routing tests cover the integrated path.
 
-Live endpoint defaults to `ws://localhost:8000/ws/v1/simulation`; override via `frontend/.env.local` using `.env.example`. Configure Person A's development origin for `http://localhost:5173` and `http://127.0.0.1:5173` as needed.
+The shared header controls live/mock selection for both pages. Recorded mock streams come from `frontend/src/fixtures`; controller commands stay disabled in mock mode. Disconnected snapshots remain visible with an explicit stale label and disabled controls. Setup changes require a paused/stopped server; step requires paused.
 
-Commands use `{protocol_version,kind:'command',command,request_id,args?}`. The pack does not freeze argument key names, trace `data` shapes, or the separate `decision_trace` payload structure. This adapter uses:
+Run `cd frontend && npm ci && npm run dev`, then open `http://localhost:5173/controller`. Use the shared mock selector for offline review, or start Person A’s backend using `backend/README.md`. The existing `VITE_WS_URL` setting controls the single shared endpoint.
 
-- `set_scenario`: `args: {scenario: 'east_surge'}`
-- `set_seed`: `args: {seed: 42}`
-- `set_speed`: `args: {speed: 2}`
-- `set_controller`: `args: {controller_mode: 'adaptive'}`
-- no args for start/pause/step/reset
-- trace envelope: `{protocol_version:'1.0',kind:'decision_trace',run_id,sequence_number,tick,payload:{events:[DecisionEvent]}}`
-- optional sort event data: `{left:'N',right:'E',order:['E','N','S','W'],left_score:12,right_score:20}`. `order` describes the state after that recorded operation. If absent, the UI displays the description and explicitly says order is unavailable; it does not compute a guessed swap.
-
-Confirm these unspecified shapes with Person A before integration; adapt only `SimulationStore.tsx`/trace parsing if needed. Snapshot DTO names remain unchanged. `oscillation` appears in Person C and acceptance requirements even though the architecture's initial preset list has only four; the backend must expose it before that acceptance check can pass.
-
-The store validates complete snapshots and queue/vehicle counts; drops same-run stale sequences and retired runs; merges trace IDs; clears the view on reconnect until a fresh complete snapshot arrives. A reconnect establishes a new stream epoch: the server owns which run is current. Events are bounded to 500 in browser memory. Export snapshots to preserve evidence; this is not a durable event archive.
+Joint browser and live-backend acceptance remains required before merge. Automated route tests mock the WebGL canvas, not the snapshot store, page controls or navigation.
 
 ## Benchmark adapter supplied by Person A
 

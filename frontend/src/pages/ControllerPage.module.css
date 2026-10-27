@@ -1,28 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap");
-:global(:root) {
+.app {
   --font-display: Georgia, "Times New Roman", serif;
   --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-code: "SFMono-Regular", Consolas, monospace;
   --text-accent: #6ce5bc;
   --text-accent-on-light: #24654f;
 }
-:global(*) {
+.app :global(*) {
   box-sizing: border-box;
 }
-:global(body) {
+.app {
   margin: 0;
+  color-scheme: light;
   background: #f2f5f7;
   color: #233448;
   font-family: var(--font-body);
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
 }
-:global(button),
-:global(select),
-:global(input) {
+.app :global(button),
+.app :global(select),
+.app :global(input) {
   font: inherit;
 }
-:global(button) {
+.app :global(button) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -37,26 +38,26 @@
   padding: 9px 12px;
   color: #35465a;
 }
-:global(button:hover:not(:disabled)) {
+.app :global(button:hover:not(:disabled)) {
   background: #edf4f1;
   border-color: #9bbfb0;
 }
-:global(button:active:not(:disabled)) {
+.app :global(button:active:not(:disabled)) {
   transform: translateY(1px);
 }
-:global(button:disabled) {
+.app :global(button:disabled) {
   opacity: 0.42;
   cursor: not-allowed;
 }
-:global(button:focus-visible),
-:global(select:focus-visible),
-:global(input:focus-visible),
-:global(a:focus-visible) {
+.app :global(button:focus-visible),
+.app :global(select:focus-visible),
+.app :global(input:focus-visible),
+.app :global(a:focus-visible) {
   outline: 3px solid #d49b3c;
   outline-offset: 3px;
 }
-:global(select),
-:global(input) {
+.app :global(select),
+.app :global(input) {
   border: 1px solid #dce3ea;
   border-radius: 5px;
   padding: 8px 10px;
@@ -64,21 +65,21 @@
   color: #2a3e52;
   min-height: 35px;
 }
-:global(a) {
+.app :global(a) {
   color: inherit;
 }
-:global(h1),
-:global(h2),
-:global(h3),
-:global(h4),
-:global(p) {
+.app :global(h1),
+.app :global(h2),
+.app :global(h3),
+.app :global(h4),
+.app :global(p) {
   margin: 0;
 }
-:global(code) {
+.app :global(code) {
   font-family: var(--font-code);
   font-size: 13px;
 }
-:global(svg) {
+.app :global(svg) {
   flex-shrink: 0;
 }
 .app {
@@ -87,8 +88,11 @@
 }
 .sidebar {
   width: 228px;
-  position: fixed;
-  inset: 0 auto 0 0;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  align-self: flex-start;
   background: #111e29;
   color: #a6b6c6;
   padding: 30px 18px;
@@ -228,7 +232,7 @@
   font-weight: 600;
 }
 .main {
-  margin-left: 228px;
+  margin-left: 0;
   width: calc(100% - 228px);
 }
 .topbar {
@@ -731,13 +735,13 @@
 .tableWrap {
   overflow: auto;
 }
-:global(table) {
+.app :global(table) {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
   white-space: nowrap;
 }
-:global(th) {
+.app :global(th) {
   font-size: 10px;
   letter-spacing: 0.7px;
   color: #96a5b0;
@@ -745,13 +749,13 @@
   padding: 10px 7px;
   border-bottom: 1px solid #e7edf1;
 }
-:global(td) {
+.app :global(td) {
   font-size: 12px;
   padding: 11px 7px;
   border-bottom: 1px solid #eef2f5;
   color: #708393;
 }
-:global(tbody tr:last-child td) {
+.app :global(tbody tr:last-child td) {
   border-bottom: 0;
 }
 .directionTag {
@@ -1202,7 +1206,7 @@
     justify-content: center;
   }
   .main {
-    margin-left: 72px;
+    margin-left: 0;
     width: calc(100% - 72px);
   }
   .controls {
@@ -1473,9 +1477,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  :global(*),
-  :global(*::before),
-  :global(*::after) {
+  .app :global(*),
+  .app :global(*::before),
+  .app :global(*::after) {
     transition: none !important;
     animation: none !important;
   }
@@ -1815,8 +1819,8 @@
 }
 
 /* Shared type hierarchy across controller, benchmarks, and demo guide. */
-:global(body) { line-height: 1.6; }
-:global(h2), :global(h3), :global(h4) {
+.app { line-height: 1.6; }
+.app :global(h2), .app :global(h3), .app :global(h4) {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
@@ -1857,9 +1861,9 @@
 .policyRow { line-height: 1.8; }
 .event b { font-size: 14px; }
 .event p, .traceDescription p, .caption { font-size: 12px; line-height: 1.8; }
-:global(th) { font-size: 11px; color: #607484; }
-:global(td) { font-size: 13px; font-variant-numeric: tabular-nums; }
-:global(svg text) { font-family: var(--font-body); }
+.app :global(th) { font-size: 11px; color: #607484; }
+.app :global(td) { font-size: 13px; font-variant-numeric: tabular-nums; }
+.app :global(svg text) { font-family: var(--font-body); }
 .controlFields, .controlButtons, .runStrip, .footer { flex-wrap: wrap; }
 .controlFields label { line-height: 1.5; }
 .controlFields select { max-width: 100%; }

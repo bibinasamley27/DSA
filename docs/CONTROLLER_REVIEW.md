@@ -16,3 +16,6 @@ Compared against pushed `feat/controller-person-c` commit `1785480` in the team 
 Node 26.7.0, npm 11.19.0. `npm ci --offline --no-audit --no-fund` reinstalled dependencies from the cache. `npm run typecheck`, `npm run build` and all 81 frontend tests passed. Build retains the existing large combined 3D bundle warning.
 
 The six new tests cover dashboard/benchmark/guide rendering, navigation between both actual pages while preserving the same snapshot and transport, flat command arguments, shared acknowledgements/rejections, running/stale/mock controls and no-snapshot waiting state. Only WebGL Scene is mocked in jsdom; browser GPU rendering and live backend integration remain unverified. No backend files, shared DTOs or shared net implementation were modified. Joint manual testing remains a pre-merge requirement.
+
+> Superseded (27 October 2026): the controller page was redesigned in PR #6 (algorithm-visualizer layout, sort trace
+> reconstruction, decision log). This review describes the state at `97374e0`; see `frontend/README.md` for the current page.

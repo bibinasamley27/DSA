@@ -1,7 +1,7 @@
 {
   "protocol_version": "1.0",
   "kind": "state",
-  "run_id": "b932c721-0835-4c49-a75d-cecf52721548",
+  "run_id": "a41472a1-d008-411b-a457-6b84cb42eb29",
   "sequence_number": 1,
   "tick": 0,
   "sim_status": "paused",
@@ -59,7 +59,10 @@
     "mean_wait_ticks": 0.0,
     "max_wait_ticks": 0,
     "switches": 0,
-    "fairness_overrides": 0
+    "fairness_overrides": 0,
+    "emergencies": 0,
+    "mean_emergency_wait_ticks": 0.0
   },
-  "decisions": []
+  "decisions": [],
+  "preemption": null
 }

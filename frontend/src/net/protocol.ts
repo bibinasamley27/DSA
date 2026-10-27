@@ -1,7 +1,7 @@
 // Network-boundary validation for protocol v1.0 server messages. Everything past this file
 // works with the frozen types from ../types/simulation.ts and never sees unvalidated JSON.
 import type {
-  DecisionEvent, Direction, DirectionState, MetricsState, Reply, StateSnapshot, VehicleState,
+  DecisionEvent, Direction, DirectionState, MetricsState, Preemption, Reply, StateSnapshot, VehicleState,
 } from '../types/simulation';
 
 export type ServerMessage = StateSnapshot | Reply;
@@ -11,7 +11,8 @@ export const DIRECTIONS: readonly Direction[] = ['N', 'E', 'S', 'W'];
 const SPEEDS = [0.5, 1, 2, 4] as const;
 const REPLY_KINDS = ['welcome', 'ack', 'error', 'decision_trace'] as const;
 const DECISION_TYPES = ['ARRIVAL', 'PHASE_CHANGE', 'THRESHOLD', 'SORT_COMPARE', 'SORT_SWAP',
-  'HYSTERESIS_REJECT', 'FAIRNESS_OVERRIDE', 'ORDER_COMMITTED', 'SPILLBACK_BLOCK'] as const;
+  'HYSTERESIS_REJECT', 'FAIRNESS_OVERRIDE', 'ORDER_COMMITTED', 'SPILLBACK_BLOCK',
+  'EMERGENCY_DETECTED', 'PREEMPT_START', 'PREEMPT_END'] as const;
 
 class Invalid extends Error {}
 type Obj = Record<string, unknown>;
@@ -40,6 +41,8 @@ function vehicle(v: unknown, path: string): VehicleState {
     arrival_tick: int(o.arrival_tick, `${path}.arrival_tick`, 0),
     path_progress: num(o.path_progress, `${path}.path_progress`, 0, 1),
     queue_position: int(o.queue_position, `${path}.queue_position`, 0),
+    // Recordings made before emergency pre-emption existed carry no `kind`; they contain only cars.
+    kind: o.kind === undefined ? 'car' : oneOf(o.kind, ['car', 'ambulance'] as const, `${path}.kind`),
   };
 }
 
@@ -65,7 +68,19 @@ function metrics(v: unknown, path: string): MetricsState {
     max_wait_ticks: int(o.max_wait_ticks, `${path}.max_wait_ticks`, 0),
     switches: int(o.switches, `${path}.switches`, 0),
     fairness_overrides: int(o.fairness_overrides, `${path}.fairness_overrides`, 0),
+    // Absent only in pre-emption-era recordings, which had no ambulances, so zero is the true value there.
+    emergencies: o.emergencies === undefined ? 0 : int(o.emergencies, `${path}.emergencies`, 0),
+    mean_emergency_wait_ticks: o.mean_emergency_wait_ticks === undefined ? 0 : num(o.mean_emergency_wait_ticks, `${path}.mean_emergency_wait_ticks`, 0),
   };
+}
+
+function preemption(v: unknown, vehicles: VehicleState[]): Preemption | null {
+  if (v === undefined || v === null) return null;
+  const o = obj(v, 'preemption');
+  const p = { direction: dir(o.direction, 'preemption.direction'), vehicle_id: int(o.vehicle_id, 'preemption.vehicle_id'), since_tick: int(o.since_tick, 'preemption.since_tick', 0) };
+  const amb = vehicles.find((x) => x.id === p.vehicle_id);
+  if (!amb || amb.kind !== 'ambulance' || amb.status !== 'QUEUED' || amb.direction !== p.direction) fail('preemption', 'must name a queued ambulance on that approach');
+  return p;
 }
 
 function decision(v: unknown, path: string): DecisionEvent {
@@ -116,6 +131,7 @@ function state(o: Obj): StateSnapshot {
     direction_states, queue_order, vehicles,
     metrics: metrics(o.metrics, 'metrics'),
     decisions: arr(o.decisions, 'decisions').map((d, i) => decision(d, `decisions[${i}]`)),
+    preemption: preemption(o.preemption, vehicles),
   };
 }
 

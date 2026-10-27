@@ -21,6 +21,7 @@ class VehicleState(DTO):
     arrival_tick: int = Field(ge=0)
     path_progress: float = Field(default=0, ge=0, le=1)
     queue_position: int = Field(default=0, ge=0)
+    kind: Literal['car', 'ambulance'] = 'car'
 
 class DirectionState(DTO):
     direction: Direction
@@ -33,7 +34,8 @@ class DirectionState(DTO):
 class DecisionEvent(DTO):
     event_id: int
     tick: int
-    type: Literal['ARRIVAL', 'PHASE_CHANGE', 'THRESHOLD', 'SORT_COMPARE', 'SORT_SWAP', 'HYSTERESIS_REJECT', 'FAIRNESS_OVERRIDE', 'ORDER_COMMITTED', 'SPILLBACK_BLOCK']
+    type: Literal['ARRIVAL', 'PHASE_CHANGE', 'THRESHOLD', 'SORT_COMPARE', 'SORT_SWAP', 'HYSTERESIS_REJECT', 'FAIRNESS_OVERRIDE', 'ORDER_COMMITTED', 'SPILLBACK_BLOCK',
+                  'EMERGENCY_DETECTED', 'PREEMPT_START', 'PREEMPT_END']
     direction: Direction | None = None
     description: str
     data: dict = Field(default_factory=dict)
@@ -45,6 +47,13 @@ class MetricsState(DTO):
     max_wait_ticks: int
     switches: int
     fairness_overrides: int
+    emergencies: int = 0
+    mean_emergency_wait_ticks: float = 0
+
+class Preemption(DTO):
+    direction: Direction
+    vehicle_id: int
+    since_tick: int = Field(ge=0)
 
 class Envelope(DTO):
     protocol_version: Literal['1.0'] = '1.0'
@@ -68,6 +77,7 @@ class StateSnapshot(Envelope):
     vehicles: list[VehicleState]
     metrics: MetricsState
     decisions: list[DecisionEvent]
+    preemption: Preemption | None = None
 
     @model_validator(mode='after')
     def complete(self):
@@ -111,8 +121,12 @@ class SpeedCommand(SimpleCommand):
             raise ValueError('speed must be numeric')
         return value
 
+class EmergencyCommand(SimpleCommand):
+    command: Literal['spawn_emergency']
+    direction: Direction
+
 class ControllerCommand(SimpleCommand):
     command: Literal['set_controller']
     controller_mode: Literal['fixed', 'adaptive']
 
-Command = Annotated[SimpleCommand | ScenarioCommand | SeedCommand | SpeedCommand | ControllerCommand, Field(discriminator='command')]
+Command = Annotated[SimpleCommand | ScenarioCommand | SeedCommand | SpeedCommand | ControllerCommand | EmergencyCommand, Field(discriminator='command')]

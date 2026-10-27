@@ -1,7 +1,7 @@
 from uuid import uuid4
 from pydantic import TypeAdapter
-from .models import Command, Config, DecisionEvent, DirectionState, StateSnapshot, VehicleState
-from .structures import TrafficList, SignalQueue
+from .models import Command, Config, DecisionEvent, DirectionState, Preemption, StateSnapshot, VehicleState
+from .structures import EmergencyHeap, TrafficList, SignalQueue
 from .arrivals import Arrivals
 from .controller import Controller
 from .metrics import Metrics
@@ -18,6 +18,7 @@ class Engine:
     def reset(self):
         self.run_id = str(uuid4())
         self.tick, self.next_id, self.event_id = 0, 1, 0
+        self.traced_upto = 0  # last event id included in a tick's trace
         self.sim_status, self.phase, self.active_direction = 'paused', 'GREEN', 'N'
         self.phase_remaining = self.config.green
         self.traffic, self.signals = TrafficList(), SignalQueue()
@@ -26,6 +27,9 @@ class Engine:
         self.controller, self.metrics = Controller(), Metrics()
         self.arrivals = Arrivals(self.seed, self.scenario, self.schedule)
         self.crossing, self.decisions = [], []
+        # Emergency pre-emption: waiting ambulances (min-heap), whether the current green was granted for one,
+        # and the approach whose green was cut short (it gets its slot back afterwards).
+        self.emergencies, self.preempt_green, self.resume, self.announced = EmergencyHeap(), False, None, set()
 
     def emit(self, kind, direction=None, data=None):
         self.event_id += 1
@@ -46,7 +50,8 @@ class Engine:
 
     def advance(self):
         self.tick += 1
-        self.decisions = []
+        # keep events emitted by commands since the last tick (e.g. EMERGENCY_DETECTED) in this tick's trace
+        self.decisions = [d for d in self.decisions if d.event_id > self.traced_upto]
         for vehicle in self.crossing:
             vehicle.status, vehicle.path_progress = 'EXITED', 1
             self.metrics.departed += 1
@@ -69,6 +74,10 @@ class Engine:
                 vehicle.status, vehicle.path_progress, vehicle.queue_position = 'CROSSING', .5, 0
                 self.crossing.append(vehicle)
                 self.metrics.waits.append(self.tick - vehicle.arrival_tick)
+                if vehicle.kind == 'ambulance' and self.emergencies.remove(vehicle.id):
+                    self.metrics.emergency_waits.append(self.tick - vehicle.arrival_tick)
+                    self.emit('PREEMPT_END', vehicle.direction, {'vehicle_id': vehicle.id, 'wait': self.tick - vehicle.arrival_tick})
+        self.preempt()
         self.phase_remaining -= 1
         if self.phase_remaining == 0:
             if self.phase == 'GREEN':
@@ -76,22 +85,68 @@ class Engine:
             elif self.phase == 'YELLOW':
                 self.phase, self.phase_remaining, self.active_direction = 'ALL_RED', self.config.all_red, None
             else:
-                if self.remaining == 0:
-                    old = self.signals.order()
-                    order = self.controller.plan(old, self.direction_states(), self.emit, self.controller_mode)
-                    self.signals.reorder(order)
-                    self.remaining = 4
-                    self.emit('ORDER_COMMITTED', None, {'order': order})
-                self.active_direction = self.signals.advance()
-                self.remaining -= 1
+                target, reason = self.emergencies.peek(), None
+                if target is not None:
+                    # Pre-emption green: the circular queue and round counter are not advanced.
+                    self.active_direction, self.preempt_green, reason = target.direction, True, 'preempt'
+                    if self.resume == target.direction:
+                        self.resume = None                         # this green also serves the cut-short approach
+                    self.announced.add(target.id)
+                    self.emit('PREEMPT_START', target.direction, {'vehicle_id': target.id, 'interrupted': self.resume})
+                elif self.resume is not None:
+                    # Give the approach whose green was cut short its slot back.
+                    self.active_direction, self.resume, self.preempt_green, reason = self.resume, None, False, 'resume'
+                else:
+                    self.preempt_green = False
+                    if self.remaining == 0:
+                        old = self.signals.order()
+                        order = self.controller.plan(old, self.direction_states(), self.emit, self.controller_mode)
+                        self.signals.reorder(order)
+                        self.remaining = 4
+                        self.emit('ORDER_COMMITTED', None, {'order': order})
+                    self.active_direction = self.signals.advance()
+                    self.remaining -= 1
                 self.phase, self.phase_remaining = 'GREEN', self.config.green
                 self.metrics.switches += 1
-            self.emit('PHASE_CHANGE', self.active_direction, {'phase': self.phase, 'remaining': self.phase_remaining})
+            data = {'phase': self.phase, 'remaining': self.phase_remaining}
+            if self.phase == 'GREEN' and reason:
+                data['reason'] = reason
+            self.emit('PHASE_CHANGE', self.active_direction, data)
+        self.traced_upto = self.event_id
+
+    def preempt(self):
+        """Adjust the current GREEN for a waiting ambulance. Never skips YELLOW or ALL_RED."""
+        if self.phase != 'GREEN':
+            return
+        target = self.emergencies.peek()
+        if target is not None and target.direction == self.active_direction:
+            if target.id not in self.announced:                    # already green: just hold it, never shorten it
+                self.announced.add(target.id)
+                self.emit('PREEMPT_START', target.direction, {'vehicle_id': target.id, 'interrupted': None})
+            self.phase_remaining = max(self.phase_remaining, 2)   # hold green until the ambulance has crossed
+        elif target is not None:
+            if self.resume is None and not self.preempt_green:
+                self.resume = self.active_direction                # cut short now; resumed after the emergency
+            self.phase_remaining = 1                               # end this green; yellow and all-red follow
+        elif self.preempt_green:
+            self.phase_remaining = min(self.phase_remaining, 1)    # ambulance crossed: end the pre-emption green
+
+    def spawn_emergency(self, direction):
+        node = self.traffic.get(direction)
+        if any(v.kind == 'ambulance' for v in node.vehicles):
+            raise ValueError('an ambulance is already waiting on that approach')
+        vehicle = VehicleState(id=self.next_id, direction=direction, arrival_tick=self.tick, kind='ambulance')
+        self.next_id += 1
+        node.vehicles.append(vehicle)   # emergency vehicles are never rejected for capacity
+        self.metrics.generated += 1
+        self.metrics.emergencies += 1
+        self.emergencies.push(vehicle)
+        self.emit('EMERGENCY_DETECTED', direction, {'vehicle_id': vehicle.id, 'queue_position': len(node.vehicles) - 1})
 
     def command(self, raw):
         command = COMMAND.validate_python(raw)
         name = command.command
-        if name not in ('start', 'pause') and self.sim_status == 'running':
+        if name not in ('start', 'pause', 'spawn_emergency') and self.sim_status == 'running':
             raise ValueError('pause before stepping or changing setup')
         if name == 'step' and self.sim_status != 'paused':
             raise ValueError('step requires paused simulation')
@@ -105,6 +160,8 @@ class Engine:
             self.reset()
         elif name == 'set_speed':
             self.speed = command.speed
+        elif name == 'spawn_emergency':
+            self.spawn_emergency(command.direction)
         else:
             field = {'set_seed': 'seed', 'set_scenario': 'scenario', 'set_controller': 'controller_mode'}[name]
             setattr(self, field, getattr(command, field))
@@ -125,4 +182,11 @@ class Engine:
                              seed=self.seed, controller_mode=self.controller_mode, speed=self.speed,
                              phase=self.phase, phase_remaining=self.phase_remaining, active_direction=self.active_direction,
                              queue_order=self.signals.order(), direction_states=self.direction_states(),
-                             vehicles=vehicles + self.crossing, metrics=self.metrics.state(), decisions=self.decisions)
+                             vehicles=vehicles + self.crossing, metrics=self.metrics.state(), decisions=self.decisions,
+                             preemption=self.preemption())
+
+    def preemption(self):
+        target = self.emergencies.peek()
+        if target is None:
+            return None
+        return Preemption(direction=target.direction, vehicle_id=target.id, since_tick=target.arrival_tick)

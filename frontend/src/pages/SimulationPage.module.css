@@ -12,6 +12,9 @@
 .details summary { cursor: pointer; font-weight: 700; padding: 6px 0; color: var(--text); }
 .details > aside { background: rgba(255, 255, 255, 0.7); }
 .right { position: absolute; right: 12px; bottom: 12px; width: 300px; }
+.emergencyBanner { position: absolute; left: 50%; top: 74px; transform: translateX(-50%); margin: 0; padding: 8px 14px; border-radius: 8px; background: #d61f2c; color: #fff; font-weight: 800; letter-spacing: 0.03em; box-shadow: 0 0 18px rgba(214, 31, 44, 0.6); animation: pulse 0.9s ease-in-out infinite alternate; white-space: nowrap; }
+@keyframes pulse { from { box-shadow: 0 0 6px rgba(214, 31, 44, 0.4); } to { box-shadow: 0 0 22px rgba(214, 31, 44, 0.9); } }
+@media (prefers-reduced-motion: reduce) { .emergencyBanner { animation: none; } }
 .empty, .badge { position: absolute; left: 50%; top: 70px; transform: translateX(-50%); margin: 0; padding: 6px 12px; border-radius: 6px; background: rgba(15, 18, 24, 0.8); color: #fff; font-size: 0.85rem; }
 @media (max-width: 900px) { .left { width: 240px; } .right { width: 240px; } }
 @media (max-width: 700px) {

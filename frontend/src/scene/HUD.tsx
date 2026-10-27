@@ -45,6 +45,8 @@ export function HUD({ sim }: { sim: SimState }) {
         <div><dt>Max wait</dt><dd>{s ? `${s.metrics.max_wait_ticks} s` : NA}</dd></div>
         <div><dt>Switches</dt><dd>{s?.metrics.switches ?? NA}</dd></div>
         <div><dt>Fairness overrides</dt><dd>{s?.metrics.fairness_overrides ?? NA}</dd></div>
+        <div><dt>Ambulances</dt><dd>{s?.metrics.emergencies ?? NA}</dd></div>
+        <div><dt>Mean ambulance wait</dt><dd>{s ? (s.metrics.emergencies ? `${s.metrics.mean_emergency_wait_ticks.toFixed(1)} s` : 'none yet') : NA}</dd></div>
         <div><dt>Vehicles shown</dt><dd>{s?.vehicles.length ?? NA}</dd></div>
       </dl>
     </aside>

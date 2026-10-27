@@ -94,7 +94,7 @@ export class PoseTracker {
   private eff(now: number) { return (this.heldAt ?? now) - this.offset; }
 
   private decide(v: VehicleState): { turn: Turn; arm: Direction; jp: ReturnType<typeof junctionPath> } {
-    let turn = this.turnFor(v.id);
+    let turn = v.kind === 'ambulance' ? 'S' : this.turnFor(v.id); // ambulances go straight through: easy to follow
     let jp = junctionPath(v.direction, turn, this.offRampFor(v.id));
     if (turn !== 'S' && this.busy(jp.arm)) {
       turn = 'S';
@@ -184,6 +184,7 @@ export class PoseTracker {
   }
 
   ids(): number[] { return [...this.tracks.keys()]; }
+  kindOf(id: number): VehicleState['kind'] { return this.tracks.get(id)?.vehicle.kind ?? 'car'; }
 
   /**
    * True while a car turning into `arm` has not yet cleared that arm's crosswalk, so a pedestrian must not step out.

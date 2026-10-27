@@ -27,6 +27,8 @@ const headingOf = (dx: number, dz: number) => Math.atan2(-dx, -dz);       // mod
  */
 export function crossingAllowed(arm: Direction, s: StateSnapshot | null, clock: number): boolean {
   if (!s || s.sim_status !== 'running' || s.phase !== 'GREEN' || s.active_direction === null) return false;
+  // A pending ambulance can cut the current green short, so its remaining time is no promise: wait.
+  if (s.preemption) return false;
   const vertical = (d: Direction) => d === 'N' || d === 'S';
   if (vertical(arm) === vertical(s.active_direction)) return false;
   return clock + CROSS_TICKS <= s.tick + s.phase_remaining;

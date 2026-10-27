@@ -68,7 +68,7 @@ describe('lampFor', () => {
 describe('PoseTracker', () => {
   const straight = { turnFor: () => 'S' as const, offRampFor: () => false };
   const veh = (id: number, q: number, status: 'QUEUED' | 'CROSSING' = 'QUEUED', direction: Direction = 'N') =>
-    ({ id, direction, status, arrival_tick: 0, path_progress: status === 'CROSSING' ? 0.5 : 0, queue_position: q });
+    ({ id, direction, status, arrival_tick: 0, path_progress: status === 'CROSSING' ? 0.5 : 0, queue_position: q, kind: 'car' as const });
   const snap = (tick: number, vehicles: ReturnType<typeof veh>[]) => frame(5, { tick, vehicles });
 
   it('drives a new car in along its road and reaches the slot within its entry budget', () => {

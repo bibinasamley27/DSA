@@ -13,7 +13,7 @@
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 1,
       "tick": 0,
       "sim_status": "paused",
@@ -71,14 +71,17 @@
         "mean_wait_ticks": 0.0,
         "max_wait_ticks": 0,
         "switches": 0,
-        "fairness_overrides": 0
+        "fairness_overrides": 0,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
-      "decisions": []
+      "decisions": [],
+      "preemption": null
     },
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 2,
       "tick": 40,
       "sim_status": "paused",
@@ -136,7 +139,8 @@
           "status": "QUEUED",
           "arrival_tick": 12,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 30,
@@ -144,7 +148,8 @@
           "status": "QUEUED",
           "arrival_tick": 23,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 36,
@@ -152,7 +157,8 @@
           "status": "QUEUED",
           "arrival_tick": 26,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 43,
@@ -160,7 +166,8 @@
           "status": "QUEUED",
           "arrival_tick": 32,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 50,
@@ -168,7 +175,8 @@
           "status": "QUEUED",
           "arrival_tick": 35,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 14,
@@ -176,7 +184,8 @@
           "status": "QUEUED",
           "arrival_tick": 10,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 15,
@@ -184,7 +193,8 @@
           "status": "QUEUED",
           "arrival_tick": 11,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 17,
@@ -192,7 +202,8 @@
           "status": "QUEUED",
           "arrival_tick": 12,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 19,
@@ -200,7 +211,8 @@
           "status": "QUEUED",
           "arrival_tick": 13,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 20,
@@ -208,7 +220,8 @@
           "status": "QUEUED",
           "arrival_tick": 14,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 21,
@@ -216,7 +229,8 @@
           "status": "QUEUED",
           "arrival_tick": 15,
           "path_progress": 0.0,
-          "queue_position": 5
+          "queue_position": 5,
+          "kind": "car"
         },
         {
           "id": 22,
@@ -224,7 +238,8 @@
           "status": "QUEUED",
           "arrival_tick": 16,
           "path_progress": 0.0,
-          "queue_position": 6
+          "queue_position": 6,
+          "kind": "car"
         },
         {
           "id": 23,
@@ -232,7 +247,8 @@
           "status": "QUEUED",
           "arrival_tick": 17,
           "path_progress": 0.0,
-          "queue_position": 7
+          "queue_position": 7,
+          "kind": "car"
         },
         {
           "id": 25,
@@ -240,7 +256,8 @@
           "status": "QUEUED",
           "arrival_tick": 18,
           "path_progress": 0.0,
-          "queue_position": 8
+          "queue_position": 8,
+          "kind": "car"
         },
         {
           "id": 26,
@@ -248,7 +265,8 @@
           "status": "QUEUED",
           "arrival_tick": 19,
           "path_progress": 0.0,
-          "queue_position": 9
+          "queue_position": 9,
+          "kind": "car"
         },
         {
           "id": 27,
@@ -256,7 +274,8 @@
           "status": "QUEUED",
           "arrival_tick": 20,
           "path_progress": 0.0,
-          "queue_position": 10
+          "queue_position": 10,
+          "kind": "car"
         },
         {
           "id": 28,
@@ -264,7 +283,8 @@
           "status": "QUEUED",
           "arrival_tick": 21,
           "path_progress": 0.0,
-          "queue_position": 11
+          "queue_position": 11,
+          "kind": "car"
         },
         {
           "id": 29,
@@ -272,7 +292,8 @@
           "status": "QUEUED",
           "arrival_tick": 22,
           "path_progress": 0.0,
-          "queue_position": 12
+          "queue_position": 12,
+          "kind": "car"
         },
         {
           "id": 31,
@@ -280,7 +301,8 @@
           "status": "QUEUED",
           "arrival_tick": 23,
           "path_progress": 0.0,
-          "queue_position": 13
+          "queue_position": 13,
+          "kind": "car"
         },
         {
           "id": 33,
@@ -288,7 +310,8 @@
           "status": "QUEUED",
           "arrival_tick": 24,
           "path_progress": 0.0,
-          "queue_position": 14
+          "queue_position": 14,
+          "kind": "car"
         },
         {
           "id": 45,
@@ -296,7 +319,8 @@
           "status": "QUEUED",
           "arrival_tick": 32,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 49,
@@ -304,7 +328,8 @@
           "status": "QUEUED",
           "arrival_tick": 34,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 57,
@@ -312,7 +337,8 @@
           "status": "QUEUED",
           "arrival_tick": 39,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         }
       ],
       "metrics": {
@@ -321,7 +347,9 @@
         "mean_wait_ticks": 12.0,
         "max_wait_ticks": 32,
         "switches": 3,
-        "fairness_overrides": 0
+        "fairness_overrides": 0,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
       "decisions": [
         {
@@ -335,12 +363,13 @@
             "accepted": false
           }
         }
-      ]
+      ],
+      "preemption": null
     },
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 3,
       "tick": 80,
       "sim_status": "paused",
@@ -398,7 +427,8 @@
           "status": "QUEUED",
           "arrival_tick": 64,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 89,
@@ -406,7 +436,8 @@
           "status": "QUEUED",
           "arrival_tick": 65,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 97,
@@ -414,7 +445,8 @@
           "status": "QUEUED",
           "arrival_tick": 70,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 108,
@@ -422,7 +454,8 @@
           "status": "QUEUED",
           "arrival_tick": 77,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 25,
@@ -430,7 +463,8 @@
           "status": "QUEUED",
           "arrival_tick": 18,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 26,
@@ -438,7 +472,8 @@
           "status": "QUEUED",
           "arrival_tick": 19,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 27,
@@ -446,7 +481,8 @@
           "status": "QUEUED",
           "arrival_tick": 20,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 28,
@@ -454,7 +490,8 @@
           "status": "QUEUED",
           "arrival_tick": 21,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 29,
@@ -462,7 +499,8 @@
           "status": "QUEUED",
           "arrival_tick": 22,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 31,
@@ -470,7 +508,8 @@
           "status": "QUEUED",
           "arrival_tick": 23,
           "path_progress": 0.0,
-          "queue_position": 5
+          "queue_position": 5,
+          "kind": "car"
         },
         {
           "id": 33,
@@ -478,7 +517,8 @@
           "status": "QUEUED",
           "arrival_tick": 24,
           "path_progress": 0.0,
-          "queue_position": 6
+          "queue_position": 6,
+          "kind": "car"
         },
         {
           "id": 66,
@@ -486,7 +526,8 @@
           "status": "QUEUED",
           "arrival_tick": 46,
           "path_progress": 0.0,
-          "queue_position": 7
+          "queue_position": 7,
+          "kind": "car"
         },
         {
           "id": 68,
@@ -494,7 +535,8 @@
           "status": "QUEUED",
           "arrival_tick": 47,
           "path_progress": 0.0,
-          "queue_position": 8
+          "queue_position": 8,
+          "kind": "car"
         },
         {
           "id": 69,
@@ -502,7 +544,8 @@
           "status": "QUEUED",
           "arrival_tick": 48,
           "path_progress": 0.0,
-          "queue_position": 9
+          "queue_position": 9,
+          "kind": "car"
         },
         {
           "id": 70,
@@ -510,7 +553,8 @@
           "status": "QUEUED",
           "arrival_tick": 49,
           "path_progress": 0.0,
-          "queue_position": 10
+          "queue_position": 10,
+          "kind": "car"
         },
         {
           "id": 71,
@@ -518,7 +562,8 @@
           "status": "QUEUED",
           "arrival_tick": 50,
           "path_progress": 0.0,
-          "queue_position": 11
+          "queue_position": 11,
+          "kind": "car"
         },
         {
           "id": 72,
@@ -526,7 +571,8 @@
           "status": "QUEUED",
           "arrival_tick": 51,
           "path_progress": 0.0,
-          "queue_position": 12
+          "queue_position": 12,
+          "kind": "car"
         },
         {
           "id": 73,
@@ -534,7 +580,8 @@
           "status": "QUEUED",
           "arrival_tick": 52,
           "path_progress": 0.0,
-          "queue_position": 13
+          "queue_position": 13,
+          "kind": "car"
         },
         {
           "id": 75,
@@ -542,7 +589,8 @@
           "status": "QUEUED",
           "arrival_tick": 54,
           "path_progress": 0.0,
-          "queue_position": 14
+          "queue_position": 14,
+          "kind": "car"
         },
         {
           "id": 106,
@@ -550,7 +598,8 @@
           "status": "QUEUED",
           "arrival_tick": 75,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 96,
@@ -558,7 +607,8 @@
           "status": "QUEUED",
           "arrival_tick": 69,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 101,
@@ -566,7 +616,8 @@
           "status": "QUEUED",
           "arrival_tick": 72,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 82,
@@ -574,7 +625,8 @@
           "status": "CROSSING",
           "arrival_tick": 59,
           "path_progress": 0.5,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         }
       ],
       "metrics": {
@@ -583,7 +635,9 @@
         "mean_wait_ticks": 20.4,
         "max_wait_ticks": 44,
         "switches": 7,
-        "fairness_overrides": 1
+        "fairness_overrides": 1,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
       "decisions": [
         {
@@ -597,12 +651,13 @@
             "accepted": false
           }
         }
-      ]
+      ],
+      "preemption": null
     },
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 4,
       "tick": 120,
       "sim_status": "paused",
@@ -660,7 +715,8 @@
           "status": "QUEUED",
           "arrival_tick": 116,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 68,
@@ -668,7 +724,8 @@
           "status": "QUEUED",
           "arrival_tick": 47,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 69,
@@ -676,7 +733,8 @@
           "status": "QUEUED",
           "arrival_tick": 48,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 70,
@@ -684,7 +742,8 @@
           "status": "QUEUED",
           "arrival_tick": 49,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 71,
@@ -692,7 +751,8 @@
           "status": "QUEUED",
           "arrival_tick": 50,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 72,
@@ -700,7 +760,8 @@
           "status": "QUEUED",
           "arrival_tick": 51,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 73,
@@ -708,7 +769,8 @@
           "status": "QUEUED",
           "arrival_tick": 52,
           "path_progress": 0.0,
-          "queue_position": 5
+          "queue_position": 5,
+          "kind": "car"
         },
         {
           "id": 75,
@@ -716,7 +778,8 @@
           "status": "QUEUED",
           "arrival_tick": 54,
           "path_progress": 0.0,
-          "queue_position": 6
+          "queue_position": 6,
+          "kind": "car"
         },
         {
           "id": 123,
@@ -724,7 +787,8 @@
           "status": "QUEUED",
           "arrival_tick": 90,
           "path_progress": 0.0,
-          "queue_position": 7
+          "queue_position": 7,
+          "kind": "car"
         },
         {
           "id": 125,
@@ -732,7 +796,8 @@
           "status": "QUEUED",
           "arrival_tick": 91,
           "path_progress": 0.0,
-          "queue_position": 8
+          "queue_position": 8,
+          "kind": "car"
         },
         {
           "id": 126,
@@ -740,7 +805,8 @@
           "status": "QUEUED",
           "arrival_tick": 92,
           "path_progress": 0.0,
-          "queue_position": 9
+          "queue_position": 9,
+          "kind": "car"
         },
         {
           "id": 128,
@@ -748,7 +814,8 @@
           "status": "QUEUED",
           "arrival_tick": 93,
           "path_progress": 0.0,
-          "queue_position": 10
+          "queue_position": 10,
+          "kind": "car"
         },
         {
           "id": 129,
@@ -756,7 +823,8 @@
           "status": "QUEUED",
           "arrival_tick": 94,
           "path_progress": 0.0,
-          "queue_position": 11
+          "queue_position": 11,
+          "kind": "car"
         },
         {
           "id": 131,
@@ -764,7 +832,8 @@
           "status": "QUEUED",
           "arrival_tick": 95,
           "path_progress": 0.0,
-          "queue_position": 12
+          "queue_position": 12,
+          "kind": "car"
         },
         {
           "id": 132,
@@ -772,7 +841,8 @@
           "status": "QUEUED",
           "arrival_tick": 96,
           "path_progress": 0.0,
-          "queue_position": 13
+          "queue_position": 13,
+          "kind": "car"
         },
         {
           "id": 133,
@@ -780,7 +850,8 @@
           "status": "QUEUED",
           "arrival_tick": 97,
           "path_progress": 0.0,
-          "queue_position": 14
+          "queue_position": 14,
+          "kind": "car"
         },
         {
           "id": 130,
@@ -788,7 +859,8 @@
           "status": "QUEUED",
           "arrival_tick": 94,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 144,
@@ -796,7 +868,8 @@
           "status": "QUEUED",
           "arrival_tick": 104,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 146,
@@ -804,7 +877,8 @@
           "status": "QUEUED",
           "arrival_tick": 105,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 149,
@@ -812,7 +886,8 @@
           "status": "QUEUED",
           "arrival_tick": 107,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 152,
@@ -820,7 +895,8 @@
           "status": "QUEUED",
           "arrival_tick": 109,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         }
       ],
       "metrics": {
@@ -829,7 +905,9 @@
         "mean_wait_ticks": 26.352941176470587,
         "max_wait_ticks": 71,
         "switches": 10,
-        "fairness_overrides": 2
+        "fairness_overrides": 2,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
       "decisions": [
         {
@@ -854,12 +932,13 @@
             "remaining": 1
           }
         }
-      ]
+      ],
+      "preemption": null
     },
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 5,
       "tick": 160,
       "sim_status": "paused",
@@ -917,7 +996,8 @@
           "status": "QUEUED",
           "arrival_tick": 153,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 125,
@@ -925,7 +1005,8 @@
           "status": "QUEUED",
           "arrival_tick": 91,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 126,
@@ -933,7 +1014,8 @@
           "status": "QUEUED",
           "arrival_tick": 92,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 128,
@@ -941,7 +1023,8 @@
           "status": "QUEUED",
           "arrival_tick": 93,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 129,
@@ -949,7 +1032,8 @@
           "status": "QUEUED",
           "arrival_tick": 94,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 131,
@@ -957,7 +1041,8 @@
           "status": "QUEUED",
           "arrival_tick": 95,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 132,
@@ -965,7 +1050,8 @@
           "status": "QUEUED",
           "arrival_tick": 96,
           "path_progress": 0.0,
-          "queue_position": 5
+          "queue_position": 5,
+          "kind": "car"
         },
         {
           "id": 133,
@@ -973,7 +1059,8 @@
           "status": "QUEUED",
           "arrival_tick": 97,
           "path_progress": 0.0,
-          "queue_position": 6
+          "queue_position": 6,
+          "kind": "car"
         },
         {
           "id": 183,
@@ -981,7 +1068,8 @@
           "status": "QUEUED",
           "arrival_tick": 134,
           "path_progress": 0.0,
-          "queue_position": 7
+          "queue_position": 7,
+          "kind": "car"
         },
         {
           "id": 184,
@@ -989,7 +1077,8 @@
           "status": "QUEUED",
           "arrival_tick": 135,
           "path_progress": 0.0,
-          "queue_position": 8
+          "queue_position": 8,
+          "kind": "car"
         },
         {
           "id": 188,
@@ -997,7 +1086,8 @@
           "status": "QUEUED",
           "arrival_tick": 137,
           "path_progress": 0.0,
-          "queue_position": 9
+          "queue_position": 9,
+          "kind": "car"
         },
         {
           "id": 189,
@@ -1005,7 +1095,8 @@
           "status": "QUEUED",
           "arrival_tick": 138,
           "path_progress": 0.0,
-          "queue_position": 10
+          "queue_position": 10,
+          "kind": "car"
         },
         {
           "id": 191,
@@ -1013,7 +1104,8 @@
           "status": "QUEUED",
           "arrival_tick": 139,
           "path_progress": 0.0,
-          "queue_position": 11
+          "queue_position": 11,
+          "kind": "car"
         },
         {
           "id": 193,
@@ -1021,7 +1113,8 @@
           "status": "QUEUED",
           "arrival_tick": 141,
           "path_progress": 0.0,
-          "queue_position": 12
+          "queue_position": 12,
+          "kind": "car"
         },
         {
           "id": 194,
@@ -1029,7 +1122,8 @@
           "status": "QUEUED",
           "arrival_tick": 142,
           "path_progress": 0.0,
-          "queue_position": 13
+          "queue_position": 13,
+          "kind": "car"
         },
         {
           "id": 196,
@@ -1037,7 +1131,8 @@
           "status": "QUEUED",
           "arrival_tick": 143,
           "path_progress": 0.0,
-          "queue_position": 14
+          "queue_position": 14,
+          "kind": "car"
         },
         {
           "id": 185,
@@ -1045,7 +1140,8 @@
           "status": "QUEUED",
           "arrival_tick": 135,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 187,
@@ -1053,7 +1149,8 @@
           "status": "QUEUED",
           "arrival_tick": 136,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 199,
@@ -1061,7 +1158,8 @@
           "status": "QUEUED",
           "arrival_tick": 146,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 213,
@@ -1069,7 +1167,8 @@
           "status": "QUEUED",
           "arrival_tick": 156,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 204,
@@ -1077,7 +1176,8 @@
           "status": "CROSSING",
           "arrival_tick": 150,
           "path_progress": 0.5,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         }
       ],
       "metrics": {
@@ -1086,7 +1186,9 @@
         "mean_wait_ticks": 29.147368421052633,
         "max_wait_ticks": 86,
         "switches": 14,
-        "fairness_overrides": 3
+        "fairness_overrides": 3,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
       "decisions": [
         {
@@ -1100,12 +1202,13 @@
             "accepted": false
           }
         }
-      ]
+      ],
+      "preemption": null
     },
     {
       "protocol_version": "1.0",
       "kind": "state",
-      "run_id": "570b102f-6d29-45d9-885d-315e20d0190c",
+      "run_id": "7b5cd573-f18a-443e-b0b7-bb8c7f1545df",
       "sequence_number": 6,
       "tick": 200,
       "sim_status": "paused",
@@ -1163,7 +1266,8 @@
           "status": "QUEUED",
           "arrival_tick": 135,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 188,
@@ -1171,7 +1275,8 @@
           "status": "QUEUED",
           "arrival_tick": 137,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 189,
@@ -1179,7 +1284,8 @@
           "status": "QUEUED",
           "arrival_tick": 138,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 191,
@@ -1187,7 +1293,8 @@
           "status": "QUEUED",
           "arrival_tick": 139,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 193,
@@ -1195,7 +1302,8 @@
           "status": "QUEUED",
           "arrival_tick": 141,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         },
         {
           "id": 194,
@@ -1203,7 +1311,8 @@
           "status": "QUEUED",
           "arrival_tick": 142,
           "path_progress": 0.0,
-          "queue_position": 5
+          "queue_position": 5,
+          "kind": "car"
         },
         {
           "id": 196,
@@ -1211,7 +1320,8 @@
           "status": "QUEUED",
           "arrival_tick": 143,
           "path_progress": 0.0,
-          "queue_position": 6
+          "queue_position": 6,
+          "kind": "car"
         },
         {
           "id": 244,
@@ -1219,7 +1329,8 @@
           "status": "QUEUED",
           "arrival_tick": 178,
           "path_progress": 0.0,
-          "queue_position": 7
+          "queue_position": 7,
+          "kind": "car"
         },
         {
           "id": 245,
@@ -1227,7 +1338,8 @@
           "status": "QUEUED",
           "arrival_tick": 179,
           "path_progress": 0.0,
-          "queue_position": 8
+          "queue_position": 8,
+          "kind": "car"
         },
         {
           "id": 248,
@@ -1235,7 +1347,8 @@
           "status": "QUEUED",
           "arrival_tick": 180,
           "path_progress": 0.0,
-          "queue_position": 9
+          "queue_position": 9,
+          "kind": "car"
         },
         {
           "id": 251,
@@ -1243,7 +1356,8 @@
           "status": "QUEUED",
           "arrival_tick": 183,
           "path_progress": 0.0,
-          "queue_position": 10
+          "queue_position": 10,
+          "kind": "car"
         },
         {
           "id": 252,
@@ -1251,7 +1365,8 @@
           "status": "QUEUED",
           "arrival_tick": 184,
           "path_progress": 0.0,
-          "queue_position": 11
+          "queue_position": 11,
+          "kind": "car"
         },
         {
           "id": 253,
@@ -1259,7 +1374,8 @@
           "status": "QUEUED",
           "arrival_tick": 185,
           "path_progress": 0.0,
-          "queue_position": 12
+          "queue_position": 12,
+          "kind": "car"
         },
         {
           "id": 254,
@@ -1267,7 +1383,8 @@
           "status": "QUEUED",
           "arrival_tick": 186,
           "path_progress": 0.0,
-          "queue_position": 13
+          "queue_position": 13,
+          "kind": "car"
         },
         {
           "id": 255,
@@ -1275,7 +1392,8 @@
           "status": "QUEUED",
           "arrival_tick": 187,
           "path_progress": 0.0,
-          "queue_position": 14
+          "queue_position": 14,
+          "kind": "car"
         },
         {
           "id": 235,
@@ -1283,7 +1401,8 @@
           "status": "QUEUED",
           "arrival_tick": 171,
           "path_progress": 0.0,
-          "queue_position": 0
+          "queue_position": 0,
+          "kind": "car"
         },
         {
           "id": 242,
@@ -1291,7 +1410,8 @@
           "status": "QUEUED",
           "arrival_tick": 176,
           "path_progress": 0.0,
-          "queue_position": 1
+          "queue_position": 1,
+          "kind": "car"
         },
         {
           "id": 246,
@@ -1299,7 +1419,8 @@
           "status": "QUEUED",
           "arrival_tick": 179,
           "path_progress": 0.0,
-          "queue_position": 2
+          "queue_position": 2,
+          "kind": "car"
         },
         {
           "id": 263,
@@ -1307,7 +1428,8 @@
           "status": "QUEUED",
           "arrival_tick": 194,
           "path_progress": 0.0,
-          "queue_position": 3
+          "queue_position": 3,
+          "kind": "car"
         },
         {
           "id": 265,
@@ -1315,7 +1437,8 @@
           "status": "QUEUED",
           "arrival_tick": 195,
           "path_progress": 0.0,
-          "queue_position": 4
+          "queue_position": 4,
+          "kind": "car"
         }
       ],
       "metrics": {
@@ -1324,7 +1447,9 @@
         "mean_wait_ticks": 31.03361344537815,
         "max_wait_ticks": 86,
         "switches": 18,
-        "fairness_overrides": 4
+        "fairness_overrides": 4,
+        "emergencies": 0,
+        "mean_emergency_wait_ticks": 0.0
       },
       "decisions": [
         {
@@ -1338,7 +1463,8 @@
             "accepted": false
           }
         }
-      ]
+      ],
+      "preemption": null
     }
   ],
   "decisions": [
@@ -5383,6 +5509,8 @@
     "max_wait_ticks": 86,
     "switches": 18,
     "fairness_overrides": 4,
+    "emergencies": 0,
+    "mean_emergency_wait_ticks": 0.0,
     "generated": 270,
     "rejected": 131,
     "p95_wait_ticks": 86

@@ -3,6 +3,7 @@
 import balanced from './balanced.json';
 import eastSurge from './east_surge.json';
 import fairnessTrap from './fairness_trap.json';
+import emergency from './emergency.json';
 
 export type MockStep = { delayMs: number; raw: string } | { delayMs: number; event: 'disconnect' | 'connect' };
 export interface MockScript { id: string; label: string; steps: MockStep[] }
@@ -46,6 +47,7 @@ export const MOCK_SCRIPTS: MockScript[] = [
   { id: 'east_surge', label: 'East surge (recorded)', steps: frames(eastSurge, 1000) },
   { id: 'fairness_trap', label: 'Fairness trap (recorded, up to 50 vehicles)', steps: frames(fairnessTrap, 1000) },
   { id: 'balanced', label: 'Balanced (recorded)', steps: frames(balanced, 1000) },
+  { id: 'emergency', label: 'Ambulances (recorded, East surge + 5 ambulances)', steps: frames(emergency, 1000) },
   { id: 'edge_cases', label: 'Protocol edge cases (stale, malformed, reconnect, new run)', steps: protocolEdgeCases() },
 ];
 

@@ -104,8 +104,25 @@ const carDetails = mergeGeometries([
   ...[-0.38, 0.38].map((x) => tinted(placed(new BoxGeometry(0.24, 0.1, 0.06), x, 0.5, half + 0.01), '#d4202a')),
 ])!;
 
+// Supercar skin: low wedge body with a rear wing, same footprint as a normal car (1.15 × CAR_LEN) so the
+// overlap checks still hold. Purely cosmetic.
+const superBody = mergeGeometries([
+  placed(new BoxGeometry(1.14, 0.3, CAR_LEN), 0, 0.3, 0).toNonIndexed(),
+  placed(new BoxGeometry(1.0, 0.1, CAR_LEN * 0.32), 0, 0.5, -half * 0.62).toNonIndexed(),      // bonnet
+  placed(new BoxGeometry(1.1, 0.05, 0.24), 0, 0.78, half - 0.16).toNonIndexed(),               // wing
+  ...[-0.4, 0.4].map((x) => placed(new BoxGeometry(0.06, 0.24, 0.08), x, 0.6, half - 0.16).toNonIndexed()),
+])!;
+const superDetails = mergeGeometries([
+  tinted(placed(new BoxGeometry(0.84, 0.24, CAR_LEN * 0.38), 0, 0.57, 0.08), '#101820'),      // canopy glass
+  tinted(placed(new BoxGeometry(0.22, 0.012, CAR_LEN * 0.995), 0, 0.456, 0), '#f5f5f5'),       // racing stripe
+  ...[[-0.5, -half * 0.6], [0.5, -half * 0.6], [-0.5, half * 0.6], [0.5, half * 0.6]].map(([x, z]) =>
+    tinted(placed(new CylinderGeometry(0.22, 0.22, 0.22, 12).rotateZ(Math.PI / 2), x!, 0.22, z!), '#111214')),
+  ...[-0.34, 0.34].map((x) => tinted(placed(new BoxGeometry(0.3, 0.06, 0.05), x, 0.4, -half - 0.01), '#e9f6ff')),
+  tinted(placed(new BoxGeometry(0.9, 0.06, 0.05), 0, 0.42, half + 0.01), '#ff2533'),
+])!;
+
 export const geo = {
-  carBody, carDetails,
+  carBody, carDetails, superBody, superDetails,
   lamp: new SphereGeometry(0.14, 12, 8),
   unit: new BoxGeometry(1, 1, 1),
   trunk: new CylinderGeometry(0.16, 0.22, 1.4, 6),
@@ -117,6 +134,9 @@ const PALETTE = ['#e4572e', '#17bebb', '#ffc914', '#f4f4f4', '#2f6fdb', '#f15bb5
 const carMats = PALETTE.map((color) => new MeshStandardMaterial({ color, roughness: 0.35, metalness: 0.25 }));
 /** Cosmetic only: colour is a pure function of the stable vehicle id. */
 export const carMaterial = (id: number) => carMats[Math.abs(id) % carMats.length]!;
+const SUPER = ['#e10600', '#ffcc00', '#76ff03', '#ff6d00', '#00e5ff', '#d500f9'];
+const superMats = SUPER.map((color) => new MeshStandardMaterial({ color, roughness: 0.22, metalness: 0.55 }));
+export const superMaterial = (id: number) => superMats[Math.abs(id) % superMats.length]!;
 
 const BUILDING = ['#e8e3d8', '#d9a99c', '#9fc0d6', '#ebd29a', '#b5c4a8', '#c4b3d6', '#d6d9de'];
 export const buildingMats = BUILDING.map((color) => new MeshStandardMaterial({ color, map: windows, roughness: 0.85 }));

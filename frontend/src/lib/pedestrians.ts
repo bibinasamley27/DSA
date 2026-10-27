@@ -43,15 +43,18 @@ export function makeCrossers(): Crosser[] {
 }
 
 /** Advance crossers to `clock`. Mutates in place (per-frame, allocation-free). */
-export function stepCrossers(list: Crosser[], s: StateSnapshot | null, clock: number) {
+export function stepCrossers(list: Crosser[], s: StateSnapshot | null, clock: number, carTurningInto: (arm: Direction) => boolean = () => false) {
   for (const c of list) {
     if (c.crossing && clock >= c.t0 + CROSS_TICKS) {
       c.crossing = false; c.side = c.side === 1 ? -1 : 1; c.t0 += CROSS_TICKS;
-    } else if (!c.crossing && clock - c.t0 >= c.minWait && crossingAllowed(c.arm, s, clock)) {
+    } else if (!c.crossing && clock - c.t0 >= c.minWait && crossingAllowed(c.arm, s, clock) && !carTurningInto(c.arm)) {
       c.crossing = true; c.t0 = clock;
     }
   }
 }
+
+/** True while someone is on the crosswalk of `arm` (turning cars then go straight instead). */
+export const crosswalkBusy = (list: Crosser[], arm: Direction) => list.some((c) => c.crossing && c.arm === arm);
 
 export function crosserPose(c: Crosser, clock: number): PedPose {
   const o = OUTWARD[c.arm], r = right(c.arm);

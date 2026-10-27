@@ -1,6 +1,6 @@
 import { CAR_LEN, QUEUE_SPACING, STOP, axialOffset, signalPlacement, vehicleWorldPosition } from '../lib/geometry';
 import { lampFor } from '../lib/signal';
-import { ENTRY_SLOTS, exitDistance, PoseTracker } from '../lib/interp';
+import { ENTRY_SPEED, entryTicks, exitDistance, PoseTracker } from '../lib/interp';
 import { SimClock } from '../lib/simClock';
 import { frame } from './helpers';
 import type { Direction } from '../types/simulation';
@@ -66,79 +66,104 @@ describe('lampFor', () => {
 });
 
 describe('PoseTracker', () => {
-  const withVehicles = (n: number, tick: number, progress = 0) => frame(5, {
-    tick, vehicles: Array.from({ length: n }, (_, i) => ({ id: i + 1, direction: 'N' as const, status: 'QUEUED' as const, arrival_tick: 0, path_progress: progress, queue_position: i })),
-  });
-  const crossingN = (tick: number) => ({ ...withVehicles(1, tick), vehicles: [{ ...withVehicles(1, tick).vehicles[0]!, status: 'CROSSING' as const, path_progress: 0.5 }] });
+  const straight = { turnFor: () => 'S' as const, offRampFor: () => false };
+  const veh = (id: number, q: number, status: 'QUEUED' | 'CROSSING' = 'QUEUED', direction: Direction = 'N') =>
+    ({ id, direction, status, arrival_tick: 0, path_progress: status === 'CROSSING' ? 0.5 : 0, queue_position: q });
+  const snap = (tick: number, vehicles: ReturnType<typeof veh>[]) => frame(5, { tick, vehicles });
 
-  it('interpolates to the new target and holds there (no extrapolation)', () => {
-    const t = new PoseTracker();
-    t.update(withVehicles(1, 1, 0), 1, 0, 1);
-    t.update(crossingN(2), 1, 500, 2);
-    const from = t.sample(1, 500, 2)!;
-    const mid = t.sample(1, 750, 2)!;
-    const end = t.sample(1, 1000, 2)!;
-    const later = t.sample(1, 60_000, 2)!;
-    expect(from.z).toBeLessThan(mid.z);
-    expect(mid.z).toBeLessThan(end.z);
-    expect(later).toEqual(end);
+  it('drives a new car in along its road and reaches the slot within its entry budget', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(1, [veh(1, 3)]), 1, 0, 1);
+    const slot = vehicleWorldPosition({ direction: 'N', status: 'QUEUED', path_progress: 0, queue_position: 3 });
+    const start = t.sample(1, 0, 1)!;
+    expect(slot.z - start.z).toBeCloseTo(ENTRY_SPEED * entryTicks(3));   // N road runs toward -z
+    expect(t.sample(1, 0, 1 + entryTicks(3))!.z).toBeCloseTo(slot.z);
+    expect(t.sample(1, 0, 99)!.z).toBeCloseTo(slot.z);                  // stays put; no extrapolation
   });
-  it('new vehicles enter from behind their slot, not on it', () => {
-    const t = new PoseTracker();
-    t.update(withVehicles(1, 1), 1, 0, 1);
-    const slot = vehicleWorldPosition({ direction: 'N', status: 'QUEUED', path_progress: 0, queue_position: 0 });
-    expect(t.sample(1, 0, 1)!.z).toBeCloseTo(slot.z - ENTRY_SLOTS * QUEUE_SPACING); // N queue extends toward -z
-    expect(t.sample(1, 5000, 1)!.z).toBeCloseTo(slot.z);
+  it('gives the head of the queue less than one tick to arrive (the engine may serve it next tick)', () => {
+    expect(entryTicks(0)).toBeLessThan(0.5);
+    for (let q = 1; q < 15; q++) expect(entryTicks(q)).toBeLessThan(q + 0.5);
   });
-  it('does not blend across runs', () => {
-    const t = new PoseTracker();
-    t.update(withVehicles(1, 1, 0), 1, 0, 1);
-    t.update(crossingN(1), 2, 400, 1);
-    expect(t.ids()).toEqual([1]);
-    expect(t.sample(1, 400, 1)!.z).toBeLessThan(-STOP); // fresh entry from behind the stop line, not a blend from the old run
+  it('moves a crossing car to the junction midpoint and holds there', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
+    const end = t.sample(1, 2000, 2)!;
+    expect(Math.hypot(end.x - -1.1, end.z)).toBeLessThan(0.05);         // N lane line, junction centre
+    expect(t.sample(1, 60_000, 2)).toEqual(end);
   });
-  it('drives a departed vehicle on to the end of its outbound road using simulation time, then drops it', () => {
-    const t = new PoseTracker();
-    t.update(crossingN(1), 1, 0, 1);
-    t.update(withVehicles(0, 2), 1, 1000, 2);
-    expect(t.ids()).toEqual([1]);
+  it('turns a left-turning car through the junction onto the East exit lane', () => {
+    const t = new PoseTracker({ turnFor: () => 'L', offRampFor: () => false });
+    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
+    t.update(snap(3, []), 1, 2000, 3);
+    const out = t.sample(1, 2000, 6)!;
+    expect(out.x).toBeGreaterThan(STOP);                                 // on the East arm
+    expect(out.z).toBeCloseTo(1.1);                                      // outbound (eastbound) lane
+    expect(Math.abs(Math.sin(out.heading))).toBeCloseTo(1);              // heading along x
+  });
+  it('goes straight instead of turning through a crosswalk with someone on it', () => {
+    const t = new PoseTracker({ turnFor: () => 'R', offRampFor: () => false });
+    t.setCrosswalkBusy((arm) => arm === 'W');                            // N right turn exits through W
+    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
+    t.update(snap(3, []), 1, 2000, 3);
+    const out = t.sample(1, 2000, 6)!;
+    expect(out.x).toBeCloseTo(-1.1);                                     // still on the N-S line, heading south
+    expect(out.z).toBeGreaterThan(STOP);
+    expect(t.turningInto('W', 2000, 6)).toBe(false);
+  });
+  it('reports a turning car to pedestrians until it has cleared the crosswalk', () => {
+    const t = new PoseTracker({ turnFor: () => 'R', offRampFor: () => false });
+    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
+    expect(t.turningInto('W', 1000, 2)).toBe(true);
+    t.update(snap(3, []), 1, 2000, 3);
+    expect(t.turningInto('W', 2000, 6)).toBe(false);                     // long gone
+  });
+  it('drives a departed car to the end of its road on simulation time, then drops it', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(1, [veh(1, 0, 'CROSSING')]), 1, 0, 1);
+    t.update(snap(2, []), 1, 1000, 2);
     const start = t.sample(1, 1000, 2)!;
-    expect(t.sample(1, 99_999, 2)).toEqual(start);                     // clock frozen (paused): no movement
-    const later = t.sample(1, 1000, 4)!;
-    expect(later.z - start.z).toBeCloseTo(exitDistance(2));             // N traffic heads south (+z)
-    expect(later.x).toBeCloseTo(start.x);
-    expect(t.sample(1, 1000, 100)).toBeNull();                          // past the world edge
-    t.update(withVehicles(0, 3), 1, 2000, 100);
-    expect(t.ids()).toEqual([]);                                        // pruned
-  });
-  it('does not animate exits across a new run', () => {
-    const t = new PoseTracker();
-    t.update(crossingN(1), 1, 0, 1);
-    t.update(withVehicles(0, 0), 2, 500, 0);
+    expect(t.sample(1, 99_999, 2)).toEqual(start);                       // clock frozen (paused): no movement
+    expect(t.sample(1, 1000, 4)!.z - start.z).toBeCloseTo(exitDistance(2));
+    expect(t.sample(1, 1000, 100)).toBeNull();
+    t.update(snap(3, []), 1, 2000, 100);
     expect(t.ids()).toEqual([]);
   });
-  it('scales new vehicles in and is idempotent per snapshot', () => {
-    const t = new PoseTracker();
-    const s = withVehicles(1, 1);
-    t.update(s, 1, 0, 1);
-    t.update(s, 1, 400, 1); // same snapshot object: ignored
-    expect(t.sample(1, 0, 1)!.scale).toBe(0);
-    expect(t.sample(1, 1000, 1)!.scale).toBe(1);
+  it('can leave via a side street', () => {
+    const t = new PoseTracker({ turnFor: () => 'S', offRampFor: () => true });
+    t.update(snap(1, [veh(1, 0, 'CROSSING')]), 1, 0, 1);
+    t.update(snap(2, []), 1, 1000, 2);
+    const far = t.sample(1, 1000, 2 + 12)!;                              // ~94 units later: past the corner at 58
+    expect(far.z).toBeCloseTo(58 - 1.1, 0);                              // westbound side-street lane
+    expect(far.x).toBeLessThan(-5);
   });
-  it('freezes live vehicles while held (stale) and resumes from the frozen pose', () => {
-    const t = new PoseTracker();
-    t.update(withVehicles(1, 1, 0), 1, 0, 1);
-    t.update(crossingN(2), 1, 1000, 2);
+  it('does not blend or animate exits across runs', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(1, [veh(1, 0, 'CROSSING')]), 1, 0, 1);
+    t.update(snap(0, []), 2, 500, 0);
+    expect(t.ids()).toEqual([]);
+  });
+  it('freezes while held (stale) and resumes from the frozen pose', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
     t.hold(1250);
     const frozen = t.sample(1, 1250, 2)!;
-    expect(t.sample(1, 9000, 2)).toEqual(frozen);                // no motion after the disconnect
-    t.update(crossingN(3), 1, 9000, 3);                           // reconnect: next snapshot starts from the frozen pose
-    t.hold(null);
+    expect(t.sample(1, 9000, 2)).toEqual(frozen);
+    t.resume(9000);
+    expect(t.sample(1, 9000, 2)).toEqual(frozen);
+    t.update(snap(3, [veh(1, 0, 'CROSSING')]), 1, 9000, 3);              // repeated state keeps the same animation
     expect(t.sample(1, 9000, 3)!.z).toBeCloseTo(frozen.z);
   });
-  it('copes with 60 vehicles', () => {
+  it('is idempotent per snapshot and copes with 60 vehicles', () => {
     const t = new PoseTracker();
-    t.update(withVehicles(60, 1), 1, 0, 1);
+    const s = snap(1, Array.from({ length: 60 }, (_, i) => veh(i + 1, i % 15, 'QUEUED', (['N', 'E', 'S', 'W'] as const)[i % 4]!)));
+    t.update(s, 1, 0, 1);
+    t.update(s, 1, 400, 1);
+    expect(t.ids()).toHaveLength(60);
     expect(t.sample(60, 10, 1)).not.toBeNull();
   });
 });

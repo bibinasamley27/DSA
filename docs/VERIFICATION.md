@@ -67,3 +67,14 @@ phase durations and frozen WebSocket fields were not changed.
 
 Not verified: GPU frame rate on the demo laptop (only software rendering was used), hidden-tab render pausing in a
 real browser, and the stale-state vehicle freeze visually (covered by unit tests only).
+
+---
+
+# Arrivals, decorative turns and supercars — 28 October 2026
+
+Branch `feat/scene-arrivals-turns` (ADR 0002). Frontend `npm test`: **120 passed**, typecheck and build passed.
+`overlap.test.ts` replays east_surge, fairness_trap and balanced at 1 snapshot/tick, live 2 Hz and 4x timing, plus
+worst cases (all left, all right onto a side street, all straight): zero car overlaps (rotated footprints), zero
+pedestrian contacts or conflicting-phase crossings, and every car at its slot when the engine reports it crossing.
+Live backend smoke (headless Chromium, software rendering): arrivals drive in, turns and supercars render, no page errors.
+Not verified: GPU frame rate on the demo laptop.

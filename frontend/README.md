@@ -74,10 +74,12 @@ intersect at any sampled instant, no crossing pedestrian touches a car or walks 
   vehicles are not in protocol v1.0 and are intentionally absent; there is no speed chart because the protocol carries no vehicle speed.
 
 ## Known limitations
-- The backend only reports `path_progress` 0 (queued) or 0.5 (crossing) and removes exited vehicles. Within a run a vehicle can only
-  leave `vehicles` by exiting, so a vanished vehicle drives on along its outbound lane to the world edge (`EXIT_SPEED` units per tick of
-  `SimClock` time; freezes when paused/stale, never across runs). New vehicles drive in from `ENTRY_SLOTS` slots behind their reported slot.
-  Both are presentation only; counts and metrics come from the snapshot.
+- The backend only reports `path_progress` 0 (queued) or 0.5 (crossing) and removes exited vehicles. Motion between
+  those states is presentation only (`lib/interp.ts`, `lib/paths.ts`, ADR 0002): arrivals drive in along their approach
+  route (North/South straight down the road, East/West off the side street) within a budget that ends before the engine
+  can serve them; crossing cars go left, right or straight (decorative, by vehicle id; straight if a crosswalk they would
+  cut through is occupied); departed cars drive off to the world edge or onto a side street. Queued cars keep one slot of
+  distance in the engine's FIFO order. About 1 in 9 cars uses a supercar skin. Nothing changes counts or metrics.
 - **Pedestrians are decorative** (see `docs/adr/0001-decorative-pedestrians.md`). The backend has no pedestrian model (PRD non-goal). Walkers each own a
   sidewalk strip; crossers use a crosswalk only while the perpendicular road is GREEN with `phase_remaining` covering the whole crossing.
   They read signal state and never influence the simulation.

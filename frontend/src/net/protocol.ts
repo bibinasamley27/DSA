@@ -81,7 +81,7 @@ function decision(v: unknown, path: string): DecisionEvent {
 }
 
 const uniqueDirections = (list: Direction[], path: string) => {
-  if (new Set(list).size !== 4) fail(path, 'must contain all four directions exactly once');
+  if (list.length !== 4 || new Set(list).size !== 4) fail(path, 'must contain all four directions exactly once');
 };
 
 function state(o: Obj): StateSnapshot {
@@ -94,6 +94,15 @@ function state(o: Obj): StateSnapshot {
   if ((phase === 'ALL_RED') !== (active_direction === null)) fail('active_direction', 'must be null exactly during ALL_RED');
   const vehicles = arr(o.vehicles, 'vehicles').map((v, i) => vehicle(v, `vehicles[${i}]`));
   if (new Set(vehicles.map((v) => v.id)).size !== vehicles.length) fail('vehicles', 'duplicate vehicle id');
+  const tick = int(o.tick, 'tick', 0);
+  vehicles.forEach((v, i) => {
+    if (v.status === 'EXITED') fail(`vehicles[${i}].status`, 'exited vehicles must not be listed as active');
+    if (v.arrival_tick > tick) fail(`vehicles[${i}].arrival_tick`, 'arrival is in the future');
+  });
+  for (const d of direction_states) {
+    const queued = vehicles.filter((v) => v.direction === d.direction && v.status === 'QUEUED').length;
+    if (d.queue_count !== queued) fail('direction_states', `${d.direction} queue_count ${d.queue_count} != ${queued} queued vehicles`);
+  }
   return {
     protocol_version: '1.0', kind: 'state', ...envelope(o),
     sim_status: oneOf(o.sim_status, ['paused', 'running', 'stopped'] as const, 'sim_status'),

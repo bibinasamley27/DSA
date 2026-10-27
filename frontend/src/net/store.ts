@@ -125,7 +125,7 @@ export class SimStore {
     const m = parsed.message;
     switch (m.kind) {
       case 'state': return this.acceptState(m);
-      case 'decision_trace': return this.acceptTrace(m.run_id, traceDecisions(m));
+      case 'decision_trace': return this.acceptTrace(m.run_id, m.sequence_number, traceDecisions(m));
       case 'welcome': return;
       case 'ack': return this.settle(String(m.payload.request_id), 'accepted', undefined, m.sequence_number);
       case 'error': {
@@ -160,8 +160,10 @@ export class SimStore {
     });
   }
 
-  private acceptTrace(runId: string, events: DecisionEvent[]) {
+  private acceptTrace(runId: string, sequence: number, events: DecisionEvent[]) {
     if (runId !== this.state.snapshot?.run_id) return this.reject('staleRun');
+    if (sequence <= this.lastSequence) return this.reject('staleSequence');
+    this.lastSequence = sequence; // traces share the server's sequence with states
     this.set({ decisions: this.mergeDecisions(this.state.decisions, runId, events) });
   }
 

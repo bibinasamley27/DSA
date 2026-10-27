@@ -70,7 +70,7 @@ intersect at any sampled instant, no crossing pedestrian touches a car or walks 
   leave `vehicles` by exiting, so a vanished vehicle drives on along its outbound lane to the world edge (`EXIT_SPEED` units per tick of
   `SimClock` time; freezes when paused/stale, never across runs). New vehicles drive in from `ENTRY_SLOTS` slots behind their reported slot.
   Both are presentation only; counts and metrics come from the snapshot.
-- **Pedestrians are decorative.** The backend has no pedestrian model (PRD non-goal; the team may want an ADR note). Walkers each own a
+- **Pedestrians are decorative** (see `docs/adr/0001-decorative-pedestrians.md`). The backend has no pedestrian model (PRD non-goal). Walkers each own a
   sidewalk strip; crossers use a crosswalk only while the perpendicular road is GREEN with `phase_remaining` covering the whole crossing.
   They read signal state and never influence the simulation.
 - Seed accepts any safe integer (docs only say "integer"); scenario/seed/mode/speed changes require a paused sim per the backend README, and are disabled otherwise.

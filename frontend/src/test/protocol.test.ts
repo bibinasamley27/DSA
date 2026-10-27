@@ -22,6 +22,26 @@ describe('parseServerMessage', () => {
   it('accepts replies', () => {
     expect(parseServerMessage(ack('x', 3)).ok).toBe(true);
   });
+  describe('SRS snapshot invariants', () => {
+    it('rejects a fifth, duplicate direction entry', () => {
+      const f = frame(20);
+      expect(parseServerMessage(raw({ ...f, direction_states: [...f.direction_states, f.direction_states[0]] })).ok).toBe(false);
+      expect(parseServerMessage(raw({ ...f, queue_order: [...f.queue_order, 'N'] })).ok).toBe(false);
+    });
+    it('rejects queue_count that disagrees with the QUEUED vehicles', () => {
+      const f = frame(20);
+      const ds = f.direction_states.map((d, i) => (i === 0 ? { ...d, queue_count: d.queue_count + 1 } : d));
+      const r = parseServerMessage(raw({ ...f, direction_states: ds }));
+      expect(r.ok).toBe(false);
+      expect(!r.ok && r.error).toMatch(/queue_count/);
+    });
+    it('rejects future arrivals and EXITED vehicles in the active list', () => {
+      const f = frame(20);
+      const v = f.vehicles[0]!;
+      expect(parseServerMessage(raw({ ...f, vehicles: [{ ...v, arrival_tick: f.tick + 1 }, ...f.vehicles.slice(1)] })).ok).toBe(false);
+      expect(parseServerMessage(raw({ ...f, vehicles: [{ ...v, status: 'EXITED' }, ...f.vehicles.slice(1)] })).ok).toBe(false);
+    });
+  });
   it('rejects duplicate vehicle ids', () => {
     const f = frame(20);
     const v = f.vehicles[0]!;

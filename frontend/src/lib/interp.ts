@@ -33,6 +33,12 @@ export class PoseTracker {
   private lastReceived = -1;
   private epoch = -1;
   private last: StateSnapshot | null = null;
+  private heldAt: number | null = null;
+
+  /** While stale (disconnected), freeze every live vehicle where it is at `at`; `null` resumes. */
+  hold(at: number | null) {
+    if (at === null || this.heldAt === null) this.heldAt = at;
+  }
 
   /**
    * Call once per accepted snapshot (repeat calls with the same snapshot are no-ops). `clock` is SimClock time at `receivedAt`.
@@ -73,7 +79,8 @@ export class PoseTracker {
 
   ids(): number[] { return [...this.tracks.keys()]; }
 
-  sample(id: number, now: number, clock: number): Pose | null {
+  sample(id: number, wallNow: number, clock: number): Pose | null {
+    const now = this.heldAt ?? wallNow;
     const t = this.tracks.get(id);
     if (!t) return null;
     if (t.exit) {
@@ -86,5 +93,5 @@ export class PoseTracker {
     return { x: lerp(t.from.x, t.to.x, k), z: lerp(t.from.z, t.to.z, k), heading: t.to.heading, scale };
   }
 
-  clear() { this.tracks.clear(); this.epoch = -1; this.last = null; }
+  clear() { this.tracks.clear(); this.epoch = -1; this.last = null; this.heldAt = null; }
 }

@@ -57,6 +57,18 @@ describe('SimStore ordering', () => {
     store.ingest(trace(11)); store.ingest(trace(12));
     expect(store.getState().decisions.filter((d) => d.event_id === 1)).toHaveLength(1);
   });
+  it('applies the sequence guard to decision traces and lets them advance it', () => {
+    const { store } = setup();
+    const ev = (id: number) => ({ event_id: id, tick: 1, type: 'ARRIVAL', direction: 'N', description: 'x', data: {} });
+    const trace = (s: number, id: number) => raw({ protocol_version: '1.0', kind: 'decision_trace', run_id: RUN, sequence_number: s, tick: 1, payload: { decisions: [ev(id)] } });
+    store.ingest(trace(9, 77));                                   // older than the accepted state (10)
+    expect(store.getState().decisions.some((d) => d.event_id === 77)).toBe(false);
+    expect(store.getState().rejected.staleSequence).toBe(1);
+    store.ingest(trace(15, 78));                                  // newer: accepted, guard advances to 15
+    store.ingest(raw(frame(6, { sequence_number: 14 })));         // state older than that trace
+    expect(store.getState().snapshot?.sequence_number).toBe(10);
+    expect(store.getState().rejected.staleSequence).toBe(2);
+  });
   it('ignores traces for other runs', () => {
     const { store } = setup();
     store.ingest(raw({ protocol_version: '1.0', kind: 'decision_trace', run_id: 'other', sequence_number: 99, tick: 1, payload: { decisions: [] } }));

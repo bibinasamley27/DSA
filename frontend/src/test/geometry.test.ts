@@ -84,13 +84,16 @@ describe('PoseTracker', () => {
     expect(entryTicks(0)).toBeLessThan(0.5);
     for (let q = 1; q < 15; q++) expect(entryTicks(q)).toBeLessThan(q + 0.5);
   });
-  it('moves a crossing car to the junction midpoint and holds there', () => {
+  it('drives a crossing car through the junction without stopping in the middle', () => {
     const t = new PoseTracker(straight);
     t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
     t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
-    const end = t.sample(1, 2000, 2)!;
-    expect(Math.hypot(end.x - -1.1, end.z)).toBeLessThan(0.05);         // N lane line, junction centre
-    expect(t.sample(1, 60_000, 2)).toEqual(end);
+    const at = (clock: number) => t.sample(1, 1000, clock)!.z;
+    expect(Math.abs(at(3))).toBeLessThan(0.5);                            // ~mid-junction one tick later, as the engine says
+    let last = at(2), slowest = Infinity;
+    for (let c = 2.75; c <= 3.4; c += 0.05) { const z = at(c); slowest = Math.min(slowest, z - last); last = z; }
+    expect(slowest).toBeGreaterThan(0.2);                                 // keeps moving through the box: no stop at the centre
+    expect(Math.abs(at(99) - (STOP + CAR_LEN / 2))).toBeLessThan(0.15);   // still CROSSING (e.g. paused late): waits at the exit edge
   });
   it('turns a left-turning car through the junction onto the East exit lane', () => {
     const t = new PoseTracker({ turnFor: () => 'L', offRampFor: () => false });
@@ -127,7 +130,7 @@ describe('PoseTracker', () => {
     t.update(snap(2, []), 1, 1000, 2);
     const start = t.sample(1, 1000, 2)!;
     expect(t.sample(1, 99_999, 2)).toEqual(start);                       // clock frozen (paused): no movement
-    expect(t.sample(1, 1000, 4)!.z - start.z).toBeCloseTo(exitDistance(2));
+    expect(t.sample(1, 1000, 4)!.z - start.z).toBeCloseTo(exitDistance(3) - exitDistance(1)); // one continuous drive
     expect(t.sample(1, 1000, 100)).toBeNull();
     t.update(snap(3, []), 1, 2000, 100);
     expect(t.ids()).toEqual([]);
@@ -148,15 +151,18 @@ describe('PoseTracker', () => {
   });
   it('freezes while held (stale) and resumes from the frozen pose', () => {
     const t = new PoseTracker(straight);
-    t.update(snap(1, [veh(1, 0)]), 1, 0, 1);
-    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 1000, 2);
+    t.update(snap(1, [veh(1, 1)]), 1, 0, 1);
+    t.update(snap(2, [veh(1, 1), veh(2, 0, 'CROSSING')].slice(0, 1).map((v) => ({ ...v, queue_position: 0 }))), 1, 1000, 2); // slot shift
     t.hold(1250);
     const frozen = t.sample(1, 1250, 2)!;
-    expect(t.sample(1, 9000, 2)).toEqual(frozen);
+    expect(t.sample(1, 9000, 2)).toEqual(frozen);                         // wall time passes: no motion while held
     t.resume(9000);
-    expect(t.sample(1, 9000, 2)).toEqual(frozen);
-    t.update(snap(3, [veh(1, 0, 'CROSSING')]), 1, 9000, 3);              // repeated state keeps the same animation
-    expect(t.sample(1, 9000, 3)!.z).toBeCloseTo(frozen.z);
+    expect(t.sample(1, 9000, 2)).toEqual(frozen);                         // resumes exactly where it froze
+  });
+  it('a car driving through the junction freezes with the simulation clock', () => {
+    const t = new PoseTracker(straight);
+    t.update(snap(2, [veh(1, 0, 'CROSSING')]), 1, 0, 2);
+    expect(t.sample(1, 1_000, 2.5)).toEqual(t.sample(1, 99_999, 2.5));    // paused/stale clock: no motion (after the 0.3 s pop-in)
   });
   it('is idempotent per snapshot and copes with 60 vehicles', () => {
     const t = new PoseTracker();

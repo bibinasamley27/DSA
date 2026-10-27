@@ -11,6 +11,9 @@ import ControllerPage from "../pages/ControllerPage";
 import SimulationPage from "../pages/SimulationPage";
 import { store } from "../net/connection";
 import { frame, raw, ack, errorMsg } from "./helpers";
+import fairnessTrap from "../../../backend/fixtures/fairness_trap.trace.json";
+import oscillation from "../../../backend/fixtures/oscillation.trace.json";
+import type { DecisionEvent } from "../types/simulation";
 
 // jsdom cannot create WebGL; keep the real page, controls, HUD and shared store.
 vi.mock("../scene/Scene", () => ({ Scene: () => <div data-testid="scene" /> }));
@@ -48,12 +51,13 @@ describe("controller on the shared connection", () => {
   it("renders every dashboard module rather than the placeholder", () => {
     renderPages();
     for (const name of [
-      "Traffic Signal Controller",
+      "Visualizing SIGNAL_CONTROLLER",
       "Traffic linked list",
       "Circular signal queue",
-      "Priority breakdown",
       "Bubble sort playback",
-      "Decision timeline",
+      "Priority breakdown",
+      "Fairness, stability & spillback",
+      "Decision log",
     ]) {
       expect(screen.getByRole("heading", { name })).toBeInTheDocument();
     }
@@ -73,7 +77,7 @@ describe("controller on the shared connection", () => {
     expect(screen.getByTestId("scene")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("link", { name: "Controller" }));
     expect(
-      screen.getByRole("heading", { name: "Traffic Signal Controller" }),
+      screen.getByRole("heading", { name: "Visualizing SIGNAL_CONTROLLER" }),
     ).toBeInTheDocument();
     expect(store.getState().snapshot).toBe(snapshot);
     expect(connect).toHaveBeenCalledTimes(1);
@@ -143,5 +147,26 @@ describe("controller on the shared connection", () => {
     expect(
       screen.queryByRole("heading", { name: "Traffic linked list" }),
     ).not.toBeInTheDocument();
+  });
+  it("explains real engine decisions: sort playback, fairness override and green slots", () => {
+    const run = store.getState().snapshot!.run_id;
+    const feed = (trace: unknown, seq: number) => {
+      const decisions = (trace as { decisions: DecisionEvent[] }).decisions.filter((e) => e.tick <= 120);
+      act(() => store.ingest(raw({ protocol_version: "1.0", kind: "decision_trace", run_id: run, sequence_number: seq, tick: 120, payload: { decisions } })));
+    };
+    feed(fairnessTrap, 50);
+    renderPages();
+    expect(screen.getByText(/SORT_TRACE · t=/)).toBeInTheDocument();
+    expect(screen.getAllByText(/fairness override: \w waited \d+s/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/slot \d of 4 in the order committed at t=/).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Next sort step" }));
+    expect(screen.getByText(/step 2\//)).toBeInTheDocument();
+    cleanup();
+    store.reset("live");
+    store.attach({ connect, send, close });
+    receive();
+    feed(oscillation, 60);
+    renderPages();
+    expect(screen.getAllByText(/hysteresis rejected/).length).toBeGreaterThan(0);
   });
 });

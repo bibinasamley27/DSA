@@ -1,6 +1,13 @@
 .shell { min-height: 100vh; display: flex; flex-direction: column; }
-.header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding: 8px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
-.header h1 { margin: 0; font-size: 1.05rem; }
+.header {
+  /* dark app chrome shared by both pages (matches the controller visualizer); local tokens only */
+  --surface: #070d0c; --surface-2: #0c1513; --border: #1d2e2a; --text: #e4f1ec; --muted: #93aba4;
+  --accent: #1fd69c; --accent-text: #04241a; --ok: #1fd69c; --warn: #f6a623; --bad: #ff6b6b;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding: 8px 16px;
+  background: var(--surface); color: var(--text); border-bottom: 1px solid var(--border);
+}
+.header h1 { margin: 0; font-size: 1.02rem; font-family: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace; letter-spacing: 0.02em; }
+.header nav a { font-weight: 600; }
 .header nav { display: flex; gap: 4px; }
 .header nav a { padding: 6px 12px; border-radius: 6px; color: var(--text); text-decoration: none; }
 .header nav a:global(.active) { background: var(--accent); color: var(--accent-text); }

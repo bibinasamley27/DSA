@@ -14,8 +14,9 @@ export interface Pose { x: number; z: number; heading: number; scale: number }
 type Motion =
   | { kind: 'lerp'; from: Pose; to: Pose }
   | { kind: 'enter'; r0: number; rEnd: number; clock0: number; dur: number } // along the approach route
-  | { kind: 'cross'; path: Path; d0: number; d1: number; t0: number; win: number }
-  | { kind: 'exit'; path: Path; d0: number; clock0: number };
+  // One continuous drive from the stop line through the junction and away (simulation time). While the engine still
+  // reports CROSSING, `cap` stops it at the junction exit edge; once it has left (EXITED) cap is null.
+  | { kind: 'drive'; path: Path; d0: number; clock0: number; cap: number | null };
 interface Track { motion: Motion; bornAt: number; vehicle: VehicleState; arm: Direction | null; turn: Turn | null }
 
 /**
@@ -40,8 +41,11 @@ const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 type Placement = Pick<VehicleState, 'direction' | 'status' | 'path_progress' | 'queue_position'>;
 const pose = (v: Placement): Pose => ({ ...vehicleWorldPosition(v), scale: 1 });
-const EXIT_EASE = 0.25; // ticks to reach EXIT_SPEED; short so the next car (which may get only a 0.5 s window) never closes in
+// Ticks to reach EXIT_SPEED from the stop line. With 0.6 the car is ~5.6 units in after one tick: about mid-junction,
+// where the engine places a CROSSING vehicle, and then it simply keeps going (no stop in the box).
+const EXIT_EASE = 0.6;
 export const exitDistance = (e: number) => (e < EXIT_EASE ? (EXIT_SPEED * e * e) / (2 * EXIT_EASE) : EXIT_SPEED * (e - EXIT_EASE / 2));
+const left = (m: Motion) => m.kind === 'drive' && m.cap === null;
 
 function mix(id: number, salt: number) {
   let h = Math.imul(id ^ salt, 2654435761) >>> 0;
@@ -131,7 +135,7 @@ export class PoseTracker {
 
     for (const v of s.vehicles) {
       const old = this.tracks.get(v.id);
-      const cur = old && old.motion.kind !== 'exit' ? this.frame.get(v.id) ?? null : null;
+      const cur = old && !left(old.motion) ? this.frame.get(v.id) ?? null : null;
       const bornAt = old ? old.bornAt : now;
       if (v.status === 'QUEUED') {
         const to = pose(v);
@@ -149,31 +153,29 @@ export class PoseTracker {
           next.set(v.id, { motion: { kind: 'lerp', from: cur ?? to, to }, bornAt, vehicle: v, arm: null, turn: null });
         }
       } else {
-        if (old?.motion.kind === 'cross') { next.set(v.id, { ...old, vehicle: v }); continue; } // repeated state: keep animating
+        if (old?.motion.kind === 'drive') { next.set(v.id, { ...old, vehicle: v }); continue; } // repeated state: keep driving
         const { turn, arm, jp } = this.decide(v);
         const from = cur ?? { ...pose({ ...v, status: 'QUEUED', path_progress: 0, queue_position: 2 }), scale: 1 }; // immediate service
         const { path, shift } = this.joinPath(jp, from);
-        next.set(v.id, { motion: { kind: 'cross', path, d0: 0, d1: jp.checkpoint + shift, t0: now, win }, bornAt, vehicle: v, arm, turn });
+        next.set(v.id, { motion: { kind: 'drive', path, d0: 0, clock0: clock, cap: 2 * jp.checkpoint + shift }, bornAt, vehicle: v, arm, turn });
       }
     }
 
     this.tracks.forEach((t, id) => {
       if (next.has(id)) return;
-      if (t.motion.kind === 'exit') {
+      if (left(t.motion)) {
         if (this.sampleAt(t, now, clock)) next.set(id, t); // still on the map
         return;
       }
       const cur = this.frame.get(id) ?? null;
       if (!cur) return;
-      if (t.motion.kind === 'cross') {
-        const m = t.motion;
-        const d = m.d0 + (m.d1 - m.d0) * smooth(clamp01((now - m.t0) / m.win));
-        next.set(id, { ...t, motion: { kind: 'exit', path: m.path, d0: d, clock0: clock } });
+      if (t.motion.kind === 'drive') {
+        next.set(id, { ...t, motion: { ...t.motion, cap: null } }); // it has left: same drive continues, now uncapped
         return;
       }
       const { turn, arm, jp } = this.decide(t.vehicle); // left while queued (e.g. two ticks per snapshot at 4x)
       const { path } = this.joinPath(jp, cur);
-      next.set(id, { ...t, arm, turn, motion: { kind: 'exit', path, d0: 0, clock0: clock } });
+      next.set(id, { ...t, arm, turn, motion: { kind: 'drive', path, d0: 0, clock0: clock, cap: null } });
     });
 
     this.tracks = next;
@@ -235,7 +237,7 @@ export class PoseTracker {
       const list = lanes.get(d) ?? [];
       const follower = t.motion.kind === 'lerp' || t.motion.kind === 'enter';
       // engine FIFO: departed cars still on the approach first, then crossing, then the queue in order
-      list.push({ id, r, order: follower ? t.vehicle.queue_position : t.motion.kind === 'exit' ? -2 : -1, follower });
+      list.push({ id, r, order: follower ? t.vehicle.queue_position : left(t.motion) ? -2 : -1, follower });
       lanes.set(d, list);
     }
     for (const [d, list] of lanes) {
@@ -264,13 +266,10 @@ export class PoseTracker {
         const r = m.rEnd + (m.r0 - m.rEnd) * (1 - easeOut(clamp01((clock - m.clock0) / m.dur)));
         return { ...routePose(t.vehicle.direction, r), scale };
       }
-      case 'cross': {
-        const d = m.d0 + (m.d1 - m.d0) * smooth(clamp01((now - m.t0) / m.win));
-        return { ...m.path.at(d), scale };
-      }
-      case 'exit': {
-        const d = m.d0 + exitDistance(Math.max(0, clock - m.clock0));
-        return d >= m.path.length ? null : { ...m.path.at(d), scale: 1 };
+      case 'drive': {
+        let d = m.d0 + exitDistance(Math.max(0, clock - m.clock0));
+        if (m.cap !== null) d = Math.min(d, m.cap);
+        return d >= m.path.length ? null : { ...m.path.at(d), scale: m.cap === null ? 1 : scale };
       }
     }
   }

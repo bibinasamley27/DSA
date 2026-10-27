@@ -1,0 +1,133 @@
+{
+  "protocol_version": "1.0",
+  "kind": "decision_trace",
+  "run_id": "fixture-east-surge",
+  "sequence_number": 50,
+  "tick": 24,
+  "payload": {
+    "events": [
+      {
+        "event_id": 1,
+        "tick": 24,
+        "type": "THRESHOLD",
+        "description": "East queue reached the congestion threshold.",
+        "data": {
+          "queue_count": 12
+        }
+      },
+      {
+        "event_id": 2,
+        "tick": 24,
+        "type": "SORT_COMPARE",
+        "description": "Compare North (12.5) and East (33).",
+        "data": {
+          "left": "N",
+          "right": "E",
+          "left_score": 12.5,
+          "right_score": 33,
+          "order": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ]
+        }
+      },
+      {
+        "event_id": 3,
+        "tick": 24,
+        "type": "SORT_SWAP",
+        "description": "East moves ahead of North.",
+        "data": {
+          "left": "N",
+          "right": "E",
+          "order": [
+            "E",
+            "N",
+            "S",
+            "W"
+          ]
+        }
+      },
+      {
+        "event_id": 4,
+        "tick": 24,
+        "type": "SORT_COMPARE",
+        "description": "Compare North (12.5) and South (18).",
+        "data": {
+          "left": "N",
+          "right": "S",
+          "order": [
+            "E",
+            "N",
+            "S",
+            "W"
+          ]
+        }
+      },
+      {
+        "event_id": 5,
+        "tick": 24,
+        "type": "SORT_SWAP",
+        "description": "South moves ahead of North.",
+        "data": {
+          "left": "N",
+          "right": "S",
+          "order": [
+            "E",
+            "S",
+            "N",
+            "W"
+          ]
+        }
+      },
+      {
+        "event_id": 6,
+        "tick": 24,
+        "type": "SORT_COMPARE",
+        "description": "Compare North (12.5) and West (16).",
+        "data": {
+          "left": "N",
+          "right": "W",
+          "order": [
+            "E",
+            "S",
+            "N",
+            "W"
+          ]
+        }
+      },
+      {
+        "event_id": 7,
+        "tick": 24,
+        "type": "SORT_SWAP",
+        "description": "West moves ahead of North.",
+        "data": {
+          "left": "N",
+          "right": "W",
+          "order": [
+            "E",
+            "S",
+            "W",
+            "N"
+          ]
+        }
+      },
+      {
+        "event_id": 8,
+        "tick": 24,
+        "type": "HYSTERESIS_REJECT",
+        "description": "Candidate observed once; two consecutive planning boundaries are required.",
+        "data": {
+          "candidate_order": [
+            "E",
+            "S",
+            "W",
+            "N"
+          ],
+          "consecutive_boundaries": 1
+        }
+      }
+    ]
+  }
+}

@@ -6,6 +6,11 @@ Educational model with demo timings; not real-world traffic engineering.
 
 ## Run it (one laptop, no external services)
 
+**One command:** `./run.sh` starts the backend and the frontend, waits until both are ready, opens
+`http://localhost:5173/` in your browser, and stops both on Ctrl+C. The first run sets up the Python
+environment (uses `python3.12`, or `uv` if installed) and the frontend packages. `MOCK=1 ./run.sh` runs the
+frontend alone on recorded data; `NO_OPEN=1 ./run.sh` skips opening the browser. The manual steps are below.
+
 Backend (Python 3.12), from `backend/`:
 
 ```sh
